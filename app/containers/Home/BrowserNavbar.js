@@ -13,22 +13,170 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
-const styles = {
-  grow: {
-    flexGrow: 1,
+import SearchIcon from '@material-ui/icons/Search';
+import Input from '@material-ui/core/Input';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import TrendingUp from '@material-ui/icons/TrendingUp';
+import HomeIcon from '@material-ui/icons/Home';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MessageIcon from '@material-ui/icons/Message';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
+const styles = theme => ({
+  sectionDesktop: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    width: '210px',
+    maxWidth: '220px',
   },
-  hamburgerIcon: {},
-};
+
+  sectionDesktopRight: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    maxWidth: '320px',
+  },
+  iconLabel: {
+    paddingLeft: 5,
+    paddingRight: 5,
+    fontSize: '1rem',
+  },
+  root: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  iconList: {
+    width: 'auto',
+    '&:hover': {
+      borderRadius: '0',
+    },
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '30%',
+  },
+  searchIcon: {
+    width: theme.spacing.unit * 9,
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+    width: '100%',
+  },
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+  },
+  seperator: {
+    marginRight: 15,
+  },
+});
 
 function BrowserNavbar(props) {
   const { classes } = props;
   return (
-    <div className={classes.grow}>
+    <div>
       <AppBar position="static">
-        <Toolbar variant="dense">
-          <Typography variant="title" className={classes.grow} color="inherit">
+        <Toolbar variant="dense" className={classes.root}>
+          <Typography variant="title" color="inherit">
             Campusrope
           </Typography>
+
+          <div className={classes.sectionDesktop}>
+            <div>
+              <IconButton color="inherit" className={classes.iconList}>
+                <HomeIcon />
+                <Typography
+                  variant="title"
+                  color="inherit"
+                  className={classes.iconLabel}
+                >
+                  Home
+                </Typography>
+              </IconButton>
+            </div>
+
+            <div>
+              <IconButton color="inherit" className={classes.iconList}>
+                <TrendingUp />
+                <Typography
+                  variant="title"
+                  color="inherit"
+                  className={classes.iconLabel}
+                >
+                  Trends
+                </Typography>
+              </IconButton>
+            </div>
+          </div>
+
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <Input
+              placeholder="Search…"
+              disableUnderline
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+            />
+          </div>
+          <div className={classes.sectionDesktopRight}>
+            <div className={classes.seperator}>
+              <IconButton color="inherit" className={classes.iconList}>
+                <AccountCircle />
+                <Typography
+                  variant="title"
+                  color="inherit"
+                  className={classes.iconLabel}
+                >
+                  Profile
+                </Typography>
+              </IconButton>
+            </div>
+
+            <div className={classes.seperator}>
+              <IconButton color="inherit" className={classes.iconList}>
+                <MessageIcon />
+                <Typography
+                  variant="title"
+                  color="inherit"
+                  className={classes.iconLabel}
+                >
+                  Messages
+                </Typography>
+              </IconButton>
+            </div>
+
+            <div className={classes.seperator}>
+              <IconButton color="inherit" className={classes.iconList}>
+                <NotificationsIcon />
+                <Typography
+                  variant="title"
+                  color="inherit"
+                  className={classes.iconLabel}
+                >
+                  Notifications
+                </Typography>
+              </IconButton>
+            </div>
+          </div>
           <IconButton
             className={classes.hamburgerIcon}
             color="inherit"
