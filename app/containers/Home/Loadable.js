@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for Radio
+ * Asynchronously loads the component for Home
  *
  */
 

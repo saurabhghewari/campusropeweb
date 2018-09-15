@@ -19,7 +19,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import indigo from '@material-ui/core/colors/indigo';
 import pink from '@material-ui/core/colors/pink';
 
-// import HomePage from 'containers/HomePage/Loadable';
+import Home from 'containers/Home/Loadable';
 import Login from 'containers/Login/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
@@ -37,12 +37,9 @@ export default function App() {
       <CssBaseline>
         <MuiThemeProvider theme={theme}>
           <Switch>
-            <Route
-              exact="exact"
-              path="/"
-              render={() => <Redirect to="/login" />}
-            />
+            <Route exact path="/" render={() => <Redirect to="/login" />} />
             <Route path="/login" component={Login} />
+            <Route path="/home" component={Home} />
             <Route component={NotFoundPage} />
           </Switch>
         </MuiThemeProvider>

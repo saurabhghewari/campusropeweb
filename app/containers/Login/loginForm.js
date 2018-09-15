@@ -13,7 +13,7 @@ const styles = theme => ({
     textAlign: 'center',
     padding: 12,
     width: `calc(100% - 24px)`,
-    maxWidth: 496,
+    maxWidth: 450,
     minHeight: 400,
   },
   avatar: {
@@ -55,7 +55,9 @@ const styles = theme => ({
         )}/>
 ); */
 
-const FormPaper = ({ classes }) => <Paper className={classes.paper} />;
+const FormPaper = ({ classes }) => (
+  <Paper className={classes.paper} elevation={5} />
+);
 
 FormPaper.propTypes = {
   classes: PropTypes.object,
