@@ -18,8 +18,9 @@ import reducer from './reducer';
 import saga from './saga';
 
 // import Drawer from 'components/Drawer'
-// import MobileNavBar from './MobileNavBar';
-import BrowserNavbar from './BrowserNavbar';
+import MobileNavBar from './MobileNavBar';
+import AppBottomNavigation from './BottomNavigation';
+// import BrowserNavbar from './BrowserNavbar';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Home extends React.Component {
@@ -30,7 +31,8 @@ export class Home extends React.Component {
           <title>Home</title>
           <meta name="description" content="Description of Home" />
         </Helmet>
-        <BrowserNavbar />
+        <MobileNavBar />
+        <AppBottomNavigation />
       </div>
     );
   }
