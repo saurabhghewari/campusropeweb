@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { push } from 'react-router-redux';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -38,7 +39,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 export class Login extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, routeToSignup } = this.props;
     return (
       <React.Fragment>
         <Helmet>
@@ -46,7 +47,10 @@ export class Login extends React.Component {
           <meta name="description" content="Description of Login" />
         </Helmet>
         <div className={classes.container}>
-          <LoginForm handleSubmit={this.props.onLoginFormSubmit} />
+          <LoginForm
+            handleSubmit={this.props.onLoginFormSubmit}
+            routeToSignup={routeToSignup}
+          />
         </div>
       </React.Fragment>
     );
@@ -56,6 +60,7 @@ export class Login extends React.Component {
 Login.propTypes = {
   classes: PropTypes.object,
   onLoginFormSubmit: PropTypes.func.isRequired,
+  routeToSignup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({ login: makeSelectLogin() });
@@ -65,6 +70,7 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     onLoginFormSubmit: (values, actions) =>
       dispatch(onLoginFormSubmit(values, actions)),
+    routeToSignup: () => dispatch(push('/signup')),
   };
 }
 

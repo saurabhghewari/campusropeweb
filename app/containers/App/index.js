@@ -21,6 +21,7 @@ import pink from '@material-ui/core/colors/pink';
 
 import Home from 'containers/Home/Loadable';
 import Login from 'containers/Login/Loadable';
+import Signup from 'containers/Signup/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 const theme = createMuiTheme({
@@ -40,6 +41,7 @@ export default function App() {
             <Route exact path="/" render={() => <Redirect to="/login" />} />
             <Route path="/login" component={Login} />
             <Route path="/home" component={Home} />
+            <Route path="/signup" component={Signup} />
             <Route component={NotFoundPage} />
           </Switch>
         </MuiThemeProvider>

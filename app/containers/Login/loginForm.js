@@ -12,7 +12,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 
@@ -175,7 +174,7 @@ const FormComponent = ({ classes, onSubmit }) => (
   </Formik>
 );
 
-const FormPaper = ({ classes, handleSubmit }) => (
+const FormPaper = ({ classes, handleSubmit,routeToSignup }) => (
   <Paper className={classes.paper}>
     <div className={classes.lockIconWrapper}>
       <Avatar className={classes.avatar}>
@@ -183,7 +182,7 @@ const FormPaper = ({ classes, handleSubmit }) => (
       </Avatar>
     </div>
     <Typography variant="headline">Sign in</Typography>
-    <FormComponent classes={classes} handleSubmit={handleSubmit} />
+    <FormComponent classes={classes} handleSubmit={handleSubmit}/>
     <Button
       type="submit"
       fullWidth
@@ -202,6 +201,7 @@ const FormPaper = ({ classes, handleSubmit }) => (
       fullWidth
       variant="contained"
       color="primary"
+      onClick={routeToSignup}
       className={classes.register}
     >{' '}
       Sign up for free!
@@ -211,6 +211,8 @@ const FormPaper = ({ classes, handleSubmit }) => (
 
 FormPaper.propTypes = {
   classes: PropTypes.object,
+  routeToSignup: PropTypes.func,
+  handleSubmit: PropTypes.func,
 };
 
 export default withStyles(styles)(FormPaper);
