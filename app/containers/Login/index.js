@@ -19,6 +19,7 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectLogin from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { onLoginFormSubmit } from './actions';
 import LoginForm from './loginForm';
 
 const styles = theme => ({
@@ -45,7 +46,7 @@ export class Login extends React.Component {
           <meta name="description" content="Description of Login" />
         </Helmet>
         <div className={classes.container}>
-          <LoginForm />
+          <LoginForm handleSubmit={this.props.onLoginFormSubmit} />
         </div>
       </React.Fragment>
     );
@@ -54,12 +55,17 @@ export class Login extends React.Component {
 
 Login.propTypes = {
   classes: PropTypes.object,
+  onLoginFormSubmit: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({ login: makeSelectLogin() });
 
 function mapDispatchToProps(dispatch) {
-  return { dispatch };
+  return {
+    dispatch,
+    onLoginFormSubmit: (values, actions) =>
+      dispatch(onLoginFormSubmit(values, actions)),
+  };
 }
 
 const withConnect = connect(
