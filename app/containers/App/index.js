@@ -12,36 +12,40 @@
  */
 
 import React from 'react';
-import { Switch, Route,Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { createMuiTheme ,MuiThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import indigo from '@material-ui/core/colors/indigo';
 import pink from '@material-ui/core/colors/pink';
 
+// import HomePage from 'containers/HomePage/Loadable';
+import Login from 'containers/Login/Loadable';
+import NotFoundPage from 'containers/NotFoundPage/Loadable';
+
 const theme = createMuiTheme({
   palette: {
     primary: indigo,
-    secondary:pink,
+    secondary: pink,
     tonalOffset: 0.2,
   },
 });
-
-import HomePage from 'containers/HomePage/Loadable';
-import Login from 'containers/Login/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 export default function App() {
   return (
     <div>
       <CssBaseline>
-      <MuiThemeProvider theme={theme}>
-      <Switch>
-        <Route exact path="/" render={() => <Redirect to="/login"/>} />
-        <Route path="/login" component={Login} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      </MuiThemeProvider>
+        <MuiThemeProvider theme={theme}>
+          <Switch>
+            <Route
+              exact="exact"
+              path="/"
+              render={() => <Redirect to="/login" />}
+            />
+            <Route path="/login" component={Login} />
+            <Route component={NotFoundPage} />
+          </Switch>
+        </MuiThemeProvider>
       </CssBaseline>
     </div>
   );

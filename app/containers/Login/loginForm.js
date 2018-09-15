@@ -1,28 +1,32 @@
 import * as React from 'react';
-import Button from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
+
+/* import Button from '@material-ui/core/Button';
 import {Formik, Field, Form} from 'formik';
-import {LinearProgress} from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
-import withStyles from '@material-ui/core/styles/withStyles'
-import Paper from '@material-ui/core/Paper'
-import LockIcon from '@material-ui/icons/LockOutlined';
-import Avatar from '@material-ui/core/Avatar';
+import TextField from '@material-ui/core/TextField'; */
+import withStyles from '@material-ui/core/styles/withStyles';
+import Paper from '@material-ui/core/Paper';
 
-const styles = (theme) => ({
-    paper: {
-        marginTop: theme.spacing.unit * 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`
-    },
-    avatar: {
-        margin: theme.spacing.unit,
-        backgroundColor: theme.palette.secondary.main
-    }
-})
+const styles = theme => ({
+  paper: {
+    margin: '0px auto',
+    textAlign: 'center',
+    padding: 12,
+    width: `calc(100% - 24px)`,
+    maxWidth: 496,
+    minHeight: 400,
+  },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE11 issue.
+    marginTop: theme.spacing.unit,
+  },
+});
 
-const FormComponent = () => (
+/* const FormComponent = () => (
     <Formik
         initialValues={{
             email: '',
@@ -37,39 +41,24 @@ const FormComponent = () => (
             }
             return errors;
         }}
-        onSubmit={(values, {setSubmitting}) => {
-            setTimeout(() => {
-                setSubmitting(false);
-                alert(JSON.stringify(values, null, 2));
-            }, 500);
-        }}
-        render={({submitForm, isSubmitting, values}) => (
-            <Form>
-                <Field type="email" label="Email" name="email" component={TextField}/>
-                <br/>
-                <Field type="password" label="Password" name="password" component={TextField}/>
-                <br/> {isSubmitting && <LinearProgress/>}
-                <br/>
-                <Button
-                    variant="raised"
-                    color="primary"
-                    disabled={isSubmitting}
-                    onClick={submitForm}>
-                    Submit
-                </Button>
-            </Form>
+        render={({submitForm, isSubmitting}) => (<Form>
+            <Field type="email" label="Email" name="email" component={TextField}/>
+            <Field type="password" label="Password" name="password" component={TextField}/>
+            <Button
+                variant="raised"
+                color="primary"
+                disabled={isSubmitting}
+                onClick={submitForm}>
+                > Submit
+            </Button>
+        </Form>
         )}/>
-);
+); */
 
-const FormPaper = ({classes}) => {
-    return (
-        <Paper className={classes.paper}>
-            <Avatar className={classes.avatar}>
-                <LockIcon/>
-            </Avatar>
-            <FormComponent/>
-        </Paper>
-    )
-}
+const FormPaper = ({ classes }) => <Paper className={classes.paper} />;
 
-export default withStyles(styles)(FormPaper)
+FormPaper.propTypes = {
+  classes: PropTypes.object,
+};
+
+export default withStyles(styles)(FormPaper);
