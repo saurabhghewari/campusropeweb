@@ -15,7 +15,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Avatar from '@material-ui/core/Avatar';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
 import injectSaga from 'utils/injectSaga';
@@ -23,6 +22,7 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectSignup from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import SignupForm from './SignupForm';
 
 const styles = theme => ({
   container: {
@@ -76,17 +76,8 @@ export class Signup extends React.Component {
                 <LockIcon />
               </Avatar>
             </div>
-            <Typography variant="headline">Sign UP</Typography>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.register}
-            >
-              {' '}
-              Sign up
-            </Button>
+            <Typography variant="headline">Sign up to</Typography>
+            <SignupForm classes={classes} />
           </Paper>
         </div>
       </div>
