@@ -22,6 +22,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { onLoginFormSubmit } from './actions';
 import LoginForm from './loginForm';
+import ForgotPasswordModel from './forgotPasswordModel';
 
 const styles = theme => ({
   container: {
@@ -38,8 +39,20 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class Login extends React.Component {
+  state = {
+    openModal: false,
+  };
+
+  handleClickOpen = () => {
+    this.setState({ openModal: true });
+  };
+
+  handleClose = () => {
+    this.setState({ openModal: false });
+  };
+
   render() {
-    const { classes, routeToSignup } = this.props;
+    const { classes, routeToSignup, onForgotPasswordSubmit } = this.props;
     return (
       <React.Fragment>
         <Helmet>
@@ -49,7 +62,15 @@ export class Login extends React.Component {
         <div className={classes.container}>
           <LoginForm
             handleSubmit={this.props.onLoginFormSubmit}
+            handleClickOpen={this.handleClickOpen}
+            handleClose={this.handleClose}
             routeToSignup={routeToSignup}
+          />
+          <ForgotPasswordModel
+            handleClickOpen={this.handleClickOpen}
+            handleClose={this.handleClose}
+            openModal={this.state.openModal}
+            handleSubmitEmail={onForgotPasswordSubmit}
           />
         </div>
       </React.Fragment>
@@ -61,6 +82,7 @@ Login.propTypes = {
   classes: PropTypes.object,
   onLoginFormSubmit: PropTypes.func.isRequired,
   routeToSignup: PropTypes.func.isRequired,
+  onForgotPasswordSubmit: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({ login: makeSelectLogin() });
@@ -70,6 +92,7 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     onLoginFormSubmit: (values, actions) =>
       dispatch(onLoginFormSubmit(values, actions)),
+    onForgotPasswordSubmit: email => console.log(email),
     routeToSignup: () => dispatch(push('/signup')),
   };
 }

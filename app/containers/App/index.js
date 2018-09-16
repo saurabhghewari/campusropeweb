@@ -23,6 +23,7 @@ import Home from 'containers/Home/Loadable';
 import Login from 'containers/Login/Loadable';
 import Signup from 'containers/Signup/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import AdminTask from 'containers/AdminTask/Loadable';
 
 const theme = createMuiTheme({
   palette: {
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/login" component={Login} />
             <Route path="/home" component={Home} />
             <Route path="/signup" component={Signup} />
+            <Route path="/adminTask" component={AdminTask} />
             <Route component={NotFoundPage} />
           </Switch>
         </MuiThemeProvider>
