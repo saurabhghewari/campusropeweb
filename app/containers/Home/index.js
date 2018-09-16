@@ -36,7 +36,7 @@ export class Home extends React.Component {
   };
   render() {
     return (
-      <div>
+      <div style={{ position: 'absolute', height: '100%' }}>
         <Helmet>
           <title>Home</title>
           <meta name="description" content="Description of Home" />
