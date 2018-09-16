@@ -22,7 +22,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { onLoginFormSubmit } from './actions';
 import LoginForm from './loginForm';
-import ForgotPasswordModel from './forgotPasswordModel';
+import ForgotPasswordModal from './forgotPasswordModel';
 
 const styles = theme => ({
   container: {
@@ -66,7 +66,7 @@ export class Login extends React.Component {
             handleClose={this.handleClose}
             routeToSignup={routeToSignup}
           />
-          <ForgotPasswordModel
+          <ForgotPasswordModal
             handleClickOpen={this.handleClickOpen}
             handleClose={this.handleClose}
             openModal={this.state.openModal}
