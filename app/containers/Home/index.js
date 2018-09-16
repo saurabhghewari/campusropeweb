@@ -10,20 +10,30 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-
+import { Switch, Route } from 'react-router-dom';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import Drawer from 'components/Drawer';
 import makeSelectHome from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
-// import Drawer from 'components/Drawer'
 import MobileNavBar from './MobileNavBar';
 import AppBottomNavigation from './BottomNavigation';
+import HomeCenterMenus from './HomeCenterMenus';
 // import BrowserNavbar from './BrowserNavbar';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Home extends React.Component {
+  state = {
+    drawerOpen: false,
+  };
+
+  toggleDrawer = opened => {
+    this.setState({
+      drawerOpen: opened || !this.state.drawerOpen,
+    });
+  };
   render() {
     return (
       <div>
@@ -31,7 +41,11 @@ export class Home extends React.Component {
           <title>Home</title>
           <meta name="description" content="Description of Home" />
         </Helmet>
-        <MobileNavBar />
+        <MobileNavBar toggleDrawer={this.toggleDrawer} />
+        <Drawer open={this.state.drawerOpen} toggleDrawer={this.toggleDrawer} />
+        <Switch>
+          <Route path="/home" component={HomeCenterMenus} />
+        </Switch>
         <AppBottomNavigation />
       </div>
     );
