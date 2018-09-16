@@ -14,13 +14,14 @@ import classNames from 'classnames';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-import Checkbox from '@material-ui/core/Checkbox';
+import { Checkbox, Grid } from '@material-ui/core';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectAdminTask from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import TaskSummeryComponent from './TaskSummeryComponent';
 
 const adminTaskList = [
   {
@@ -119,23 +120,14 @@ const styles = theme => ({
     margin: theme.spacing.unit * 4,
   },
   taskListRoot: {
-    width: '75%',
     display: 'flex',
     justifyContent: 'space-around',
     flexWrap: 'wrap',
   },
-  assignTaskRoot: {
-    width: '25%',
-  },
-  taskRoot: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginTop: theme.spacing.unit * 2,
-  },
   taskListItems: {
     border: '1px solid #f6e9de',
     padding: 10,
-    width: 200,
+    minWidth: 200,
     maxWidth: 200,
     marginBottom: theme.spacing.unit * 2,
     '&:hover': {
@@ -166,7 +158,7 @@ export class AdminTask extends React.PureComponent {
     const { adminTasks } = this.state;
     this.setState({
       adminTasks: adminTasks.map((task, i) => {
-        if (i === index) {
+        if (i + 1 === index) {
           return { ...task, selected: !task.selected };
         }
         return task;
@@ -176,7 +168,7 @@ export class AdminTask extends React.PureComponent {
 
   render() {
     const { classes } = this.props;
-    const renderTasks = this.state.adminTasks.map((task, index) => {
+    const renderTasks = this.state.adminTasks.map(task => {
       const taskListItemSelectedClass = task.selected
         ? classes.selectedItems
         : '';
@@ -192,7 +184,7 @@ export class AdminTask extends React.PureComponent {
             {task.taskName}
             <Checkbox
               onChange={() => {
-                this.handleCheckboxChange(index);
+                this.handleCheckboxChange(task.id);
               }}
               checked={task.selected}
               color="primary"
@@ -201,6 +193,7 @@ export class AdminTask extends React.PureComponent {
         </div>
       );
     });
+
     return (
       <div className={classes.rootContainer}>
         <div
@@ -217,10 +210,19 @@ export class AdminTask extends React.PureComponent {
             <Typography variant="title" gutterBottom>
               Assign Task
             </Typography>
-            <div className={classes.taskRoot}>
-              <div className={classes.taskListRoot}>{renderTasks}</div>
-              <div className={classes.assignTaskRoot}>Summary</div>
-            </div>
+
+            <Grid container>
+              <Grid item xs={12} sm={7} md={9}>
+                <div className={classes.taskListRoot}>{renderTasks}</div>
+              </Grid>
+
+              <Grid item xs={12} sm={5} md={3}>
+                <TaskSummeryComponent
+                  handleTaskRemove={this.handleCheckboxChange}
+                  adminTasks={this.state.adminTasks}
+                />
+              </Grid>
+            </Grid>
           </Paper>
         </div>
       </div>
