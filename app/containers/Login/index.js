@@ -21,8 +21,8 @@ import makeSelectLogin from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { onLoginFormSubmit } from './actions';
-import LoginForm from './loginForm';
-import ForgotPasswordModel from './forgotPasswordModel';
+import LoginForm from './LoginForm';
+import ForgotPasswordModel from './ForgotPasswordModel';
 
 const styles = theme => ({
   container: {
