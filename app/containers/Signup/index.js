@@ -77,7 +77,10 @@ export class Signup extends React.Component {
               </Avatar>
             </div>
             <Typography variant="headline">Sign up to</Typography>
-            <SignupForm classes={classes} />
+            <SignupForm
+              classes={classes}
+              handleSignUp={this.props.onSignUpFormSubmit}
+            />
           </Paper>
         </div>
       </div>
@@ -87,6 +90,7 @@ export class Signup extends React.Component {
 
 Signup.propTypes = {
   classes: PropTypes.object,
+  onSignUpFormSubmit: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -96,6 +100,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    onSignUpFormSubmit: (values, actions) => console.log(values, actions),
   };
 }
 
