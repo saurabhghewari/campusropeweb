@@ -72,7 +72,7 @@ const styles = theme => ({
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
 
-const FormComponent = ({ classes, onSubmit }) => (
+const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
   <Formik
     initialValues={{
       email: '',
@@ -152,7 +152,9 @@ const FormComponent = ({ classes, onSubmit }) => (
               }
               label="Remember me"
             />
-            <Button color="primary" className={classes.button}>
+            <Button
+              color="primary" className={classes.button} 
+              onClick={handleClickOpen}>
               Forgot password?
             </Button>
           </div>
@@ -174,7 +176,7 @@ const FormComponent = ({ classes, onSubmit }) => (
   </Formik>
 );
 
-const FormPaper = ({ classes, handleSubmit,routeToSignup }) => (
+const FormPaper = ({ classes, handleSubmit, routeToSignup, handleClickOpen }) => (
   <Paper className={classes.paper}>
     <div className={classes.lockIconWrapper}>
       <Avatar className={classes.avatar}>
@@ -182,7 +184,9 @@ const FormPaper = ({ classes, handleSubmit,routeToSignup }) => (
       </Avatar>
     </div>
     <Typography variant="headline">Sign in</Typography>
-    <FormComponent classes={classes} handleSubmit={handleSubmit}/>
+    <FormComponent
+      classes={classes} handleSubmit={handleSubmit}
+      handleClickOpen={handleClickOpen}/>
     <Button
       type="submit"
       fullWidth
