@@ -79,6 +79,7 @@ function MobileNavbar(props) {
             />
           </div>
           <IconButton
+            onClick={() => props.toggleDrawer()}
             className={classes.hamburgerIcon}
             color="inherit"
             aria-label="Menu"
@@ -93,6 +94,7 @@ function MobileNavbar(props) {
 
 MobileNavbar.propTypes = {
   classes: PropTypes.object.isRequired,
+  toggleDrawer: PropTypes.func,
 };
 
 export default withStyles(styles)(MobileNavbar);
