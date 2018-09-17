@@ -113,7 +113,7 @@ export class HomeCenterMenus extends React.Component {
                 </Typography>
               </div>
               <Typography
-                variant="display1"
+                variant="headline"
                 className={classNames(
                   classes.menuItemContent,
                   classes.menuTitleSize,
