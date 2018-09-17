@@ -71,7 +71,7 @@ const adminTaskList = [
   },
   {
     id: 10,
-    taskName: 'Users and Notifications',
+    taskName: 'Users/Notifications',
     selected: false,
   },
   {
@@ -91,7 +91,7 @@ const adminTaskList = [
   },
   {
     id: 14,
-    taskName: 'Suggestions and Feedback',
+    taskName: 'Suggestions/Feedback',
     selected: false,
   },
   {
@@ -127,8 +127,8 @@ const styles = theme => ({
   taskListItems: {
     border: '1px solid #f6e9de',
     padding: 10,
-    minWidth: 200,
-    maxWidth: 200,
+    minWidth: 220,
+    maxWidth: 220,
     marginBottom: theme.spacing.unit * 2,
     '&:hover': {
       border: '1px solid #4478ac',
