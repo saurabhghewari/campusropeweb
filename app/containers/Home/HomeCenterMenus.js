@@ -16,6 +16,7 @@ import Gavel from '@material-ui/icons/Gavel';
 import SettingsPhone from '@material-ui/icons/SettingsPhone';
 import InfoOutline from '@material-ui/icons/InfoOutlined';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 const styles = () => ({
   root: {
@@ -25,13 +26,12 @@ const styles = () => ({
     flexWrap: 'wrap',
     width: '70%',
     height: '75%',
+    alignItems: 'center',
   },
   menuListItem: {
-    border: '1px solid #3f51b5',
     height: 82,
     borderRadius: 5,
     display: 'flex',
-    width: 250,
     cursor: 'pointer',
     margin: 20,
     '& svg': {
@@ -45,6 +45,13 @@ const styles = () => ({
   },
   menuTitleSize: {
     fontSize: 25,
+  },
+  menuItemButton: {
+    width: 240,
+    '& span': {
+      display: 'flex',
+      justifyContent: 'space-around',
+    },
   },
 });
 
@@ -74,7 +81,7 @@ const menus = [
     linkTo: '/home/helpline',
   },
   {
-    title: 'Legal Support',
+    title: 'Support',
     iconBgColor: '#3F51B5',
     icon: <Gavel />,
     linkTo: '/home/petitions/list',
@@ -95,20 +102,26 @@ export class HomeCenterMenus extends React.Component {
       <div className={classes.root}>
         {menus.map(menu => (
           <div className={classes.menuListItem} key={menu.title}>
-            <div className={classes.menuItemContent}>
-              <Typography type="subheading" color="secondary">
-                {menu.icon}
-              </Typography>
-            </div>
-            <Typography
-              variant="display1"
-              className={classNames(
-                classes.menuItemContent,
-                classes.menuTitleSize,
-              )}
+            <Button
+              variant="outlined"
+              color="secondary"
+              className={classes.menuItemButton}
             >
-              {menu.title}
-            </Typography>
+              <div className={classes.menuItemContent}>
+                <Typography type="subheading" color="secondary">
+                  {menu.icon}
+                </Typography>
+              </div>
+              <Typography
+                variant="headline"
+                className={classNames(
+                  classes.menuItemContent,
+                  classes.menuTitleSize,
+                )}
+              >
+                {menu.title}
+              </Typography>
+            </Button>
           </div>
         ))}
       </div>
