@@ -196,15 +196,6 @@ export class AdminTask extends React.PureComponent {
 
     return (
       <div className={classes.rootContainer}>
-        <div
-          style={{
-            height: '75px',
-            backgroundColor: 'violet',
-            color: 'black',
-          }}
-        >
-          AppBar
-        </div>
         <div className={classes.root}>
           <Paper className={classes.paperRoot} elevation={1}>
             <Typography variant="title" gutterBottom>
