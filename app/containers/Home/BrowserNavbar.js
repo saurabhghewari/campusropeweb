@@ -87,7 +87,7 @@ const styles = theme => ({
 });
 
 function BrowserNavbar(props) {
-  const { classes } = props;
+  const { classes, toggleDrawer } = props;
   return (
     <div>
       <AppBar position="static">
@@ -179,6 +179,7 @@ function BrowserNavbar(props) {
           </div>
           <IconButton
             className={classes.hamburgerIcon}
+            onClick={() => toggleDrawer()}
             color="inherit"
             aria-label="Menu"
           >
@@ -192,6 +193,7 @@ function BrowserNavbar(props) {
 
 BrowserNavbar.propTypes = {
   classes: PropTypes.object.isRequired,
+  toggleDrawer: PropTypes.func,
 };
 
 export default withStyles(styles)(BrowserNavbar);

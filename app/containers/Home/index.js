@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Switch, Route } from 'react-router-dom';
+import { BrowserView, MobileView } from 'react-device-detect';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Drawer from 'components/Drawer';
@@ -21,7 +22,7 @@ import saga from './saga';
 import MobileNavBar from './MobileNavBar';
 import AppBottomNavigation from './BottomNavigation';
 import HomeCenterMenus from './HomeCenterMenus';
-// import BrowserNavbar from './BrowserNavbar';
+import BrowserNavbar from './BrowserNavbar';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Home extends React.Component {
@@ -41,12 +42,19 @@ export class Home extends React.Component {
           <title>Home</title>
           <meta name="description" content="Description of Home" />
         </Helmet>
-        <MobileNavBar toggleDrawer={this.toggleDrawer} />
+        <MobileView>
+          <MobileNavBar toggleDrawer={this.toggleDrawer} />
+        </MobileView>
+        <BrowserView>
+          <BrowserNavbar toggleDrawer={this.toggleDrawer} />
+        </BrowserView>
         <Drawer open={this.state.drawerOpen} toggleDrawer={this.toggleDrawer} />
         <Switch>
           <Route path="/home" component={HomeCenterMenus} />
         </Switch>
-        <AppBottomNavigation />
+        <MobileView>
+          <AppBottomNavigation />
+        </MobileView>
       </div>
     );
   }
