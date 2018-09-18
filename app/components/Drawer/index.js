@@ -17,43 +17,53 @@ import Icon from '@material-ui/core/Icon';
 const menuItemsConfig = [
   {
     id: 1,
-    iconName: 'inbox',
-    menuLabel: 'Inbox',
+    iconName: 'home',
+    menuLabel: 'Home',
   },
   {
     id: 2,
-    iconName: 'inbox',
-    menuLabel: 'Inbox',
+    iconName: 'assessment',
+    menuLabel: 'My NGOs',
   },
   {
     id: 3,
-    iconName: 'inbox',
-    menuLabel: 'Inbox',
+    iconName: 'message',
+    menuLabel: 'Messages',
   },
   {
     id: 4,
-    iconName: 'inbox',
-    menuLabel: 'Inbox',
+    iconName: 'insert_invitation',
+    menuLabel: 'Invite Friends',
   },
   {
     id: 5,
-    iconName: 'inbox',
-    menuLabel: 'Inbox',
+    iconName: 'perm_identity',
+    menuLabel: 'Friend Suggestions',
   },
   {
     id: 6,
-    iconName: 'inbox',
-    menuLabel: 'Inbox',
+    iconName: 'rss_feed',
+    menuLabel: 'Feeds',
   },
   {
     id: 7,
-    iconName: 'inbox',
-    menuLabel: 'Inbox',
+    iconName: 'settings',
+    menuLabel: 'Settings',
   },
   {
     id: 8,
-    iconName: 'inbox',
-    menuLabel: 'Inbox',
+    iconName: 'feedback',
+    menuLabel: 'Suggestions and Feedback',
+  },
+  {
+    id: 9,
+    iconName: 'help',
+    menuLabel: 'Help',
+  },
+  {
+    id: 10,
+    iconName: 'person',
+    menuLabel: 'Log Out',
   },
 ];
 
@@ -67,11 +77,14 @@ const MenuItems = menus =>
     </ListItem>
   ));
 
-const styes = {
+const styles = theme => ({
   list: {
-    width: 200,
+    width: 350,
+    [theme.breakpoints.up('sm')]: {
+      width: 250,
+    },
   },
-};
+});
 
 /* eslint-disable react/prefer-stateless-function */
 class TemporaryDrawer extends React.Component {
@@ -86,7 +99,7 @@ class TemporaryDrawer extends React.Component {
         onClick={() => this.props.toggleDrawer(false)}
         onKeyDown={() => this.props.toggleDrawer(false)}
       >
-        <div style={styes.list}>
+        <div style={styles.list}>
           <List>{MenuItems(menuItemsConfig)}</List>
         </div>
       </Drawer>
