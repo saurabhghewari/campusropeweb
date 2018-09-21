@@ -16,7 +16,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Input from '@material-ui/core/Input';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import TrendingUp from '@material-ui/icons/TrendingUp';
+import Title from '@material-ui/icons/Title';
 import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MessageIcon from '@material-ui/icons/Message';
@@ -25,7 +25,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 const styles = theme => ({
   sectionDesktop: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     width: '210px',
     maxWidth: '220px',
   },
@@ -49,6 +49,9 @@ const styles = theme => ({
     '&:hover': {
       borderRadius: '0',
     },
+    '& span:first-child': {
+      padding: 10,
+    },
   },
   search: {
     position: 'relative',
@@ -58,7 +61,8 @@ const styles = theme => ({
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
-    width: '30%',
+    width: '55%',
+    left: -15,
   },
   searchIcon: {
     width: theme.spacing.unit * 9,
@@ -82,7 +86,7 @@ const styles = theme => ({
     width: '100%',
   },
   seperator: {
-    marginRight: 15,
+    marginRight: 20,
   },
 });
 
@@ -97,29 +101,15 @@ function BrowserNavbar(props) {
           </Typography>
 
           <div className={classes.sectionDesktop}>
-            <div>
+            <div className={classes.seperator}>
               <IconButton color="inherit" className={classes.iconList}>
                 <HomeIcon />
-                <Typography
-                  variant="title"
-                  color="inherit"
-                  className={classes.iconLabel}
-                >
-                  Home
-                </Typography>
               </IconButton>
             </div>
 
-            <div>
+            <div className={classes.seperator}>
               <IconButton color="inherit" className={classes.iconList}>
-                <TrendingUp />
-                <Typography
-                  variant="title"
-                  color="inherit"
-                  className={classes.iconLabel}
-                >
-                  Trends
-                </Typography>
+                <Title />
               </IconButton>
             </div>
           </div>
@@ -141,39 +131,18 @@ function BrowserNavbar(props) {
             <div className={classes.seperator}>
               <IconButton color="inherit" className={classes.iconList}>
                 <AccountCircle />
-                <Typography
-                  variant="title"
-                  color="inherit"
-                  className={classes.iconLabel}
-                >
-                  Profile
-                </Typography>
               </IconButton>
             </div>
 
             <div className={classes.seperator}>
               <IconButton color="inherit" className={classes.iconList}>
                 <MessageIcon />
-                <Typography
-                  variant="title"
-                  color="inherit"
-                  className={classes.iconLabel}
-                >
-                  Messages
-                </Typography>
               </IconButton>
             </div>
 
             <div className={classes.seperator}>
               <IconButton color="inherit" className={classes.iconList}>
                 <NotificationsIcon />
-                <Typography
-                  variant="title"
-                  color="inherit"
-                  className={classes.iconLabel}
-                >
-                  Notifications
-                </Typography>
               </IconButton>
             </div>
           </div>
