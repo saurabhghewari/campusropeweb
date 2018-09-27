@@ -15,6 +15,8 @@ import { BrowserView, MobileView } from 'react-device-detect';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Drawer from 'components/Drawer';
+import AdminTask from 'containers/AdminTask/Loadable';
+
 import makeSelectHome from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -37,7 +39,7 @@ export class Home extends React.Component {
   };
   render() {
     return (
-      <div style={{ position: 'absolute', height: '100%' }}>
+      <React.Fragment>
         <Helmet>
           <title>Home</title>
           <meta name="description" content="Description of Home" />
@@ -50,12 +52,13 @@ export class Home extends React.Component {
         </BrowserView>
         <Drawer open={this.state.drawerOpen} toggleDrawer={this.toggleDrawer} />
         <Switch>
-          <Route path="/home" component={HomeCenterMenus} />
+          <Route exact path="/app" component={HomeCenterMenus} />
+          <Route path="/app/admintask" component={AdminTask} />
         </Switch>
         <MobileView>
           <AppBottomNavigation />
         </MobileView>
-      </div>
+      </React.Fragment>
     );
   }
 }

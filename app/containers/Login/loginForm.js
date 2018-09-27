@@ -186,11 +186,11 @@ const FormPaper = ({ classes, handleSubmit, routeToSignup, handleClickOpen }) =>
     </div>
     <Typography variant="headline">Sign in</Typography>
     <FormComponent
-      classes={classes} handleSubmit={handleSubmit}
+      classes={classes} onSubmit={handleSubmit}
       handleClickOpen={handleClickOpen} />
     <GoogleLogin
       clientId="988043376297-la3l4of9h9njusecop8af9a0ddcn8tev.apps.googleusercontent.com"
-      onSuccess={(data)=>console.log(data)}
+      onSuccess={()=>{}}
       onFailure={()=>{}}
       uxMode="popup"
       render={({onClick})=>(

@@ -107,10 +107,7 @@ const adminTaskList = [
 ];
 
 const styles = theme => ({
-  rootContainer: {
-    width: '100%',
-    position: 'absolute',
-  },
+  rootContainer: {},
   paperRoot: {
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
