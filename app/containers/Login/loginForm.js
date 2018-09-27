@@ -14,6 +14,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
+import { GoogleLogin } from 'react-google-login';
 
 const styles = theme => ({
   paper: {
@@ -153,7 +154,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
               label="Remember me"
             />
             <Button
-              color="primary" className={classes.button} 
+              color="primary" className={classes.button}
               onClick={handleClickOpen}>
               Forgot password?
             </Button>
@@ -186,22 +187,34 @@ const FormPaper = ({ classes, handleSubmit, routeToSignup, handleClickOpen }) =>
     <Typography variant="headline">Sign in</Typography>
     <FormComponent
       classes={classes} handleSubmit={handleSubmit}
-      handleClickOpen={handleClickOpen}/>
-    <Button
-      type="submit"
-      fullWidth
-      variant="raised"
-      color="secondary"
-      className={classes.google}
+      handleClickOpen={handleClickOpen} />
+    <GoogleLogin
+      clientId="988043376297-la3l4of9h9njusecop8af9a0ddcn8tev.apps.googleusercontent.com"
+      onSuccess={(data)=>console.log(data)}
+      onFailure={()=>{}}
+      uxMode="popup"
+      render={({onClick})=>(
+        <Button
+          type="submit"
+          fullWidth
+          variant="raised"
+          color="secondary"
+          onClick={onClick}
+          className={classes.google}
+        >
+          {' '}
+        Login With Google
+        </Button>
+      )}
     >
-      {' '}
-      Login With Google
-    </Button>
+      
+    </GoogleLogin>
+
     <Typography variant="body2" gutterBottom>
       New to Campusrope ?
     </Typography>
     <Button
-      type="submit" 
+      type="submit"
       fullWidth
       variant="contained"
       color="primary"
