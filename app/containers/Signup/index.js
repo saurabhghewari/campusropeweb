@@ -58,6 +58,9 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.secondary.main,
   },
+  submit: {
+    marginTop: 15,
+  },
 });
 /* eslint-disable react/prefer-stateless-function */
 export class Signup extends React.Component {

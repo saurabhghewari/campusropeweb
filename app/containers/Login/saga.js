@@ -1,21 +1,11 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 
-import { LOGIN_FORM_SUBMIT } from './constants';
+import {
+  LOGIN_FORM_SUBMIT,
+  NON_EXIST_EMAIL_PASSWORD_ERROR_MESSAGE,
+} from './constants';
 import { loginApi } from './api';
-
-// Fake API call with appropriate responses based on inputs.
-/* function* loginAPI(email, password) {
-  // Simulate async call.
-  yield delay(500);
-  if (email !== 'a@g.com') {
-    throw new Error('Username not found.');
-  }
-  if (password !== 'password') {
-    throw new Error('Invalid password.');
-  }
-  return 'fake-API-token';
-} */
 
 // Function for storing our API token, perhaps in localStorage or Redux state.
 function* storeToken(token) {
@@ -31,16 +21,18 @@ function* submitLogin({ values, actions }) {
     // Connect to our "API" and get an API token for future API calls.
     const response = yield call(loginApi, values.email, values.password);
     yield call(storeToken, response);
-    // Reset the form just to be clean, then send the user to our Dashboard which "requires"
-    // authentication.
+    // Reset the form just to be clean, then send the user to our home  which "requires" authentication
     yield call(resetForm);
     yield put(push('/app'));
   } catch (e) {
-    // If our API throws an error we will leverage Formik's existing error system to pass it along
-    // to the view layer, as well as clearing the loading indicator.
-    yield call(setErrors, {
-      authentication: e.message,
-    });
+    if (e.status === 401) {
+      // If our API throws an error we will leverage Formik's existing error system to pass it along
+      // to the view layer, as well as clearing the loading indicator.
+      yield call(setErrors, {
+        authentication: NON_EXIST_EMAIL_PASSWORD_ERROR_MESSAGE,
+      });
+    }
+
     yield call(setSubmitting, false);
   }
 }

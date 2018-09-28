@@ -26,7 +26,7 @@ const SignupForm = ({ classes, handleSignUp }) => (
       password: Yup.string().required('please provide passoword'),
       passwordConfirm: Yup.string()
         .oneOf([Yup.ref('password')], "Passwords don't match")
-        .required('Password confirm is required'),
+        .required('Please confirm your password'),
     })}
     onSubmit={(values, actions) => handleSignUp(values, actions)}
   >
@@ -118,7 +118,7 @@ const SignupForm = ({ classes, handleSignUp }) => (
           </FormControl>
 
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="passwordConfirm">Password</InputLabel>
+            <InputLabel htmlFor="passwordConfirm">Confirm Password</InputLabel>
             <Input
               name="passwordConfirm"
               type="password"
