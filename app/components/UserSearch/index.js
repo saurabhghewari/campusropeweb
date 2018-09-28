@@ -252,7 +252,7 @@ class UserSearch extends React.Component {
       }),
     };
 
-    const filterColors = (inputValue: string) =>
+    const filterColors = inputValue =>
       suggestions.filter(i =>
         i.label.toLowerCase().includes(inputValue.toLowerCase()),
       );
