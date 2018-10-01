@@ -20,6 +20,7 @@ function* submitLogin({ values, actions }) {
   try {
     // Connect to our "API" and get an API token for future API calls.
     const response = yield call(loginApi, values.email, values.password);
+    console.log(response);
     yield call(storeToken, response);
     // Reset the form just to be clean, then send the user to our home  which "requires" authentication
     yield call(resetForm);
