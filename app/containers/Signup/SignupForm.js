@@ -57,10 +57,10 @@ const SignupForm = ({ classes, handleSignUp }) => (
             />{' '}
             {touched.name &&
               errors.name && (
-              <FormHelperText className={classes.error}>
-                {errors.name}
-              </FormHelperText>
-            )}
+                <FormHelperText className={classes.error}>
+                  {errors.name}
+                </FormHelperText>
+              )}
           </FormControl>
 
           <FormControl margin="normal" required fullWidth>
@@ -75,10 +75,10 @@ const SignupForm = ({ classes, handleSignUp }) => (
             />{' '}
             {touched.email &&
               errors.email && (
-              <FormHelperText className={classes.error}>
-                {errors.email}
-              </FormHelperText>
-            )}
+                <FormHelperText className={classes.error}>
+                  {errors.email}
+                </FormHelperText>
+              )}
           </FormControl>
 
           <FormControl margin="normal" fullWidth>
@@ -94,10 +94,10 @@ const SignupForm = ({ classes, handleSignUp }) => (
             </Select>
             {touched.gender &&
               errors.gender && (
-              <FormHelperText className={classes.error}>
-                {errors.gender}
-              </FormHelperText>
-            )}
+                <FormHelperText className={classes.error}>
+                  {errors.gender}
+                </FormHelperText>
+              )}
           </FormControl>
 
           <FormControl margin="normal" required fullWidth>
@@ -111,10 +111,10 @@ const SignupForm = ({ classes, handleSignUp }) => (
             />{' '}
             {touched.password &&
               errors.password && (
-              <FormHelperText className={classes.error}>
-                {errors.password}
-              </FormHelperText>
-            )}
+                <FormHelperText className={classes.error}>
+                  {errors.password}
+                </FormHelperText>
+              )}
           </FormControl>
 
           <FormControl margin="normal" required fullWidth>
@@ -128,10 +128,10 @@ const SignupForm = ({ classes, handleSignUp }) => (
             />{' '}
             {touched.passwordConfirm &&
               errors.passwordConfirm && (
-              <FormHelperText className={classes.error}>
-                {errors.passwordConfirm}
-              </FormHelperText>
-            )}
+                <FormHelperText className={classes.error}>
+                  {errors.passwordConfirm}
+                </FormHelperText>
+              )}
           </FormControl>
 
           <Button

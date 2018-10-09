@@ -104,12 +104,9 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
           noValidate="noValidate"
           onSubmit={handleSubmit}
         >
-          {
-            errors.authentication && (
-              <span className={classes.error}>
-                {errors.authentication}
-              </span>
-            )}
+          {errors.authentication && (
+            <span className={classes.error}>{errors.authentication}</span>
+          )}
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email</InputLabel>
             <Input
@@ -122,10 +119,10 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
             />{' '}
             {touched.email &&
               errors.email && (
-              <FormHelperText className={classes.error}>
-                {errors.email}
-              </FormHelperText>
-            )}
+                <FormHelperText className={classes.error}>
+                  {errors.email}
+                </FormHelperText>
+              )}
           </FormControl>
 
           <FormControl margin="normal" required fullWidth>
@@ -140,10 +137,10 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
             />{' '}
             {touched.password &&
               errors.password && (
-              <FormHelperText className={classes.error}>
-                {errors.password}
-              </FormHelperText>
-            )}
+                <FormHelperText className={classes.error}>
+                  {errors.password}
+                </FormHelperText>
+              )}
           </FormControl>
           <div className="rememberMeWrapper">
             <FormControlLabel
@@ -160,8 +157,10 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
               label="Remember me"
             />
             <Button
-              color="primary" className={classes.button}
-              onClick={handleClickOpen}>
+              color="primary"
+              className={classes.button}
+              onClick={handleClickOpen}
+            >
               Forgot password?
             </Button>
           </div>
@@ -183,7 +182,12 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
   </Formik>
 );
 
-const FormPaper = ({ classes, handleSubmit, routeToSignup, handleClickOpen }) => (
+const FormPaper = ({
+  classes,
+  handleSubmit,
+  routeToSignup,
+  handleClickOpen,
+}) => (
   <Paper className={classes.paper}>
     <div className={classes.lockIconWrapper}>
       <Avatar className={classes.avatar}>
@@ -192,14 +196,16 @@ const FormPaper = ({ classes, handleSubmit, routeToSignup, handleClickOpen }) =>
     </div>
     <Typography variant="h5">Sign in</Typography>
     <FormComponent
-      classes={classes} onSubmit={handleSubmit}
-      handleClickOpen={handleClickOpen} />
+      classes={classes}
+      onSubmit={handleSubmit}
+      handleClickOpen={handleClickOpen}
+    />
     <GoogleLogin
       clientId="988043376297-la3l4of9h9njusecop8af9a0ddcn8tev.apps.googleusercontent.com"
-      onSuccess={()=>{}}
-      onFailure={()=>{}}
+      onSuccess={() => {}}
+      onFailure={() => {}}
       uxMode="popup"
-      render={({onClick})=>(
+      render={({ onClick }) => (
         <Button
           type="submit"
           fullWidth
@@ -209,12 +215,10 @@ const FormPaper = ({ classes, handleSubmit, routeToSignup, handleClickOpen }) =>
           className={classes.google}
         >
           {' '}
-        Login With Google
+          Login With Google
         </Button>
       )}
-    >
-      
-    </GoogleLogin>
+    />
 
     <Typography variant="body2" gutterBottom>
       New to Campusrope ?
@@ -226,7 +230,8 @@ const FormPaper = ({ classes, handleSubmit, routeToSignup, handleClickOpen }) =>
       color="primary"
       onClick={routeToSignup}
       className={classes.register}
-    >{' '}
+    >
+      {' '}
       Sign up for free!
     </Button>
   </Paper>

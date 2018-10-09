@@ -22,6 +22,7 @@ import makeSelectAdminTask from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import TaskSummeryComponent from './TaskSummeryComponent';
+import UserSearch from '../../components/UserSearch';
 
 const adminTaskList = [
   {
@@ -198,6 +199,8 @@ export class AdminTask extends React.PureComponent {
             <Typography variant="h6" gutterBottom>
               Assign Task
             </Typography>
+
+            <UserSearch />
 
             <Grid container>
               <Grid item xs={12} sm={7} md={9}>

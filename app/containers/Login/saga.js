@@ -12,7 +12,7 @@ import setupAxiosWithAuthHeader from '../../setup_axios';
 
 // Function for storing our API token, perhaps in localStorage or Redux state.
 function* storeToken(token) {
-  ls.set(USER_TOKEN,token);
+  ls.set(USER_TOKEN, token);
   setupAxiosWithAuthHeader();
 }
 

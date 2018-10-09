@@ -19,6 +19,7 @@ import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
+import { searchUser } from './api';
 
 const suggestions = [
   { label: 'Afghanistan' },
@@ -229,13 +230,15 @@ const components = {
 
 class UserSearch extends React.Component {
   state = {
-    single: null,
-    multi: null,
+    selectedUser: null,
   };
 
-  handleChange = name => value => {
+  users = [];
+
+  handleChange = value => {
+    console.log(value);
     this.setState({
-      [name]: value,
+      selectedUser: value,
     });
   };
 
@@ -252,15 +255,11 @@ class UserSearch extends React.Component {
       }),
     };
 
-    const filterColors = inputValue =>
-      suggestions.filter(i =>
-        i.label.toLowerCase().includes(inputValue.toLowerCase()),
-      );
+    const createOptions = users =>
+      users.map(user => ({ label: user.name, value: user._id }));
 
     const loadOptions = (inputValue, callback) => {
-      setTimeout(() => {
-        callback(filterColors(inputValue));
-      }, 1000);
+      searchUser(inputValue).then(users => callback(createOptions(users)));
     };
 
     return (
@@ -269,32 +268,13 @@ class UserSearch extends React.Component {
           <Select
             classes={classes}
             styles={selectStyles}
-            options={suggestions}
+            options={this.users}
             components={components}
-            value={this.state.single}
+            value={this.state.selectedUser}
             cacheOptions
             loadOptions={loadOptions}
-            onChange={this.handleChange('single')}
-            placeholder="Search a country (start with a)"
-          />
-          <div className={classes.divider} />
-          <Select
-            classes={classes}
-            styles={selectStyles}
-            textFieldProps={{
-              label: 'Label',
-              InputLabelProps: {
-                shrink: true,
-              },
-            }}
-            options={suggestions}
-            components={components}
-            value={this.state.multi}
-            onChange={this.handleChange('multi')}
-            placeholder="Select multiple countries"
-            cacheOptions
-            loadOptions={loadOptions}
-            isMulti
+            onChange={this.handleChange}
+            placeholder="Search for a user by typing name"
           />
         </NoSsr>
       </div>

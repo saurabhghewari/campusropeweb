@@ -59,7 +59,6 @@ const styles = theme => ({
   },
 });
 
-
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
 
@@ -121,10 +120,10 @@ const FormComponent = ({
                   />{' '}
                   {touched.email &&
                     errors.email && (
-                    <FormHelperText className={classes.error}>
-                      {errors.email}
-                    </FormHelperText>
-                  )}
+                      <FormHelperText className={classes.error}>
+                        {errors.email}
+                      </FormHelperText>
+                    )}
                 </FormControl>
               </DialogContent>
 
