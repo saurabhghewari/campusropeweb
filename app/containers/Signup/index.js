@@ -79,7 +79,7 @@ export class Signup extends React.Component {
                 <LockIcon />
               </Avatar>
             </div>
-            <Typography variant="headline">Sign up to</Typography>
+            <Typography variant="h5">Sign up to</Typography>
             <SignupForm
               classes={classes}
               handleSignUp={this.props.onSignUpFormSubmit}

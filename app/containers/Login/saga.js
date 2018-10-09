@@ -1,15 +1,19 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
+import ls from 'local-storage';
 
 import {
   LOGIN_FORM_SUBMIT,
   NON_EXIST_EMAIL_PASSWORD_ERROR_MESSAGE,
 } from './constants';
 import { loginApi } from './api';
+import { USER_TOKEN } from '../../constants/local_storage_constants';
+import setupAxiosWithAuthHeader from '../../setup_axios';
 
 // Function for storing our API token, perhaps in localStorage or Redux state.
 function* storeToken(token) {
-  yield `${token}`;
+  ls.set(USER_TOKEN,token);
+  setupAxiosWithAuthHeader();
 }
 
 // Our SUBMIT_LOGIN action passes along the form values as the payload and form actions as
@@ -20,8 +24,7 @@ function* submitLogin({ values, actions }) {
   try {
     // Connect to our "API" and get an API token for future API calls.
     const response = yield call(loginApi, values.email, values.password);
-    console.log(response);
-    yield call(storeToken, response);
+    yield call(storeToken, response.data.token);
     // Reset the form just to be clean, then send the user to our home  which "requires" authentication
     yield call(resetForm);
     yield put(push('/app'));

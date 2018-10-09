@@ -169,7 +169,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
           <Button
             fullWidth
             type="submit"
-            variant="raised"
+            variant="contained"
             color="primary"
             className={classes.submit}
             disabled={isSubmitting}
@@ -190,7 +190,7 @@ const FormPaper = ({ classes, handleSubmit, routeToSignup, handleClickOpen }) =>
         <LockIcon />
       </Avatar>
     </div>
-    <Typography variant="headline">Sign in</Typography>
+    <Typography variant="h5">Sign in</Typography>
     <FormComponent
       classes={classes} onSubmit={handleSubmit}
       handleClickOpen={handleClickOpen} />
@@ -203,7 +203,7 @@ const FormPaper = ({ classes, handleSubmit, routeToSignup, handleClickOpen }) =>
         <Button
           type="submit"
           fullWidth
-          variant="raised"
+          variant="contained"
           color="secondary"
           onClick={onClick}
           className={classes.google}

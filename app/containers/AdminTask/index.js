@@ -195,7 +195,7 @@ export class AdminTask extends React.PureComponent {
       <div className={classes.rootContainer}>
         <div className={classes.root}>
           <Paper className={classes.paperRoot} elevation={1}>
-            <Typography variant="title" gutterBottom>
+            <Typography variant="h6" gutterBottom>
               Assign Task
             </Typography>
 

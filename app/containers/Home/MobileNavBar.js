@@ -61,7 +61,7 @@ function MobileNavbar(props) {
     <div>
       <AppBar position="static">
         <Toolbar variant="dense" className={classes.root}>
-          <Typography variant="title" color="inherit">
+          <Typography variant="h6" color="inherit">
             Campusrope
           </Typography>
 

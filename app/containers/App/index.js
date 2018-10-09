@@ -30,6 +30,9 @@ const theme = createMuiTheme({
     secondary: pink,
     tonalOffset: 0.2,
   },
+  typography: {
+    useNextVariants: true,
+  },
 });
 
 export default function App() {
