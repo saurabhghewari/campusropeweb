@@ -39,6 +39,9 @@ const styles = () => ({
       fontSize: 40,
     },
   },
+  link: {
+    textDecoration: 'none',
+  },
   menuItemContent: {
     display: 'flex',
     alignItems: 'center',
@@ -109,7 +112,7 @@ export class HomeCenterMenus extends React.Component {
       <div className={classes.root}>
         {menus.map(menu => (
           <div className={classes.menuListItem} key={menu.title}>
-            <Link to={menu.linkTo}>
+            <Link to={menu.linkTo} className={classes.link}>
               <Button
                 variant="outlined"
                 color="secondary"
