@@ -23,6 +23,7 @@ import Home from 'containers/Home/Loadable';
 import Login from 'containers/Login/Loadable';
 import Signup from 'containers/Signup/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import PrivateRoute from 'components/PrivateRoute/Loadable';
 
 const theme = createMuiTheme({
   palette: {
@@ -41,9 +42,13 @@ export default function App() {
       <CssBaseline>
         <MuiThemeProvider theme={theme}>
           <Switch>
-            <Route exact path="/" render={() => <Redirect to="/login" />} />
+            <PrivateRoute
+              exact
+              path="/"
+              render={() => <Redirect to="/app" />}
+            />
+            <PrivateRoute path="/app" component={Home} />
             <Route path="/login" component={Login} />
-            <Route path="/app" component={Home} />
             <Route path="/signup" component={Signup} />
             <Route component={NotFoundPage} />
           </Switch>

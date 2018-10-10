@@ -10,12 +10,13 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { BrowserView, MobileView } from 'react-device-detect';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Drawer from 'components/Drawer';
 import AdminTask from 'containers/AdminTask/Loadable';
+import PrivateRoute from 'components/PrivateRoute/Loadable';
 
 import makeSelectHome from './selectors';
 import reducer from './reducer';
@@ -52,8 +53,8 @@ export class Home extends React.Component {
         </BrowserView>
         <Drawer open={this.state.drawerOpen} toggleDrawer={this.toggleDrawer} />
         <Switch>
-          <Route exact path="/app" component={HomeCenterMenus} />
-          <Route path="/app/admintask" component={AdminTask} />
+          <PrivateRoute exact path="/app" component={HomeCenterMenus} />
+          <PrivateRoute path="/app/admintask" component={AdminTask} />
         </Switch>
         <MobileView>
           <AppBottomNavigation />

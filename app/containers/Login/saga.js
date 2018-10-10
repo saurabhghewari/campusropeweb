@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { push } from 'react-router-redux';
+import { replace } from 'react-router-redux';
 import ls from 'local-storage';
 
 import {
@@ -27,7 +27,7 @@ function* submitLogin({ values, actions }) {
     yield call(storeToken, response.data.token);
     // Reset the form just to be clean, then send the user to our home  which "requires" authentication
     yield call(resetForm);
-    yield put(push('/app'));
+    yield put(replace('/app'));
   } catch (e) {
     if (e.status === 401) {
       // If our API throws an error we will leverage Formik's existing error system to pass it along
