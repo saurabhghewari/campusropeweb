@@ -9,10 +9,12 @@ import {
   DEFAULT_ACTION,
   SET_ADMIN_TASKS,
   TOGGLE_ADMIN_TASK_SELECTION,
+  FETCH_ADMIN_TASKS_OF_GIVEN_USER,
 } from './constants';
 
 export const initialState = fromJS({
   tasks: [],
+  selectedUser: '',
 });
 
 function adminTaskReducer(state = initialState, action) {
@@ -22,6 +24,10 @@ function adminTaskReducer(state = initialState, action) {
     }
     case SET_ADMIN_TASKS: {
       return state.set('tasks', fromJS(action.tasks));
+    }
+
+    case FETCH_ADMIN_TASKS_OF_GIVEN_USER: {
+      return state.set('selectedUser', action.userId);
     }
     case TOGGLE_ADMIN_TASK_SELECTION: {
       const indexOfListToUpdate = state

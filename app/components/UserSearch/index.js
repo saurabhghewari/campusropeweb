@@ -199,7 +199,9 @@ class UserSearch extends React.Component {
     this.setState({
       selectedUser: selected,
     });
+    if(selected.value){
     this.props.onSelectUser(selected.value);
+    }
   };
 
   render() {

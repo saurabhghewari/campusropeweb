@@ -26,6 +26,7 @@ import UserSearch from '../../components/UserSearch';
 import {
   fetchAdminTasksOfGivenUser,
   toggleAdminTaskSelection,
+  saveAdminTasks,
 } from './actions';
 
 const styles = theme => ({
@@ -62,6 +63,9 @@ const styles = theme => ({
       color: '#fff',
     },
   },
+  textColor: {
+    color: 'orange',
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -77,9 +81,16 @@ export class AdminTask extends React.PureComponent {
         [classes.taskListItems]: true,
         [classes.selectedItems]: task.selected,
       });
+      const taskItemTextClassName = classNames({
+        [classes.textColor]: task.selected,
+      });
       return (
         <div className={taskItemClassName} key={task.id}>
-          <Typography variant="body2" gutterBottom>
+          <Typography
+            variant="body2"
+            gutterBottom
+            className={taskItemTextClassName}
+          >
             {task.taskName}
             <Checkbox
               onChange={() => this.handleCheckboxChange(task.id)}
@@ -94,7 +105,12 @@ export class AdminTask extends React.PureComponent {
     return renderedTasks;
   }
   render() {
-    const { classes, selectedAdminTasks, onSelectUser } = this.props;
+    const {
+      classes,
+      selectedAdminTasks,
+      onSelectUser,
+      saveAdminTasksDispatch,
+    } = this.props;
     return (
       <div className={classes.rootContainer}>
         <div className={classes.root}>
@@ -116,6 +132,7 @@ export class AdminTask extends React.PureComponent {
                 <TaskSummary
                   handleRemoveTask={this.handleCheckboxChange}
                   tasks={selectedAdminTasks}
+                  saveAdminTasks={saveAdminTasksDispatch}
                 />
               </Grid>
             </Grid>
@@ -132,6 +149,7 @@ AdminTask.propTypes = {
   selectedAdminTasks: PropTypes.array.isRequired,
   toggleAdminTaskSelection: PropTypes.func.isRequired,
   onSelectUser: PropTypes.func.isRequired,
+  saveAdminTasksDispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -145,6 +163,7 @@ function mapDispatchToProps(dispatch) {
     onSelectUser: userId => dispatch(fetchAdminTasksOfGivenUser(userId)),
     toggleAdminTaskSelection: taskId =>
       dispatch(toggleAdminTaskSelection(taskId)),
+    saveAdminTasksDispatch: () => dispatch(saveAdminTasks()),
   };
 }
 

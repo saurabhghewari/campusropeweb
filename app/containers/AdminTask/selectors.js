@@ -5,7 +5,7 @@ import { initialState } from './reducer';
  * Direct selector to the adminTask state domain
  */
 
-const selectAdminTaskDomain = state =>
+export const selectAdminTaskDomain = state =>
   state.get('adminTask', initialState).toJS();
 
 /**

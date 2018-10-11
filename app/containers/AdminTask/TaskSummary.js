@@ -4,6 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import { Paper, Typography } from '@material-ui/core';
 import Cancel from '@material-ui/icons/Cancel';
+import Button from '@material-ui/core/Button';
 import PlaylistAdd from '@material-ui/icons/PlaylistAdd';
 
 const styles = () => ({
@@ -38,6 +39,9 @@ const styles = () => ({
     fontSize: '16px',
     cursor: 'pointer',
   },
+  saveButton: {
+    margin: 10,
+  },
 });
 
 const renderAssignedTasks = (tasks, classes, handleRemoveTask) => {
@@ -57,7 +61,12 @@ const renderAssignedTasks = (tasks, classes, handleRemoveTask) => {
   ));
 };
 
-const TaskSummeryComponent = ({ tasks, handleRemoveTask, classes }) => (
+const TaskSummaryComponent = ({
+  tasks,
+  handleRemoveTask,
+  classes,
+  saveAdminTasks,
+}) => (
   <Paper className={classes.taskPaper}>
     <Typography className={classes.summeryTitle} variant="body1">
       <i>
@@ -69,13 +78,23 @@ const TaskSummeryComponent = ({ tasks, handleRemoveTask, classes }) => (
     <ul className={classes.taskList}>
       {renderAssignedTasks(tasks, classes, handleRemoveTask)}
     </ul>
+
+    <Button
+      variant="contained"
+      color="primary"
+      className={classes.saveButton}
+      onClick={() => saveAdminTasks()}
+    >
+      Save
+    </Button>
   </Paper>
 );
 
-TaskSummeryComponent.propTypes = {
+TaskSummaryComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   handleRemoveTask: PropTypes.func,
   tasks: PropTypes.array,
+  saveAdminTasks: PropTypes.func,
 };
 
-export default withStyles(styles)(TaskSummeryComponent);
+export default withStyles(styles)(TaskSummaryComponent);

@@ -9,6 +9,7 @@ import {
   FETCH_ADMIN_TASKS_OF_GIVEN_USER,
   SET_ADMIN_TASKS,
   TOGGLE_ADMIN_TASK_SELECTION,
+  SAVE_ADMIN_TASKS,
 } from './constants';
 
 export function defaultAction() {
@@ -35,5 +36,11 @@ export function setAdminTasks(tasks) {
   return {
     type: SET_ADMIN_TASKS,
     tasks,
+  };
+}
+
+export function saveAdminTasks() {
+  return {
+    type: SAVE_ADMIN_TASKS,
   };
 }
