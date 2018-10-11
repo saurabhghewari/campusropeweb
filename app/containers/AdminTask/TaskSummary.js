@@ -40,25 +40,24 @@ const styles = () => ({
   },
 });
 
-const AssignedTasks = ({ adminTasks, handleTaskRemove, classes }) =>
-  adminTasks.map(
-    task =>
-      task.selected ? (
-        <li className={classes.taskWrapper} key={task.id}>
-          <span>{task.taskName}</span>
-          <span>
-            <Cancel
-              className={classes.cancelIcon}
-              onClick={() => handleTaskRemove(task.id)}
-            />
-          </span>
-        </li>
-      ) : (
-        ''
-      ),
-  );
+const renderAssignedTasks = (tasks, classes, handleRemoveTask) => {
+  if (tasks.length === 0) {
+    return <li>No Task Assigned</li>;
+  }
+  return tasks.map(task => (
+    <li className={classes.taskWrapper} key={task.id}>
+      <span>{task.taskName}</span>
+      <span>
+        <Cancel
+          className={classes.cancelIcon}
+          onClick={() => handleRemoveTask(task.id)}
+        />
+      </span>
+    </li>
+  ));
+};
 
-const TaskSummeryComponent = ({ adminTasks, handleTaskRemove, classes }) => (
+const TaskSummeryComponent = ({ tasks, handleRemoveTask, classes }) => (
   <Paper className={classes.taskPaper}>
     <Typography className={classes.summeryTitle} variant="body1">
       <i>
@@ -68,23 +67,15 @@ const TaskSummeryComponent = ({ adminTasks, handleTaskRemove, classes }) => (
     </Typography>
 
     <ul className={classes.taskList}>
-      {adminTasks.find(task => task.selected) ? (
-        <AssignedTasks
-          adminTasks={adminTasks}
-          classes={classes}
-          handleTaskRemove={handleTaskRemove}
-        />
-      ) : (
-        <li>No Task Assigned</li>
-      )}
+      {renderAssignedTasks(tasks, classes, handleRemoveTask)}
     </ul>
   </Paper>
 );
 
 TaskSummeryComponent.propTypes = {
   classes: PropTypes.object.isRequired,
-  handleTaskRemove: PropTypes.func,
-  adminTasks: PropTypes.array,
+  handleRemoveTask: PropTypes.func,
+  tasks: PropTypes.array,
 };
 
 export default withStyles(styles)(TaskSummeryComponent);

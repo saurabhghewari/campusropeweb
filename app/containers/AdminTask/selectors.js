@@ -5,7 +5,8 @@ import { initialState } from './reducer';
  * Direct selector to the adminTask state domain
  */
 
-const selectAdminTaskDomain = state => state.get('adminTask', initialState);
+const selectAdminTaskDomain = state =>
+  state.get('adminTask', initialState).toJS();
 
 /**
  * Other specific selectors
@@ -16,7 +17,12 @@ const selectAdminTaskDomain = state => state.get('adminTask', initialState);
  */
 
 const makeSelectAdminTask = () =>
-  createSelector(selectAdminTaskDomain, substate => substate.toJS());
+  createSelector(selectAdminTaskDomain, substate => substate.tasks);
+
+const makeSelectSelectedAdminTask = () =>
+  createSelector(selectAdminTaskDomain, state =>
+    state.tasks.filter(task => task.selected),
+  );
 
 export default makeSelectAdminTask;
-export { selectAdminTaskDomain };
+export { makeSelectAdminTask, makeSelectSelectedAdminTask };

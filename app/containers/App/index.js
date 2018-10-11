@@ -45,7 +45,7 @@ export default function App() {
             <PrivateRoute
               exact
               path="/"
-              render={() => <Redirect to="/app" />}
+              component={() => <Redirect to="/app" />}
             />
             <PrivateRoute path="/app" component={Home} />
             <Route path="/login" component={Login} />

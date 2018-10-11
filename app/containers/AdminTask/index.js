@@ -18,94 +18,15 @@ import { Checkbox, Grid } from '@material-ui/core';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectAdminTask from './selectors';
+import { makeSelectAdminTask, makeSelectSelectedAdminTask } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import TaskSummeryComponent from './TaskSummeryComponent';
+import TaskSummary from './TaskSummary';
 import UserSearch from '../../components/UserSearch';
-
-const adminTaskList = [
-  {
-    id: 1,
-    taskName: 'Helpline',
-    selected: false,
-  },
-  {
-    id: 2,
-    taskName: 'Trending News',
-    selected: false,
-  },
-  {
-    id: 3,
-    taskName: 'Feed Commercials',
-    selected: false,
-  },
-  {
-    id: 4,
-    taskName: 'Feed Contents',
-    selected: false,
-  },
-  {
-    id: 5,
-    taskName: 'Help',
-    selected: false,
-  },
-  {
-    id: 6,
-    taskName: 'Helpline',
-    selected: false,
-  },
-  {
-    id: 7,
-    taskName: 'Approve NGO News',
-    selected: false,
-  },
-  {
-    id: 8,
-    taskName: 'Trending News',
-    selected: false,
-  },
-  {
-    id: 9,
-    taskName: 'NGO Verifications',
-    selected: false,
-  },
-  {
-    id: 10,
-    taskName: 'Users/Notifications',
-    selected: false,
-  },
-  {
-    id: 11,
-    taskName: 'Petitions and RTIs',
-    selected: false,
-  },
-  {
-    id: 12,
-    taskName: 'Reported posts',
-    selected: false,
-  },
-  {
-    id: 13,
-    taskName: 'Statistics',
-    selected: false,
-  },
-  {
-    id: 14,
-    taskName: 'Suggestions/Feedback',
-    selected: false,
-  },
-  {
-    id: 15,
-    taskName: 'Abuse Reports',
-    selected: false,
-  },
-  {
-    id: 16,
-    taskName: 'About us',
-    selected: false,
-  },
-];
+import {
+  fetchAdminTasksOfGivenUser,
+  toggleAdminTaskSelection,
+} from './actions';
 
 const styles = theme => ({
   rootContainer: {},
@@ -145,45 +66,23 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminTask extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      adminTasks: adminTaskList,
-    };
-  }
-
-  handleCheckboxChange = index => {
-    const { adminTasks } = this.state;
-    this.setState({
-      adminTasks: adminTasks.map((task, i) => {
-        if (i + 1 === index) {
-          return { ...task, selected: !task.selected };
-        }
-        return task;
-      }),
-    });
+  handleCheckboxChange = taskId => {
+    this.props.toggleAdminTaskSelection(taskId);
   };
 
-  render() {
-    const { classes } = this.props;
-    const renderTasks = this.state.adminTasks.map(task => {
-      const taskListItemSelectedClass = task.selected
-        ? classes.selectedItems
-        : '';
+  renderAdminTasks() {
+    const { classes, adminTasks } = this.props;
+    const renderedTasks = adminTasks.map(task => {
+      const taskItemClassName = classNames({
+        [classes.taskListItems]: true,
+        [classes.selectedItems]: task.selected,
+      });
       return (
-        <div
-          className={classNames(
-            classes.taskListItems,
-            taskListItemSelectedClass,
-          )}
-          key={task.id}
-        >
+        <div className={taskItemClassName} key={task.id}>
           <Typography variant="body2" gutterBottom>
             {task.taskName}
             <Checkbox
-              onChange={() => {
-                this.handleCheckboxChange(task.id);
-              }}
+              onChange={() => this.handleCheckboxChange(task.id)}
               checked={task.selected}
               color="primary"
             />
@@ -192,6 +91,10 @@ export class AdminTask extends React.PureComponent {
       );
     });
 
+    return renderedTasks;
+  }
+  render() {
+    const { classes, selectedAdminTasks, onSelectUser } = this.props;
     return (
       <div className={classes.rootContainer}>
         <div className={classes.root}>
@@ -200,17 +103,19 @@ export class AdminTask extends React.PureComponent {
               Assign Task
             </Typography>
 
-            <UserSearch />
+            <UserSearch onSelectUser={onSelectUser} />
 
             <Grid container>
               <Grid item xs={12} sm={7} md={9}>
-                <div className={classes.taskListRoot}>{renderTasks}</div>
+                <div className={classes.taskListRoot}>
+                  {this.renderAdminTasks()}
+                </div>
               </Grid>
 
               <Grid item xs={12} sm={5} md={3}>
-                <TaskSummeryComponent
-                  handleTaskRemove={this.handleCheckboxChange}
-                  adminTasks={this.state.adminTasks}
+                <TaskSummary
+                  handleRemoveTask={this.handleCheckboxChange}
+                  tasks={selectedAdminTasks}
                 />
               </Grid>
             </Grid>
@@ -223,15 +128,23 @@ export class AdminTask extends React.PureComponent {
 
 AdminTask.propTypes = {
   classes: PropTypes.object.isRequired,
+  adminTasks: PropTypes.array.isRequired,
+  selectedAdminTasks: PropTypes.array.isRequired,
+  toggleAdminTaskSelection: PropTypes.func.isRequired,
+  onSelectUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  admintask: makeSelectAdminTask(),
+  adminTasks: makeSelectAdminTask(),
+  selectedAdminTasks: makeSelectSelectedAdminTask(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    onSelectUser: userId => dispatch(fetchAdminTasksOfGivenUser(userId)),
+    toggleAdminTaskSelection: taskId =>
+      dispatch(toggleAdminTaskSelection(taskId)),
   };
 }
 

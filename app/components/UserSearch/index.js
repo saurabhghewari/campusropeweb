@@ -21,50 +21,10 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 import { searchUser } from './api';
 
-const suggestions = [
-  { label: 'Afghanistan' },
-  { label: 'Aland Islands' },
-  { label: 'Albania' },
-  { label: 'Algeria' },
-  { label: 'American Samoa' },
-  { label: 'Andorra' },
-  { label: 'Angola' },
-  { label: 'Anguilla' },
-  { label: 'Antarctica' },
-  { label: 'Antigua and Barbuda' },
-  { label: 'Argentina' },
-  { label: 'Armenia' },
-  { label: 'Aruba' },
-  { label: 'Australia' },
-  { label: 'Austria' },
-  { label: 'Azerbaijan' },
-  { label: 'Bahamas' },
-  { label: 'Bahrain' },
-  { label: 'Bangladesh' },
-  { label: 'Barbados' },
-  { label: 'Belarus' },
-  { label: 'Belgium' },
-  { label: 'Belize' },
-  { label: 'Benin' },
-  { label: 'Bermuda' },
-  { label: 'Bhutan' },
-  { label: 'Bolivia, Plurinational State of' },
-  { label: 'Bonaire, Sint Eustatius and Saba' },
-  { label: 'Bosnia and Herzegovina' },
-  { label: 'Botswana' },
-  { label: 'Bouvet Island' },
-  { label: 'Brazil' },
-  { label: 'British Indian Ocean Territory' },
-  { label: 'Brunei Darussalam' },
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label,
-}));
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 250,
+    marginBottom: 20,
   },
   input: {
     display: 'flex',
@@ -227,7 +187,7 @@ const components = {
   SingleValue,
   ValueContainer,
 };
-
+/* eslint-disable*/
 class UserSearch extends React.Component {
   state = {
     selectedUser: null,
@@ -235,11 +195,11 @@ class UserSearch extends React.Component {
 
   users = [];
 
-  handleChange = value => {
-    console.log(value);
+  handleChange = selected => {
     this.setState({
-      selectedUser: value,
+      selectedUser: selected,
     });
+    this.props.onSelectUser(selected.value);
   };
 
   render() {
@@ -285,6 +245,7 @@ class UserSearch extends React.Component {
 UserSearch.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  onSelectUser: PropTypes.func,
 };
 
 export default withStyles(styles, { withTheme: true })(UserSearch);
