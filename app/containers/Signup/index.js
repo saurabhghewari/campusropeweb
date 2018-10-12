@@ -23,6 +23,7 @@ import makeSelectSignup from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import SignupForm from './SignupForm';
+import { signUpSubmit } from './actions';
 
 const styles = theme => ({
   container: {
@@ -103,7 +104,8 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    onSignUpFormSubmit: (values, actions) => console.log(values, actions),
+    onSignUpFormSubmit: (values, actions) =>
+      dispatch(signUpSubmit(values, actions)),
   };
 }
 
