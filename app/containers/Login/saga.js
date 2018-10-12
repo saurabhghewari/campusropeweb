@@ -11,7 +11,7 @@ import { USER_TOKEN } from '../../constants/local_storage_constants';
 import setupAxiosWithAuthHeader from '../../setup_axios';
 
 // Function for storing our API token, perhaps in localStorage or Redux state.
-function* storeToken(token) {
+export function* storeToken(token) {
   ls.set(USER_TOKEN, token);
   setupAxiosWithAuthHeader();
 }
@@ -29,7 +29,7 @@ function* submitLogin({ values, actions }) {
     yield call(resetForm);
     yield put(replace('/app'));
   } catch (e) {
-    if (e.status === 401) {
+    if (e.response.status === 401) {
       // If our API throws an error we will leverage Formik's existing error system to pass it along
       // to the view layer, as well as clearing the loading indicator.
       yield call(setErrors, {
