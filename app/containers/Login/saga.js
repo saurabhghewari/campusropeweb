@@ -9,6 +9,7 @@ import {
 import { loginApi } from './api';
 import { USER_TOKEN } from '../../constants/local_storage_constants';
 import setupAxiosWithAuthHeader from '../../setup_axios';
+import { setLoggedUser } from '../../store/loggeduser/actions';
 
 // Function for storing our API token, perhaps in localStorage or Redux state.
 export function* storeToken(token) {
@@ -27,6 +28,7 @@ function* submitLogin({ values, actions }) {
     yield call(storeToken, response.data.token);
     // Reset the form just to be clean, then send the user to our home  which "requires" authentication
     yield call(resetForm);
+    yield put(setLoggedUser(response.data.user));
     yield put(replace('/app'));
   } catch (e) {
     if (e.response.status === 401) {
