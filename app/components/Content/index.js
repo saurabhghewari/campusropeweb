@@ -15,10 +15,9 @@ import Grid from '@material-ui/core/Grid';
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    minHeight: '70vh',
-    marginTop: theme.spacing.unit * 3,
+    padding: theme.spacing.unit * 2,
+    minHeight: '100vh',
+    margin: theme.spacing.unit,
   },
 });
 
@@ -27,10 +26,10 @@ class Content extends React.Component {
   render() {
     const { classes, children } = this.props;
     return (
-      <Grid container spacing={24}>
+      <Grid container>
         <Grid item lg={2} />
         <Grid item xs={12} lg={8}>
-          <Paper className={classes.root} elevation={1}>
+          <Paper className={classes.root} elevation={10}>
             {children}
           </Paper>
         </Grid>

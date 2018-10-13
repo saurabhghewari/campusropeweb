@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { Switch } from 'react-router-dom';
 import PrivateRoute from 'components/PrivateRoute';
+import Content from 'components/Content/Loadable';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import Loadable from 'react-loadable';
@@ -45,11 +46,13 @@ export class Ngo extends React.Component {
           <title>Ngo</title>
           <meta name="description" content="Description of Ngo" />
         </Helmet>
+        <Content>
         <Switch>
           <PrivateRoute exact path="/app/ngos" component={AllNgos} />
           <PrivateRoute path="/app/ngos/my" component={MyNgos} />
           <PrivateRoute path="/app/ngos/new" component={NewNgo} />
         </Switch>
+        </Content>
       </div>
     );
   }
