@@ -17,6 +17,7 @@ import injectReducer from 'utils/injectReducer';
 import Drawer from 'components/Drawer';
 import AdminTask from 'containers/AdminTask/Loadable';
 import TrendingNews from 'containers/TrendingNews/Loadable';
+import Ngo from 'containers/Ngo/Loadable';
 import PrivateRoute from 'components/PrivateRoute/Loadable';
 
 import makeSelectHome from './selectors';
@@ -57,6 +58,7 @@ export class Home extends React.Component {
           <PrivateRoute exact path="/app" component={HomeCenterMenus} />
           <PrivateRoute path="/app/admintask" component={AdminTask} />
           <PrivateRoute path="/app/trendingnews" component={TrendingNews} />
+          <PrivateRoute path="/app/ngos" component={Ngo} />
         </Switch>
         <MobileView>
           <AppBottomNavigation />

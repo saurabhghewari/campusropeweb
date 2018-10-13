@@ -8,16 +8,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
+import { Switch } from 'react-router-dom';
+import PrivateRoute from 'components/PrivateRoute';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import Loadable from 'react-loadable';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectNgo from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
+/* eslint-disable*/
+
+const MyNgos = Loadable({
+  loader: () => import('./MyNgos'),
+  loading: () => null,
+});
+
+const AllNgos = Loadable({
+  loader: () => import('./AllNgos'),
+  loading: () => null,
+});
+
+const NewNgo = Loadable({
+  loader: () => import('./NewNgo'),
+  loading: () => null,
+});
 
 /* eslint-disable react/prefer-stateless-function */
 export class Ngo extends React.Component {
@@ -28,7 +45,11 @@ export class Ngo extends React.Component {
           <title>Ngo</title>
           <meta name="description" content="Description of Ngo" />
         </Helmet>
-        <FormattedMessage {...messages.header} />
+        <Switch>
+          <PrivateRoute exact path="/app/ngos" component={AllNgos} />
+          <PrivateRoute path="/app/ngos/my" component={MyNgos} />
+          <PrivateRoute path="/app/ngos/new" component={NewNgo} />
+        </Switch>
       </div>
     );
   }

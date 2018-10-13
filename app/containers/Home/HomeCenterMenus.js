@@ -64,7 +64,7 @@ const menus = [
     title: 'NGOs',
     iconBgColor: '#FF6D00',
     icon: <AccountBalance />,
-    linkTo: '/ngos',
+    linkTo: '/app/ngos',
   },
   {
     title: 'Petitions',
