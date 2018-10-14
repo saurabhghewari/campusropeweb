@@ -1,0 +1,50 @@
+.avatarWrapper {
+    position: absolute;
+    padding: 0;
+    top: 70%;
+    left: 20%;
+  }
+
+  .iconBtnWrapper{
+    position: absolute;
+    top: 90%;
+    left: 60%;
+  }
+
+  .userGrid{
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+    padding-bottom: 20px;
+    justify-content: flex-end;
+  }
+
+  .userGrid p, .userGrid h5 {
+    color: white;
+  }
+
+  .iconGrid{
+    position: relative;
+  }
+
+  @media only screen and (max-width: 960px) {
+    .iconBtnWrapper{
+        top: 80%;
+        left: 65%;
+    }
+
+  }
+
+  @media only screen and (max-width: 700px) {
+    .avatarWrapper {
+        top: 40%;
+    }
+    .iconBtnWrapper{
+        top: 50%;
+        left: 44%;
+    }
+    .userGrid, .iconGrid{
+        height: 50%;
+    }
+  }
+

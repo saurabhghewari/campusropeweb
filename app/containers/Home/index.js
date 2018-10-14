@@ -18,6 +18,7 @@ import Drawer from 'components/Drawer';
 import AdminTask from 'containers/AdminTask/Loadable';
 import TrendingNews from 'containers/TrendingNews/Loadable';
 import Ngo from 'containers/Ngo/Loadable';
+import Profile from 'containers/UserProfile/Loadable';
 import PrivateRoute from 'components/PrivateRoute/Loadable';
 
 import makeSelectHome from './selectors';
@@ -59,6 +60,7 @@ export class Home extends React.Component {
           <PrivateRoute path="/app/admintask" component={AdminTask} />
           <PrivateRoute path="/app/trendingnews" component={TrendingNews} />
           <PrivateRoute path="/app/ngos" component={Ngo} />
+          <PrivateRoute path="/app/profile" component={Profile} />
         </Switch>
         <MobileView>
           <AppBottomNavigation />
