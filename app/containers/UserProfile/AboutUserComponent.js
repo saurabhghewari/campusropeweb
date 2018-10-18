@@ -9,10 +9,12 @@ import {
   FormHelperText,
   FormControl,
   InputLabel,
+  Typography,
 } from '@material-ui/core';
 import { Formik } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
 import * as Yup from 'yup';
+import '../App/common.css'
 
 const styles = theme => ({
   aboutPaper: {
@@ -73,6 +75,8 @@ const AboutUserComponent = ({ classes, handleSignUp }) => (
             noValidate="noValidate"
             onSubmit={handleSubmit}
           >
+            <Typography variant="h5" className="text-center">About</Typography>
+
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="name">Name</InputLabel>
               <Input
@@ -97,7 +101,7 @@ const AboutUserComponent = ({ classes, handleSignUp }) => (
                 <MenuItem value="other">other</MenuItem>
               </Select>
               {touched.gender &&
-                                errors.gender && (
+                errors.gender && (
                 <FormHelperText className={classes.error}>
                   {errors.gender}
                 </FormHelperText>
@@ -114,7 +118,7 @@ const AboutUserComponent = ({ classes, handleSignUp }) => (
                 onChange={handleChange}
               />{' '}
               {touched.email &&
-                                errors.email && (
+                errors.email && (
                 <FormHelperText className={classes.error}>
                   {errors.email}
                 </FormHelperText>
@@ -219,7 +223,7 @@ const AboutUserComponent = ({ classes, handleSignUp }) => (
               disabled={isSubmitting}
             >
               {' '}
-                            Save
+              Save
             </Button>
           </form>
         </Paper>

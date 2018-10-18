@@ -24,9 +24,11 @@ import makeSelectUserProfile from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import AboutUserComponent from './AboutUserComponent';
+import ProfileTabType from './ProfileTabTypeModel';
 
-
+import { tabSelectAction } from './actions'
 import './user-profile.css';
+import '../App/common.css';
 
 const styles = () => ({
   root: {
@@ -70,28 +72,23 @@ const styles = () => ({
     borderTopRightRadius: 0,
   },
   tabGrid: {
-    margin: '0 auto',
     padding: '0 !important',
   },
   followersCount: {
     textAlign: 'center',
-  },
-  followerLi: {
-    flexDirection: 'column',
-    paddingTop: '22px !important',
   },
   profileNavUl: {
     margin: 0,
     padding: 0,
     display: 'flex',
     height: '70px',
-    alignItems: 'center',
+    alignItems: 'baseline',
 
     '& li': {
       listStyleType: 'none',
       display: 'flex',
       alignItems: 'center',
-      padding: '0 20px 10px',
+      padding: '0 20px 5px',
       fontSize: '14px',
       color: '#4c4747',
       fontWeight: '700',
@@ -102,17 +99,20 @@ const styles = () => ({
       borderBottom: '2px solid #1890ff',
     },
   },
+  followerLi: {
+    flexDirection: 'column',
+    paddingTop: '22px !important',
+  },
   avaatarGrid: {
     position: 'relative',
   },
   iconUl: {
     margin: 0,
-    padding: 0,
-    display: 'flex',
     '& li': {
-      width: '40px',
+      width: '140px',
       height: '40px',
       marginRight: '10px',
+      marginTop: '10px',
       listStyleType: 'none',
       display: 'inline-block',
     },
@@ -123,7 +123,8 @@ const styles = () => ({
     },
   },
   followIcon: {
-    width: '80%',
+    width: '20px',
+    marginRight: "10px",
   },
   secondryGrid: {
     height: '100%',
@@ -152,14 +153,38 @@ const styles = () => ({
   aboutGrid: {
     marginTop: '15px',
   },
+  activeTab: {
+    color: '#131315 !important',
+    borderBottom: '2px solid #1890ff',
+  },
+  btnIcon: {
+    marginRight: "10px",
+    fontSize: "18px",
+  },
 });
 
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
 /* eslint-disable react/prefer-stateless-function */
 export class UserProfile extends React.Component {
+
+  handleProfileTabChange = (selectedTab) => {
+    this.props.onSelectProfileTab(selectedTab)
+  }
   render() {
-    const { classes } = this.props;
+    const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
+    const { classes, dispatch, userprofile } = this.props;
+    const { selectedTab } = userprofile;
+
+    const followIngLIClassName = classNames({
+      [classes.activeTab]: selectedTab === TAB_TYPE_MAP.FOLLOWING_TAB,
+      [classes.followerLi]: true,
+    });
+
+    const followerLIClassName = classNames({
+      [classes.activeTab]: selectedTab === TAB_TYPE_MAP.FOLLOWERS_TAB,
+      [classes.followerLi]: true,
+    });
 
     return (
       <div className={classes.root}>
@@ -171,6 +196,7 @@ export class UserProfile extends React.Component {
 
         <Paper elevation={1} className={classes.profilePaper}>
           <Grid container className={classes.grid2Container}>
+          
             <Grid item xs={4} md={2} lg={2} className={classes.avaatarGrid}>
               <div className="avatarWrapper">
                 <Avatar
@@ -181,9 +207,39 @@ export class UserProfile extends React.Component {
               </div>
             </Grid>
 
-            <Grid item xs={8} md={10} lg={10}>
-              <Grid container className={classes.secondryGrid}>
-                <Grid item xs={12} md={6} className="userGrid">
+            <Grid item xs={8} md={10} lg={10} className="iconGrid">
+              <ul className={classNames(classes.iconUl, 'iconBtnWrapper')}>
+                <li>
+                  <Button className={classes.blockBtn}>
+                    <Block className={classes.btnIcon}/>  Block
+                  </Button>
+                </li>
+
+                <li>
+                  <Button className={classes.messageBtn}>
+                    <Message className={classes.btnIcon}/>  Message
+                  </Button>
+                </li>
+
+                <li>
+                  <Button className={classes.followBtn}>
+                    <img className={classes.followIcon} src={followIcon} alt="Profile Pic" />  Follow
+                  </Button>
+                </li>
+              </ul>
+
+            </Grid>
+
+          </Grid>
+        </Paper>
+
+        <div className={classes.profileControlWrapper}>
+          <Paper elevation={1} className={classes.profileWrapperPapper}>
+
+            <Grid container spacing={16} className={classes.grid3Container}>
+
+              <Grid item md={5} className="userGrid">
+                <div className="tablet-lg-screen justify-flex-end text-center">
                   <Typography className={classes.userName} variant="h5">
                     Saif Eliyas
                   </Typography>
@@ -191,67 +247,49 @@ export class UserProfile extends React.Component {
                   <Typography className={classes.userInfo} variant="body2">
                     Software Developer | chennai, INDIA
                   </Typography>
-                </Grid>
-
-                <Grid item xs={12} md={6} className="iconGrid">
-                  <ul className={classNames(classes.iconUl, 'iconBtnWrapper')}>
-                    <li>
-                      <Button className={classes.blockBtn} variant="fab">
-                        <Block />
-                      </Button>
-                    </li>
-
-                    <li>
-                      <Button className={classes.messageBtn} variant="fab">
-                        <Message />
-                      </Button>
-                    </li>
-
-                    <li>
-                      <Button className={classes.followBtn} variant="fab">
-                        <img className={classes.followIcon} src={followIcon} alt="Profile Pic"/>
-                      </Button>
-                    </li>
-                  </ul>
-                </Grid>
+                </div>
               </Grid>
-            </Grid>
-          </Grid>
-        </Paper>
 
-        <div className={classes.profileControlWrapper}>
-          <Paper elevation={1} className={classes.profileWrapperPapper}>
-            <Grid container spacing={16} className={classes.grid3Container}>
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                lg={7}
-                className={classes.tabGrid}
-              >
+              <Grid item xs={12} sm={7} md={7} lg={7} className={classes.tabGrid}>
+
                 <ul className={classes.profileNavUl}>
-                  <li>About</li>
+                  <li
+                    onClick={() => this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)}
+                    className={selectedTab === TAB_TYPE_MAP.ABOUT_TAB ? classes.activeTab : ''}>
+                    About
+                  </li>
 
-                  <li>Achievements</li>
+                  <li
+                    onClick={() => this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)}
+                    className={selectedTab === TAB_TYPE_MAP.ACHIEVEMENTS_TAB ? classes.activeTab : ''}>
+                    Achievements
+                  </li>
 
-                  <li className={classes.followerLi}>
+                  <li
+                    onClick={() => this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)}
+                    className={followerLIClassName}>
                     <span>Followers</span>
                     <span className={classes.followersCount}>45</span>
                   </li>
 
-                  <li className={classes.followerLi}>
+                  <li
+                    onClick={() => this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)}
+                    className={followIngLIClassName}>
                     <span>Following</span>
+
                     <span className={classes.followersCount}>74</span>
                   </li>
+
                 </ul>
+
               </Grid>
             </Grid>
+
           </Paper>
 
           <Grid container className={classes.aboutGrid}>
-            <Grid item xs={12} md={6}>
-              <AboutUserComponent />
+            <Grid item xs={12} md={6} className="margin-auto">
+              {selectedTab === TAB_TYPE_MAP.ABOUT_TAB && <AboutUserComponent />}
             </Grid>
           </Grid>
         </div>
@@ -268,8 +306,12 @@ const mapStateToProps = createStructuredSelector({
   userprofile: makeSelectUserProfile(),
 });
 
-function mapDispatchToProps() {
-  return {};
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    onSelectProfileTab: (selectedTab) =>
+      dispatch(tabSelectAction(selectedTab)),
+  };
 }
 
 const withConnect = connect(

@@ -1,0 +1,70 @@
+.mobile-screen{
+    display: none !important;
+}
+
+.tablet-screen{
+    display: none !important;
+}
+
+.tablet-lg-screen{
+    display: none !important;
+}
+
+.desktop-screen{
+    display: none !important;
+}
+
+.desktop-lg-screen{
+    display: none !important;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .mobile-screen{
+        display: block;
+    }
+} 
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .tablet-screen{
+        display: block;
+    }
+} 
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .tablet-lg-screen{
+        display: block  !important;
+    }
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .desktop-screen{
+        display: block;
+    }
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .desktop-lg-screen{
+        display: block;
+    }
+}
+
+.text-center{
+    text-align: center;
+}
+
+.align-flex-end{
+    align-items: flex-end;
+}
+
+.justify-flex-end{
+    justify-content: flex-end;
+}
+
+.margin-auto{
+    margin: 0 auto !important;
+}

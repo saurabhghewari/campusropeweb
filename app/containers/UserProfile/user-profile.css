@@ -1,50 +1,33 @@
 .avatarWrapper {
-    position: absolute;
-    padding: 0;
-    top: 70%;
-    left: 20%;
-  }
+  position: absolute;
+  padding: 0;
+  top: 40%;
+  left: 20%;
+}
 
+.iconBtnWrapper{
+  display: flex;
+  padding: 10px 0;
+  height: 100%;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.userGrid{
+  padding-bottom: 20px;
+}
+
+.iconGrid{
+  height: 100%;
+}
+
+@media only screen and (max-width: 700px) {
   .iconBtnWrapper{
-    position: absolute;
-    top: 90%;
-    left: 60%;
+    flex-direction: column !important;
   }
-
   .userGrid{
-    display: flex;
-    align-items: end;
-    flex-direction: column;
-    padding-bottom: 20px;
-    justify-content: flex-end;
+      height: 50%;
   }
-
-  .userGrid p, .userGrid h5 {
-    color: white;
-  }
-
-  .iconGrid{
-    position: relative;
-  }
-
-  @media only screen and (max-width: 960px) {
-    .iconBtnWrapper{
-        top: 80%;
-        left: 65%;
-    }
-
-  }
-
-  @media only screen and (max-width: 700px) {
-    .avatarWrapper {
-        top: 40%;
-    }
-    .iconBtnWrapper{
-        top: 50%;
-        left: 44%;
-    }
-    .userGrid, .iconGrid{
-        height: 50%;
-    }
-  }
+}
 
