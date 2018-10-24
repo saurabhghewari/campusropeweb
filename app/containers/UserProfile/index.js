@@ -20,7 +20,7 @@ import classNames from 'classnames';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectUserProfile from './selectors';
+import {selectUserProfileInfo, makeSelectSelectedTab} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import AboutUserComponent from './AboutUserComponent';
@@ -173,8 +173,7 @@ export class UserProfile extends React.Component {
   }
   render() {
     const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
-    const { classes, dispatch, userprofile } = this.props;
-    const { selectedTab } = userprofile;
+    const { classes, dispatch, selectedTab, userprofileInfo = {} } = this.props;
 
     const followIngLIClassName = classNames({
       [classes.activeTab]: selectedTab === TAB_TYPE_MAP.FOLLOWING_TAB,
@@ -289,7 +288,7 @@ export class UserProfile extends React.Component {
 
           <Grid container className={classes.aboutGrid}>
             <Grid item xs={12} md={6} className="margin-auto">
-              {selectedTab === TAB_TYPE_MAP.ABOUT_TAB && <AboutUserComponent />}
+              {selectedTab === TAB_TYPE_MAP.ABOUT_TAB && <AboutUserComponent userProfile={userprofileInfo}/>}
             </Grid>
           </Grid>
         </div>
@@ -303,7 +302,8 @@ UserProfile.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  userprofile: makeSelectUserProfile(),
+  selectedTab: makeSelectSelectedTab(),
+  userprofileInfo: selectUserProfileInfo(),
 });
 
 function mapDispatchToProps(dispatch) {

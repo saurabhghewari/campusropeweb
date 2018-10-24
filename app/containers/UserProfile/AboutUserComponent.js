@@ -39,23 +39,31 @@ const styles = theme => ({
   },
 });
 
+let initalValue = {
+  name: '',
+  gender: '',
+  email: '',
+  homeTown: '',
+  currentCity: '',
+  politicalView: '',
+  workAndExperience: '',
+  skill: '',
+  college: '',
+  otherDegreeAndCourses: '',
+  careerObjectives: '',
+}
+
+const getInitialValues = (userProfile) => (
+  Object.assign({}, initalValue, { ...userProfile, ...userProfile.createdBy })
+)
+
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
-const AboutUserComponent = ({ classes, handleSignUp }) => (
-  <Formik
-    initialValues={{
-      name: '',
-      gender: '',
-      email: '',
-      homeTown: '',
-      currentCity: '',
-      politicalView: '',
-      workAndExperience: '',
-      skill: '',
-      college: '',
-      otherDegreeAndCourses: '',
-      careerObjectives: '',
-    }}
+const AboutUserComponent = (props) => {
+  let { classes, handleSignUp, userProfile } = props;
+
+  return <Formik
+    initialValues={getInitialValues(userProfile)}
     validationSchema={Yup.object().shape({})}
     onSubmit={(values, actions) => handleSignUp(values, actions)}
   >
@@ -102,10 +110,10 @@ const AboutUserComponent = ({ classes, handleSignUp }) => (
               </Select>
               {touched.gender &&
                 errors.gender && (
-                <FormHelperText className={classes.error}>
-                  {errors.gender}
-                </FormHelperText>
-              )}
+                  <FormHelperText className={classes.error}>
+                    {errors.gender}
+                  </FormHelperText>
+                )}
             </FormControl>
 
             <FormControl margin="normal" required fullWidth>
@@ -119,10 +127,10 @@ const AboutUserComponent = ({ classes, handleSignUp }) => (
               />{' '}
               {touched.email &&
                 errors.email && (
-                <FormHelperText className={classes.error}>
-                  {errors.email}
-                </FormHelperText>
-              )}
+                  <FormHelperText className={classes.error}>
+                    {errors.email}
+                  </FormHelperText>
+                )}
               {errors.exists && <FormHelperText className={classes.error}>{errors.exists}</FormHelperText>}
             </FormControl>
 
@@ -230,11 +238,12 @@ const AboutUserComponent = ({ classes, handleSignUp }) => (
       );
     }}
   </Formik>
-);
+};
 
 AboutUserComponent.propTypes = {
   classes: PropTypes.object,
   handleSubmit: PropTypes.func,
+  userProfile: PropTypes.object.required
 };
 
 export default withStyles(styles)(AboutUserComponent);
