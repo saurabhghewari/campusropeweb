@@ -58,7 +58,7 @@ export class Home extends React.Component {
         <Switch>
           <PrivateRoute exact path="/app" component={HomeCenterMenus} />
           <PrivateRoute path="/app/admintask" component={AdminTask} />
-          <PrivateRoute path="/app/trendingnews" component={TrendingNews} />
+          <PrivateRoute path="/app/news/trends" component={TrendingNews} />
           <PrivateRoute path="/app/ngos" component={Ngo} />
           <PrivateRoute path="/app/profile" component={Profile} />
         </Switch>

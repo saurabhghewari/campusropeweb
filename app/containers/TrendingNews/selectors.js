@@ -6,18 +6,13 @@ import { initialState } from './reducer';
  */
 
 const selectTrendingNewsDomain = state =>
-  state.get('trendingNews', initialState);
+  state.get('trendingNews', initialState).toJS();
 
 /**
  * Other specific selectors
  */
+const getStates = () =>
+  createSelector(selectTrendingNewsDomain, substate => substate.states);
 
-/**
- * Default selector used by TrendingNews
- */
-
-const makeSelectTrendingNews = () =>
-  createSelector(selectTrendingNewsDomain, substate => substate.toJS());
-
-export default makeSelectTrendingNews;
-export { selectTrendingNewsDomain };
+export default getStates;
+export { selectTrendingNewsDomain, getStates };
