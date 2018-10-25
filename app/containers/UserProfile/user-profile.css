@@ -1,0 +1,33 @@
+.avatarWrapper {
+  position: absolute;
+  padding: 0;
+  top: 40%;
+  left: 20%;
+}
+
+.iconBtnWrapper{
+  display: flex;
+  padding: 10px 0;
+  height: 100%;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.userGrid{
+  padding-bottom: 20px;
+}
+
+.iconGrid{
+  height: 100%;
+}
+
+@media only screen and (max-width: 700px) {
+  .iconBtnWrapper{
+    flex-direction: column !important;
+  }
+  .userGrid{
+      height: 50%;
+  }
+}
+

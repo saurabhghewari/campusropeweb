@@ -21,6 +21,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MessageIcon from '@material-ui/icons/Message';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   sectionDesktop: {
@@ -88,10 +89,14 @@ const styles = theme => ({
   seperator: {
     marginRight: 20,
   },
+  link: {
+    color: 'white',
+  },
 });
 
 function BrowserNavbar(props) {
   const { classes, toggleDrawer } = props;
+
   return (
     <div>
       <AppBar position="static">
@@ -102,9 +107,11 @@ function BrowserNavbar(props) {
 
           <div className={classes.sectionDesktop}>
             <div className={classes.seperator}>
-              <IconButton color="inherit" className={classes.iconList}>
-                <HomeIcon />
-              </IconButton>
+              <Link to="/app" className={classes.link} href="#">
+                <IconButton color="inherit" className={classes.iconList}>
+                  <HomeIcon />
+                </IconButton>
+              </Link>
             </div>
 
             <div className={classes.seperator}>
@@ -129,9 +136,11 @@ function BrowserNavbar(props) {
           </div>
           <div className={classes.sectionDesktopRight}>
             <div className={classes.seperator}>
-              <IconButton color="inherit" className={classes.iconList}>
-                <AccountCircle />
-              </IconButton>
+              <Link to="/app/profile" className={classes.link} href="#">
+                <IconButton color="inherit" className={classes.iconList}>
+                  <AccountCircle />
+                </IconButton>
+              </Link>
             </div>
 
             <div className={classes.seperator}>
