@@ -8,6 +8,7 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import loggedUserReducer from './store/loggeduser/reducer';
+import constantsReducer from './store/constants/reducer';
 
 /*
  * routeReducer
@@ -45,6 +46,7 @@ export default function createReducer(injectedReducers) {
     route: routeReducer,
     language: languageProviderReducer,
     loggedUser: loggedUserReducer,
+    constants: constantsReducer,
     ...injectedReducers,
   });
 }
