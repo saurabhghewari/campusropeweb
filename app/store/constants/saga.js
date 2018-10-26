@@ -5,6 +5,7 @@ import { setConstants } from './actions';
 
 function* fetchConstantsSaga() {
   const constants = yield call(fetchConstantsApi);
+  console.log(constants);
   yield put(setConstants(constants));
 }
 

@@ -1,7 +1,6 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { replace } from 'react-router-redux';
 import ls from 'local-storage';
-
 import {
   LOGIN_FORM_SUBMIT,
   NON_EXIST_EMAIL_PASSWORD_ERROR_MESSAGE,
@@ -30,8 +29,8 @@ function* submitLogin({ values, actions }) {
     // Reset the form just to be clean, then send the user to our home  which "requires" authentication
     yield call(resetForm);
     yield put(setLoggedUser(response.data.user));
+    yield put(fetchConstants());
     yield put(replace('/app'));
-    yield call(fetchConstants());
   } catch (e) {
     if (e.response.status === 401) {
       // If our API throws an error we will leverage Formik's existing error system to pass it along
