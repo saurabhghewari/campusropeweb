@@ -1,11 +1,10 @@
 import { createSelector } from 'reselect';
-import { initialState } from './reducer';
 
 /**
  * Direct selector to the login state domain
  */
 
-const selectLoginDomain = state => state.get('login', initialState);
+const selectLoginDomain = state => state.login;
 
 /**
  * Other specific selectors
@@ -16,7 +15,7 @@ const selectLoginDomain = state => state.get('login', initialState);
  */
 
 const makeSelectLogin = () =>
-  createSelector(selectLoginDomain, substate => substate.toJS());
+  createSelector(selectLoginDomain, substate => substate);
 
 export default makeSelectLogin;
 export { selectLoginDomain };

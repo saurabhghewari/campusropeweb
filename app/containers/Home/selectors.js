@@ -1,11 +1,10 @@
 import { createSelector } from 'reselect';
-import { initialState } from './reducer';
 
 /**
  * Direct selector to the home state domain
  */
 
-const selectHomeDomain = state => state.get('home', initialState);
+const selectHomeDomain = state => state.home;
 
 /**
  * Other specific selectors
@@ -16,7 +15,7 @@ const selectHomeDomain = state => state.get('home', initialState);
  */
 
 const makeSelectHome = () =>
-  createSelector(selectHomeDomain, substate => substate.toJS());
+  createSelector(selectHomeDomain, substate => substate);
 
 export default makeSelectHome;
 export { selectHomeDomain };

@@ -1,11 +1,10 @@
 import { createSelector } from 'reselect';
-import { initialState } from './reducer';
 
 /**
  * Direct selector to the userProfile state domain
  */
 
-const selectUserProfileDomain = state => state.get('userProfile', initialState);
+const selectUserProfileDomain = state => state.userProfile;
 
 /**
  * Other specific selectors
@@ -13,24 +12,33 @@ const selectUserProfileDomain = state => state.get('userProfile', initialState);
 
 // selects user profile info(userProfileEntity)
 const selectUserProfileInfo = () =>
-  createSelector(selectUserProfileDomain, 
-    (profile) => {
-      return profile.userProfileInfo && profile.userProfileInfo.toJS()
-    })
+  createSelector(
+    selectUserProfileDomain,
+    profile => profile.userProfileInfo && profile.userProfileInfo,
+  );
 
 // selects user details(userEntity)
-const selectUserInfo = () =>
-  createSelector(selectUserProfileInfo, 
-    (userProfile) => userProfile.createdBy && userProfile.createdBy.toJS())
+/* const selectUserInfo = () =>
+  createSelector(
+    selectUserProfileInfo,
+    userProfile => userProfile.createdBy && userProfile.createdBy,
+  ); */
 
 const makeSelectSelectedTab = () =>
-  createSelector(makeSelectUserProfile(), (userProfile) => userProfile.selectedTab)
+  createSelector(
+    makeSelectUserProfile(),
+    userProfile => userProfile.selectedTab,
+  );
 /**
  * Default selector used by UserProfile
  */
 
 const makeSelectUserProfile = () =>
-  createSelector(selectUserProfileDomain, substate => substate.toJS());
+  createSelector(selectUserProfileDomain, substate => substate);
 
 export default makeSelectUserProfile;
-export { selectUserProfileDomain, makeSelectSelectedTab, selectUserProfileInfo };
+export {
+  selectUserProfileDomain,
+  makeSelectSelectedTab,
+  selectUserProfileInfo,
+};

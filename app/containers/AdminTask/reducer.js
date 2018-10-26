@@ -29,14 +29,25 @@ function adminTaskReducer(state = initialState, action) {
     }
 
     case FETCH_ADMIN_TASKS_OF_GIVEN_USER: {
-      return state.set('selectedUser', action.userId);
+      return {
+        ...state,
+        selectedUser: action.userId,
+      };
     }
     case TOGGLE_ADMIN_TASK_SELECTION: {
-      const indexOfListToUpdate = state
-        .get('tasks')
-        .findIndex(task => task.get('id') === action.taskId);
-      const bool = state.getIn(['tasks', indexOfListToUpdate, 'selected']);
-      return state.setIn(['tasks', indexOfListToUpdate, 'selected'], !bool);
+      const indexOfListToUpdate = state.tasks.findIndex(
+        task => task.id === action.taskId,
+      );
+      const updatesTaks = state.tasks.map((task, i) => {
+        if (i === indexOfListToUpdate) {
+          return {
+            ...task,
+            selected: !task.selected,
+          };
+        }
+        return task;
+      });
+      return { ...state, tasks: updatesTaks };
     }
     default:
       return state;

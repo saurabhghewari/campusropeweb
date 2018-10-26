@@ -29,9 +29,10 @@ export function routeReducer(state = routeInitialState, action) {
   switch (action.type) {
     /* istanbul ignore next */
     case LOCATION_CHANGE:
-      return state.merge({
+      return {
+        ...state,
         location: action.payload,
-      });
+      };
     default:
       return state;
   }

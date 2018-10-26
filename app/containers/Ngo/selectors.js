@@ -1,11 +1,10 @@
 import { createSelector } from 'reselect';
-import { initialState } from './reducer';
 
 /**
  * Direct selector to the ngo state domain
  */
 
-const selectNgoDomain = state => state.get('ngo', initialState);
+const selectNgoDomain = state => state.ngo;
 
 /**
  * Other specific selectors
@@ -16,7 +15,7 @@ const selectNgoDomain = state => state.get('ngo', initialState);
  */
 
 const makeSelectNgo = () =>
-  createSelector(selectNgoDomain, substate => substate.toJS());
+  createSelector(selectNgoDomain, substate => substate);
 
 export default makeSelectNgo;
 export { selectNgoDomain };

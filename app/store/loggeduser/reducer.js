@@ -15,7 +15,10 @@ function loggedReducer(state = initialState, action) {
     case DEFAULT_ACTION:
       return state;
     case SET_LOGGED_USER: {
-      return state.set('user', action.user);
+      return {
+        ...state,
+        user: action.user,
+      };
     }
     default:
       return state;

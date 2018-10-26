@@ -21,9 +21,15 @@ function userProfileReducer(state = initialState, action) {
     case DEFAULT_ACTION:
       return state;
     case PROFILE_INFO_FETCH_SUCCESS_ACTION:
-      return state.set('userProfileInfo', action.userProfile);
+      return {
+        ...state,
+        userProfileInfo: action.userProfile,
+      };
     case PROFILE_TAB_SELECTION_ACTION:
-      return state.set('selectedTab', action.selectedTab);
+      return {
+        ...state,
+        selectedTab: action.selectedTab,
+      };
     default:
       return state;
   }

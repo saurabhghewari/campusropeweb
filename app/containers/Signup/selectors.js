@@ -1,11 +1,10 @@
 import { createSelector } from 'reselect';
-import { initialState } from './reducer';
 
 /**
  * Direct selector to the signup state domain
  */
 
-const selectSignupDomain = state => state.get('signup', initialState);
+const selectSignupDomain = state => state.signup;
 
 /**
  * Other specific selectors
@@ -16,7 +15,7 @@ const selectSignupDomain = state => state.get('signup', initialState);
  */
 
 const makeSelectSignup = () =>
-  createSelector(selectSignupDomain, substate => substate.toJS());
+  createSelector(selectSignupDomain, substate => substate);
 
 export default makeSelectSignup;
 export { selectSignupDomain };
