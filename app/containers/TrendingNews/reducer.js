@@ -4,14 +4,13 @@
  *
  */
 
-import { fromJS } from 'immutable';
 import { DEFAULT_ACTION } from './constants';
 import { getState } from '../../constants/cities';
 
-export const initialState = fromJS({
+export const initialState = {
   states: getState(),
   selectedState: '',
-});
+};
 
 function trendingNewsReducer(state = initialState, action) {
   switch (action.type) {

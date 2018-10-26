@@ -4,12 +4,11 @@
  *
  */
 
-import { fromJS } from 'immutable';
 import { DEFAULT_ACTION, SET_LOGGED_USER } from './constants';
 
-export const initialState = fromJS({
+export const initialState = {
   user: null,
-});
+};
 
 function loggedReducer(state = initialState, action) {
   switch (action.type) {

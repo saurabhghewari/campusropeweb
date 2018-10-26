@@ -4,7 +4,6 @@
  *
  */
 
-import { fromJS } from 'immutable';
 import {
   DEFAULT_ACTION,
   SET_ADMIN_TASKS,
@@ -12,10 +11,10 @@ import {
   FETCH_ADMIN_TASKS_OF_GIVEN_USER,
 } from './constants';
 
-export const initialState = fromJS({
+export const initialState = {
   tasks: [],
   selectedUser: '',
-});
+};
 
 function adminTaskReducer(state = initialState, action) {
   switch (action.type) {
@@ -23,7 +22,10 @@ function adminTaskReducer(state = initialState, action) {
       return state;
     }
     case SET_ADMIN_TASKS: {
-      return state.set('tasks', fromJS(action.tasks));
+      return {
+        ...state,
+        tasks: action.tasks,
+      };
     }
 
     case FETCH_ADMIN_TASKS_OF_GIVEN_USER: {
