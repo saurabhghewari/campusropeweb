@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
@@ -57,7 +57,11 @@ export class Home extends React.Component {
         <BrowserView>
           <BrowserNavbar toggleDrawer={this.toggleDrawer} />
         </BrowserView>
-        <Drawer open={this.state.drawerOpen} toggleDrawer={this.toggleDrawer} />
+        <Drawer
+          open={this.state.drawerOpen}
+          toggleDrawer={this.toggleDrawer}
+          dispatch={this.props.dispatch}
+        />
         <Switch>
           <PrivateRoute exact path="/app" component={HomeCenterMenus} />
           <PrivateRoute path="/app/admintask" component={AdminTask} />
@@ -77,7 +81,7 @@ export class Home extends React.Component {
 }
 
 Home.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

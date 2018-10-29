@@ -4,6 +4,7 @@ import ls from 'local-storage';
 import {
   LOGIN_FORM_SUBMIT,
   NON_EXIST_EMAIL_PASSWORD_ERROR_MESSAGE,
+  LOGOUT,
 } from './constants';
 import { loginApi } from './api';
 import { USER_TOKEN } from '../../constants/local_storage_constants';
@@ -15,6 +16,11 @@ import { fetchConstants } from '../../store/constants/actions';
 export function* storeToken(token) {
   ls.set(USER_TOKEN, token);
   setupAxiosWithAuthHeader();
+}
+
+export function* logout() {
+  ls.remove(USER_TOKEN);
+  yield put(replace('/login'));
 }
 
 // Our SUBMIT_LOGIN action passes along the form values as the payload and form actions as
@@ -46,5 +52,8 @@ function* submitLogin({ values, actions }) {
 
 // Individual exports for testing
 export default function* defaultSaga() {
-  yield takeLatest(LOGIN_FORM_SUBMIT, submitLogin);
+  yield [
+    takeLatest(LOGIN_FORM_SUBMIT, submitLogin),
+    takeLatest(LOGOUT, logout),
+  ];
 }

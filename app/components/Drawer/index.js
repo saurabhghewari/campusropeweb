@@ -13,6 +13,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
+import { logOut } from '../../containers/Login/actions';
 
 const menuItemsConfig = [
   {
@@ -64,12 +65,13 @@ const menuItemsConfig = [
     id: 10,
     iconName: 'person',
     menuLabel: 'Log Out',
+    trigger: dispatch => dispatch(logOut()),
   },
 ];
 
-const MenuItems = menus =>
+const MenuItems = (menus, dispatch) =>
   menus.map(menu => (
-    <ListItem button key={menu.id}>
+    <ListItem button key={menu.id} onClick={() => menu.trigger(dispatch)}>
       <ListItemIcon>
         <Icon>{menu.iconName}</Icon>
       </ListItemIcon>
@@ -89,6 +91,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 class TemporaryDrawer extends React.Component {
   render() {
+    const { dispatch } = this.props;
     return (
       <Drawer
         anchor="right"
@@ -100,7 +103,7 @@ class TemporaryDrawer extends React.Component {
         onKeyDown={() => this.props.toggleDrawer(false)}
       >
         <div style={styles.list}>
-          <List>{MenuItems(menuItemsConfig)}</List>
+          <List>{MenuItems(menuItemsConfig, dispatch)}</List>
         </div>
       </Drawer>
     );
@@ -110,6 +113,7 @@ class TemporaryDrawer extends React.Component {
 TemporaryDrawer.propTypes = {
   open: PropTypes.bool,
   toggleDrawer: PropTypes.func,
+  dispatch: PropTypes.func,
 };
 
 export default TemporaryDrawer;

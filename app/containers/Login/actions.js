@@ -4,7 +4,7 @@
  *
  */
 
-import { DEFAULT_ACTION, LOGIN_FORM_SUBMIT } from './constants';
+import { DEFAULT_ACTION, LOGIN_FORM_SUBMIT, LOGOUT } from './constants';
 
 export function defaultAction() {
   return {
@@ -17,5 +17,11 @@ export function onLoginFormSubmit(values, actions) {
     type: LOGIN_FORM_SUBMIT,
     values,
     actions,
+  };
+}
+
+export function logOut() {
+  return {
+    type: LOGOUT,
   };
 }

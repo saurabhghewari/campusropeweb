@@ -94,6 +94,7 @@ const styles = theme => ({
   },
 });
 
+/*eslint-disable*/
 function BrowserNavbar(props) {
   const { classes, toggleDrawer } = props;
 
@@ -113,12 +114,13 @@ function BrowserNavbar(props) {
                 </IconButton>
               </Link>
             </div>
-
-            <div className={classes.seperator}>
-              <IconButton color="inherit" className={classes.iconList}>
-                <Title />
-              </IconButton>
-            </div>
+            <Link to="app/news/trends">
+              <div className={classes.seperator}>
+                <IconButton color="inherit" className={classes.iconList}>
+                  <Title />
+                </IconButton>
+              </div>
+            </Link>
           </div>
 
           <div className={classes.search}>

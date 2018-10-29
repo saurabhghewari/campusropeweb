@@ -21,8 +21,9 @@ import makeSelectLogin from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { onLoginFormSubmit } from './actions';
-import LoginForm from './loginForm';
+import LoginForm from './LoginForm';
 import ForgotPasswordModal from './forgotPasswordModel';
+import { DAEMON } from '../../utils/constants';
 
 const styles = theme => ({
   container: {
@@ -52,7 +53,7 @@ export class Login extends React.Component {
   };
 
   render() {
-    const { classes, routeToSignup, onForgotPasswordSubmit } = this.props;
+    const { classes, routeToSignup } = this.props;
     return (
       <React.Fragment>
         <Helmet>
@@ -70,7 +71,7 @@ export class Login extends React.Component {
             handleClickOpen={this.handleClickOpen}
             handleClose={this.handleClose}
             openModal={this.state.openModal}
-            handleSubmitEmail={onForgotPasswordSubmit}
+            handleSubmitEmail={() => {}}
           />
         </div>
       </React.Fragment>
@@ -82,7 +83,7 @@ Login.propTypes = {
   classes: PropTypes.object,
   onLoginFormSubmit: PropTypes.func.isRequired,
   routeToSignup: PropTypes.func.isRequired,
-  onForgotPasswordSubmit: PropTypes.func,
+  // onForgotPasswordSubmit: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({ login: makeSelectLogin() });
@@ -92,7 +93,7 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     onLoginFormSubmit: (values, actions) =>
       dispatch(onLoginFormSubmit(values, actions)),
-    onForgotPasswordSubmit: email => console.log(email),
+    // onForgotPasswordSubmit: email => {},
     routeToSignup: () => dispatch(push('/signup')),
   };
 }
@@ -103,7 +104,7 @@ const withConnect = connect(
 );
 
 const withReducer = injectReducer({ key: 'login', reducer });
-const withSaga = injectSaga({ key: 'login', saga });
+const withSaga = injectSaga({ key: 'login', saga, mode: DAEMON });
 const componentWithStyles = withStyles(styles)(Login);
 
 export default compose(
