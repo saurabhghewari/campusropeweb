@@ -191,7 +191,6 @@ class Search extends React.Component {
 Search.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  states: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(Search);
