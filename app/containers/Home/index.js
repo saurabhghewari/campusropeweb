@@ -19,6 +19,9 @@ import AdminTask from 'containers/AdminTask/Loadable';
 import TrendingNews from 'containers/TrendingNews/Loadable';
 import Ngo from 'containers/Ngo/Loadable';
 import Profile from 'containers/UserProfile/Loadable';
+import Support from 'containers/Support/Loadable';
+import Helpline from 'containers/Helpline/Loadable';
+import AboutUs from 'containers/AboutUs/Loadable';
 import PrivateRoute from 'components/PrivateRoute/Loadable';
 
 import makeSelectHome from './selectors';
@@ -61,6 +64,9 @@ export class Home extends React.Component {
           <PrivateRoute path="/app/news/trends" component={TrendingNews} />
           <PrivateRoute path="/app/ngos" component={Ngo} />
           <PrivateRoute path="/app/profile" component={Profile} />
+          <PrivateRoute path="/app/support" component={Support} />
+          <PrivateRoute path="/app/helpline" component={Helpline} />
+          <PrivateRoute path="/app/about" component={AboutUs} />
         </Switch>
         <MobileView>
           <AppBottomNavigation />

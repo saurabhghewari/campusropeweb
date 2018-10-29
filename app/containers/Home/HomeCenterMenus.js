@@ -11,8 +11,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AccountBalance from '@material-ui/icons/AccountBalanceRounded';
-import Assignment from '@material-ui/icons/Assessment';
-import ChangeHistory from '@material-ui/icons/ChangeHistory';
 import Gavel from '@material-ui/icons/Gavel';
 import SettingsPhone from '@material-ui/icons/SettingsPhone';
 import InfoOutline from '@material-ui/icons/InfoOutlined';
@@ -67,34 +65,22 @@ const menus = [
     linkTo: '/app/ngos',
   },
   {
-    title: 'Petitions',
-    iconBgColor: '#FF5722',
-    icon: <Assignment />,
-    linkTo: '/petitions',
-  },
-  {
-    title: 'RTI',
-    iconBgColor: '#607D8B',
-    icon: <ChangeHistory />,
-    linkTo: '/rtis',
-  },
-  {
     title: 'Helpline',
     iconBgColor: '#D81B60',
     icon: <SettingsPhone />,
-    linkTo: '/helpline',
+    linkTo: '/app/helpline',
   },
   {
     title: 'Support',
     iconBgColor: '#3F51B5',
     icon: <Gavel />,
-    linkTo: '/petitions',
+    linkTo: 'app/support',
   },
   {
     title: 'About Us',
     iconBgColor: '#006064',
     icon: <InfoOutline />,
-    linkTo: '/profile',
+    linkTo: '/app/about',
   },
   {
     title: 'Admin tasks',
