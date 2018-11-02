@@ -6,4 +6,4 @@ const makeSelectLoggedUser = () =>
   createSelector(selectLoggedUserDomain, substate => substate);
 
 export default makeSelectLoggedUser;
-export { selectLoggedUserDomain };
+export { selectLoggedUserDomain, makeSelectLoggedUser };

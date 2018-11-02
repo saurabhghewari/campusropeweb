@@ -11,9 +11,6 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
@@ -35,21 +32,24 @@ class Upload extends React.Component {
         apiKey: 969738646161883,
       },
       (error, result) => {
-        console.log(error, result);
+        if (error) {
+          throw error;
+        }
+        this.props.onUploaded(result);
       },
     );
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, className, text } = this.props;
     return (
       <Button
         variant="contained"
         color="default"
-        className={classes.button}
+        className={className}
         onClick={this.onUploadOpen}
       >
-        Upload
+        {text || 'Upload'}
         <CloudUploadIcon className={classes.rightIcon} />
       </Button>
     );
@@ -58,6 +58,9 @@ class Upload extends React.Component {
 
 Upload.propTypes = {
   classes: PropTypes.object.isRequired,
+  onUploaded: PropTypes.func.isRequired,
+  text: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default withStyles(styles)(Upload);

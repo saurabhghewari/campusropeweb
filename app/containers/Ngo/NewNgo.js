@@ -17,14 +17,20 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import IdealImage from 'react-ideal-image';
+import _isEmpty from 'lodash/isEmpty';
+
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { replace } from 'react-router-redux';
 import Upload from 'components/Upload/Loadable';
 import {
   makeSelectStates,
   makeSelectNgoTypes,
 } from '../../store/constants/selectors';
+import makeSelectLoggedUser from '../../store/loggeduser/selectors';
 
 /* eslint-disable*/
 
@@ -40,7 +46,11 @@ const styles = theme => ({
       marginTop:theme.spacing.unit * 2
   },
   error:{
-
+      color:'red'
+  },
+  uploadBtn:{
+    marginLeft:0,
+    margin: theme.spacing.unit,
   }
 });
 
@@ -78,6 +88,7 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
         isSubmitting,
         handleChange,
         handleSubmit,
+        setFieldValue
       } = props;
       return (
         <form
@@ -102,11 +113,12 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
               )}
           </FormControl>
 
-          <FormControl margin="normal" fullWidth>
+          <FormControl margin="normal" fullWidth required>
             <InputLabel htmlFor="ngoType">NGO type</InputLabel>
             <Select
               value={values.ngoType}
               onChange={handleChange}
+              
               input={<Input id="ngoType" name="ngoType" />}
             >
               {ngo_types.map((ngo_type)=> <MenuItem key={ngo_type} value={ngo_type}>{ngo_type}</MenuItem>)}
@@ -119,7 +131,7 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
             )}
           </FormControl>
 
-          <FormControl margin="normal" required fullWidth>
+          <FormControl margin="normal"  fullWidth>
             <InputLabel htmlFor="name">Website Link</InputLabel>
             <Input
               id="ngoSiteLink"
@@ -136,25 +148,7 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
               )}
           </FormControl>
 
-           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Contact Email</InputLabel>
-            <Input
-              id="email"
-              name="email"
-              autoComplete="email"
-              value={values.email}
-              onChange={handleChange}
-            />{' '}
-            {touched.email &&
-              errors.email && (
-                <FormHelperText className={classes.error}>
-                  {errors.email}
-                </FormHelperText>
-              )}
-          </FormControl>
-
-
-           <FormControl margin="normal" required fullWidth>
+       <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="contactEmail">Contact Email</InputLabel>
             <Input
               id="contactEmail"
@@ -167,15 +161,37 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
             {touched.contactEmail &&
               errors.contactEmail && (
                 <FormHelperText className={classes.error}>
-                  {errors.email}
+                  {errors.contactEmail}
                 </FormHelperText>
               )}
           </FormControl>
           
-          <Upload/>
+          <Upload className={classes.uploadBtn} text='Upload cancelled Check pic' onUploaded={(res)=>setFieldValue('documentLink',res[0].secure_url)}/>
+          <Typography variant="caption">
+          Upload a cancelled check of your NGO named to campusope.com with NIL amount, dated for today to get your NGO verified
+          </Typography>
+
+          {
+              errors.documentLink && (
+                <FormHelperText className={classes.error}>
+                  {errors.documentLink}
+                </FormHelperText>
+              )}
+
+              {
+                !_isEmpty(values.documentLink) && (
+                  <IdealImage
+                  placeholder={{color:'grey'}}
+                  srcSet={[{src: values.documentLink, width: 100,height:100}]}
+                  alt="cancelled check pic"
+                  width={100}
+                  height={100}
+                />
+                )
+              }
 
 
-           <FormControl margin="normal" fullWidth>
+           <FormControl margin="normal" fullWidth required>
             <InputLabel htmlFor="ngoType">Operating State</InputLabel>
             <Select
               value={values.operatingState}
@@ -196,7 +212,7 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
           id="noteToUser"
           label="Note to user"
           multiline
-          rowsMax="4"
+          rowsMax="8"
           value={values.noteToUser}
           onChange={handleChange}
           margin="normal"
@@ -217,9 +233,9 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
           </Button>
 
           <Button
-            type="submit"
             variant="contained"
             color="secondary"
+            onClick={()=> onCancel()}
             className={classes.cancel}
             disabled={isSubmitting}
           >
@@ -233,11 +249,22 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
 );
 
 class NewNgo extends React.Component {
+  onCancel(){
+    this.props.dispatch(replace('/app/ngos'))
+  }
+  onSubmit(values,actions){
+    console.log(values,this.props.loggedUser)
+  }
   render() {
     const { classes,ngo_types,states } = this.props;
     return (
       <div>
-        <NewNgoFormComponent classes={classes} states={states} ngo_types={ngo_types} />
+        <NewNgoFormComponent 
+        classes={classes}
+        onCancel={() => this.onCancel()} 
+        onSubmit={(values,actions) => this.onSubmit(values,actions)} 
+        states={states} 
+        ngo_types={ngo_types} />
       </div>
       
     );
@@ -252,7 +279,8 @@ NewNgo.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   states:makeSelectStates(),
-  ngo_types:makeSelectNgoTypes()
+  ngo_types:makeSelectNgoTypes(),
+  loggedUser:makeSelectLoggedUser()
 });
 
 function mapDispatchToProps(dispatch) {
