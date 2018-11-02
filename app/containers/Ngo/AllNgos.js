@@ -13,6 +13,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Button from '@material-ui/core/Button';
 import NgoList from './NgoList';
+import { fetchNgos } from './actions';
+import { makeSelectFetchedNgos } from './selectors';
 
 /* eslint-disable*/
 
@@ -24,17 +26,20 @@ const styles = theme => ({
 
 class AllNgos extends React.Component {
 
+  componentDidMount(){
+    this.props.fetchNgos()
+  }
  
   createNewNgo(){
     this.props.dispatch(replace('/app/ngos/new'))
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes ,fetchedNgos} = this.props;
     return (
       <Fragment>
         <Button variant="contained" className={classes.createNgoBtn} color="secondary" onClick={() => this.createNewNgo()}> Create NGO </Button>
-        <NgoList ngos={[]}/>
+        <NgoList ngos={fetchedNgos}/>
       </Fragment>
     );
   }
@@ -47,12 +52,13 @@ AllNgos.propTypes = {
 
 
 const mapStateToProps = createStructuredSelector({
-  
+  fetchedNgos:makeSelectFetchedNgos()
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchNgos:() => dispatch(fetchNgos())
   };
 }
 

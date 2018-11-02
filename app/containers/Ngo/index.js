@@ -20,6 +20,7 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectNgo from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { DAEMON } from '../../utils/constants';
 /* eslint-disable*/
 
 const MyNgos = Loadable({
@@ -78,7 +79,7 @@ const withConnect = connect(
 );
 
 const withReducer = injectReducer({ key: 'ngo', reducer });
-const withSaga = injectSaga({ key: 'ngo', saga });
+const withSaga = injectSaga({ key: 'ngo', saga,mode:DAEMON});
 
 export default compose(
   withReducer,

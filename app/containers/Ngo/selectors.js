@@ -17,5 +17,8 @@ const selectNgoDomain = state => state.ngo;
 const makeSelectNgo = () =>
   createSelector(selectNgoDomain, substate => substate);
 
+const makeSelectFetchedNgos = () =>
+  createSelector(selectNgoDomain, substate => substate.fetchedNgos);
+
 export default makeSelectNgo;
-export { selectNgoDomain };
+export { selectNgoDomain, makeSelectFetchedNgos };
