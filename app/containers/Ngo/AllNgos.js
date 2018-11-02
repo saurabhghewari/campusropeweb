@@ -34,7 +34,7 @@ class AllNgos extends React.Component {
     return (
       <Fragment>
         <Button variant="contained" className={classes.createNgoBtn} color="secondary" onClick={() => this.createNewNgo()}> Create NGO </Button>
-        <NgoList />
+        <NgoList ngos={[]}/>
       </Fragment>
     );
   }

@@ -31,6 +31,7 @@ import {
   makeSelectNgoTypes,
 } from '../../store/constants/selectors';
 import makeSelectLoggedUser from '../../store/loggeduser/selectors';
+import { submitNewNgo } from './actions';
 
 /* eslint-disable*/
 
@@ -217,7 +218,7 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
           onChange={handleChange}
           margin="normal"
           fullWidth
-          helperText="Upload a cancelled check of your NGO named to campusope.com with NIL amount, dated for today to get your NGO verified"
+          helperText="After Successful verification, your NGO will be listed on Campusrope"
           variant="outlined"
         />
 
@@ -253,7 +254,10 @@ class NewNgo extends React.Component {
     this.props.dispatch(replace('/app/ngos'))
   }
   onSubmit(values,actions){
-    console.log(values,this.props.loggedUser)
+    this.props.submitNewNgoDetails({
+      ...values,
+      createdBy:this.props.loggedUser.id
+    },actions)
   }
   render() {
     const { classes,ngo_types,states } = this.props;
@@ -286,6 +290,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    submitNewNgoDetails:(values,actions) => dispatch(submitNewNgo(values,actions))
   };
 }
 
