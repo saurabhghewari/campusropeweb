@@ -48,9 +48,9 @@ export class Ngo extends React.Component {
         </Helmet>
         <Content>
         <Switch>
-          <PrivateRoute exact path="/app/ngos" component={AllNgos} />
-          <PrivateRoute path="/app/ngos/my" component={MyNgos} />
           <PrivateRoute path="/app/ngos/new" component={NewNgo} />
+          <PrivateRoute path="/app/ngos/my" component={MyNgos} />
+          <PrivateRoute exact path="/app/ngos" component={AllNgos} />
         </Switch>
         </Content>
       </div>
