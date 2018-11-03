@@ -27,17 +27,23 @@ import PrivateRoute from 'components/PrivateRoute/Loadable';
 import makeSelectHome from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { homeMounted } from './actions';
 
 import MobileNavBar from './MobileNavBar';
 import AppBottomNavigation from './BottomNavigation';
 import HomeCenterMenus from './HomeCenterMenus';
 import BrowserNavbar from './BrowserNavbar';
+import { DAEMON } from '../../utils/constants';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Home extends React.Component {
   state = {
     drawerOpen: false,
   };
+
+  componentDidMount() {
+    this.props.homeMounted();
+  }
 
   toggleDrawer = opened => {
     this.setState({
@@ -82,6 +88,7 @@ export class Home extends React.Component {
 
 Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  homeMounted: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -91,6 +98,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    homeMounted: () => dispatch(homeMounted()),
   };
 }
 
@@ -100,7 +108,7 @@ const withConnect = connect(
 );
 
 const withReducer = injectReducer({ key: 'home', reducer });
-const withSaga = injectSaga({ key: 'home', saga });
+const withSaga = injectSaga({ key: 'home', saga, mode: DAEMON });
 
 export default compose(
   withReducer,
