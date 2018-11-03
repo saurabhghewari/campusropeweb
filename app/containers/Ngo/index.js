@@ -21,6 +21,7 @@ import makeSelectNgo from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { DAEMON } from '../../utils/constants';
+
 /* eslint-disable*/
 
 const MyNgos = Loadable({
@@ -38,6 +39,11 @@ const NewNgo = Loadable({
   loading: () => null,
 });
 
+const NgoVerification = Loadable({
+  loader: () => import('./NgoAdminVerification'),
+  loading: () => null,
+});
+
 /* eslint-disable react/prefer-stateless-function */
 export class Ngo extends React.Component {
   render() {
@@ -49,8 +55,9 @@ export class Ngo extends React.Component {
         </Helmet>
         <Content>
         <Switch>
-          <PrivateRoute path="/app/ngos/new" component={NewNgo} />
-          <PrivateRoute path="/app/ngos/my" component={MyNgos} />
+          <PrivateRoute  path="/app/ngos/new" component={NewNgo} />
+          <PrivateRoute  path="/app/ngos/my" component={MyNgos} />
+          <PrivateRoute   path="/app/ngos/verification"  component={NgoVerification} />
           <PrivateRoute exact path="/app/ngos" component={AllNgos} />
         </Switch>
         </Content>

@@ -88,6 +88,12 @@ const menus = [
     icon: <InfoOutline />,
     linkTo: '/app/admintask',
   },
+  {
+    title: 'NGO verification',
+    iconBgColor: '#006064',
+    icon: <InfoOutline />,
+    linkTo: '/app/ngos/verification',
+  },
 ];
 
 /* eslint-disable  */

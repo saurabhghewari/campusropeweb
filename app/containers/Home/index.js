@@ -17,7 +17,7 @@ import injectReducer from 'utils/injectReducer';
 import Drawer from 'components/Drawer';
 import AdminTask from 'containers/AdminTask/Loadable';
 import TrendingNews from 'containers/TrendingNews/Loadable';
-import Ngo from 'containers/Ngo/Loadable';
+import Ngo from 'containers/Ngo';
 import Profile from 'containers/UserProfile/Loadable';
 import Support from 'containers/Support/Loadable';
 import Helpline from 'containers/Helpline/Loadable';

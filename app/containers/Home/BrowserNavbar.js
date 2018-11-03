@@ -114,7 +114,7 @@ function BrowserNavbar(props) {
                 </IconButton>
               </Link>
             </div>
-            <Link to="app/news/trends">
+            <Link to="/app/news/trends" replace={true}>
               <div className={classes.seperator}>
                 <IconButton color="inherit" className={classes.iconList}>
                   <Title />
