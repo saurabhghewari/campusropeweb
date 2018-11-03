@@ -40,7 +40,7 @@ const NewNgo = Loadable({
 });
 
 const NgoVerification = Loadable({
-  loader: () => import('./NgoAdminVerification'),
+  loader: () => import('./AdminVerification'),
   loading: () => null,
 });
 

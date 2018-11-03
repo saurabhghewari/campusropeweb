@@ -1,9 +1,3 @@
-/**
- *
- * AllNgos
- *
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -14,77 +8,67 @@ import { compose } from 'redux';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import { fetchNgos } from './actions';
-import { makeSelectFetchedNgos } from './selectors';
+import NgoList from './NgoList';
+import { makeSelectApprovedNgos, makeSelectPendingNgos } from './selectors';
 
-/* eslint-disable*/
+/*eslint-disable*/
 
 const styles = theme => ({
-  createNgoBtn:{
-    float:'right'
-  }
+  createNgoBtn: {
+    float: 'right',
+  },
 });
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
+class NgoAdminVerification extends React.Component {
+  state = {
+    value: 0,
+  };
 
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
 
-class NgoVerification extends React.Component {
-
-    state = {
-        value: 1,
-      };
-
-      handleChange = (event, value) => {
-        this.setState({ value });
-      };
-
-  componentDidMount(){
-    this.props.fetchNgos()
+  componentDidMount() {
+    this.props.fetchNgos();
   }
 
-  createNewNgo(){
-    this.props.dispatch(replace('/app/ngos/new'))
+  createNewNgo() {
+    this.props.dispatch(replace('/app/ngos/new'));
   }
 
   render() {
-    const { classes ,fetchedNgos} = this.props;
-    const { value} = this.state;
+    const { classes, pendingNgos, approvedNgos } = this.props;
+    const { value } = this.state;
     return (
-    <div className={classes.root}>
+      <div>
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label="PENDING" />
             <Tab label="APPROVED" />
           </Tabs>
         </AppBar>
-        {value === 1 && <TabContainer>Item Two</TabContainer>}
-        {value === 2 && <TabContainer>Item Three</TabContainer>}
+        {value === 0 && <NgoList ngos={pendingNgos} />}
+        {value === 1 && <NgoList ngos={approvedNgos} />}
       </div>
     );
   }
 }
 
-AllNgos.propTypes = {
+NgoAdminVerification.propTypes = {
   classes: PropTypes.object.isRequired,
-  dispatch:PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
-
 const mapStateToProps = createStructuredSelector({
-  fetchedNgos:makeSelectFetchedNgos()
+  approvedNgos: makeSelectApprovedNgos(),
+  pendingNgos: makeSelectPendingNgos(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchNgos:() => dispatch(fetchNgos())
+    fetchNgos: () => dispatch(fetchNgos()),
   };
 }
 
@@ -93,8 +77,7 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-
 export default compose(
   withStyles(styles),
   withConnect,
-)(NgoVerification);
+)(NgoAdminVerification);

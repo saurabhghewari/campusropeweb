@@ -20,5 +20,20 @@ const makeSelectNgo = () =>
 const makeSelectFetchedNgos = () =>
   createSelector(selectNgoDomain, substate => substate.fetchedNgos);
 
+const makeSelectPendingNgos = () =>
+  createSelector(selectNgoDomain, substate =>
+    substate.fetchedNgos.filter(ngo => ngo.status === 'PENDING'),
+  );
+
+const makeSelectApprovedNgos = () =>
+  createSelector(selectNgoDomain, substate =>
+    substate.fetchedNgos.filter(ngo => ngo.status === 'APPROVED'),
+  );
+
 export default makeSelectNgo;
-export { selectNgoDomain, makeSelectFetchedNgos };
+export {
+  selectNgoDomain,
+  makeSelectFetchedNgos,
+  makeSelectPendingNgos,
+  makeSelectApprovedNgos,
+};
