@@ -40,7 +40,7 @@ class NgoVerification extends React.Component {
     state = {
         value: 1,
       };
-    
+
       handleChange = (event, value) => {
         this.setState({ value });
       };
@@ -48,13 +48,14 @@ class NgoVerification extends React.Component {
   componentDidMount(){
     this.props.fetchNgos()
   }
- 
+
   createNewNgo(){
     this.props.dispatch(replace('/app/ngos/new'))
   }
 
   render() {
     const { classes ,fetchedNgos} = this.props;
+    const { value} = this.state;
     return (
     <div className={classes.root}>
         <AppBar position="static">
