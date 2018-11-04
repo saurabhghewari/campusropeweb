@@ -1,33 +1,37 @@
 .avatarWrapper {
-  position: absolute;
-  padding: 0;
-  top: 40%;
-  left: 20%;
+  height: 100%;
 }
 
-.iconBtnWrapper{
+.avatar {
+  width: 95% !important;
+  height: 95% !important;
+}
+
+.circleBorder{
+  border: 2px solid #e0e0e0;
+  height: 100%;
+  max-width: 250px !important;
+  max-height: 400px !important;
+  border-radius: 50%;
   display: flex;
-  padding: 10px 0;
-  height: 100%;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: flex-end;
+  justify-content: center;
+  font-size: 1.25rem;
+  align-items: center;
+  position: relative;
+  top: 15%;
 }
 
-.userGrid{
-  padding-bottom: 20px;
-}
-
-.iconGrid{
-  height: 100%;
+.profileFormSection{
+  padding: 0 25px
 }
 
 @media only screen and (max-width: 700px) {
-  .iconBtnWrapper{
-    flex-direction: column !important;
+  .circleBorder{
+    top: 10%;
   }
-  .userGrid{
-      height: 50%;
+
+  .profileFormSection{
+    padding: 0
   }
 }
 

@@ -13,14 +13,14 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Paper, Grid, Avatar, Typography, Button } from '@material-ui/core';
+import { Paper, Grid, Avatar, Typography, Button, Tabs, Tab } from '@material-ui/core';
 import { Block, Message } from '@material-ui/icons';
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import {selectUserProfileInfo, makeSelectSelectedTab} from './selectors';
+import { selectUserProfileInfo, makeSelectSelectedTab } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import AboutUserComponent from './AboutUserComponent';
@@ -36,131 +36,44 @@ const styles = () => ({
     display: 'flex',
     justifyContent: 'space-around',
     flexWrap: 'wrap',
-    width: '90%',
+    width: '80%',
     height: '75%',
     alignItems: 'center',
   },
-  profileControlWrapper: {
-    width: '100%',
-  },
-  avatarWrapper: {
-    padding: '15px 20px',
-  },
   grid2Container: {
-    height: '200px',
+    height: '220px',
   },
-  grid3Container: {
-    margin: 0,
+  topSectionGrid: {
+    minHeight: "250px"
   },
-  avatar: {
-    width: '100px',
-    height: '100px',
+  followsCount: {
+    paddingRight: "10px"
   },
-  profileBtnWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    textAlign: 'center',
+  followsLabel: {
+    color: "#888484"
   },
-  profilePaper: {
-    width: '100%',
-    background: `url(${profileBgImage})`,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-  },
-  profileWrapperPapper: {
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-  },
-  tabGrid: {
-    padding: '0 !important',
-  },
-  followersCount: {
-    textAlign: 'center',
-  },
-  profileNavUl: {
-    margin: 0,
-    padding: 0,
-    display: 'flex',
-    height: '70px',
-    alignItems: 'baseline',
+  userFollowsWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+    paddingLeft: "50px",
 
-    '& li': {
-      listStyleType: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      padding: '0 20px 5px',
-      fontSize: '14px',
-      color: '#4c4747',
-      fontWeight: '700',
-      height: '100%',
-    },
-    '& li:hover': {
-      color: '#131315',
-      borderBottom: '2px solid #1890ff',
-    },
+    "& p": {
+      padding: "15px 0"
+    }
   },
-  followerLi: {
-    flexDirection: 'column',
-    paddingTop: '22px !important',
+  userDetail: {
+    paddingBottom: "25px",
+    fontSize: "16px",
+    paddingTop: "60px"
   },
-  avaatarGrid: {
-    position: 'relative',
-  },
-  iconUl: {
-    margin: 0,
-    '& li': {
-      width: '140px',
-      height: '40px',
-      marginRight: '10px',
-      marginTop: '10px',
-      listStyleType: 'none',
-      display: 'inline-block',
-    },
-    '& button': {
-      width: '100%',
-      height: '100%',
-      minWidth: 0,
-    },
-  },
-  followIcon: {
-    width: '20px',
-    marginRight: "10px",
-  },
-  secondryGrid: {
-    height: '100%',
-  },
-  blockBtn: {
-    background: '#ff5e3a',
-    color: 'white',
-    '&:hover': {
-      background: '#e14928',
-    },
-  },
-  messageBtn: {
-    background: '#0277BD',
-    color: 'white',
-    '&:hover': {
-      background: '#01579B',
-    },
-  },
-  followBtn: {
-    background: '#7c5ac2',
-    color: 'white',
-    '&:hover': {
-      background: '#5f419d',
-    },
-  },
-  aboutGrid: {
-    marginTop: '15px',
-  },
-  activeTab: {
-    color: '#131315 !important',
-    borderBottom: '2px solid #1890ff',
-  },
-  btnIcon: {
-    marginRight: "10px",
-    fontSize: "18px",
-  },
+  profileTabGrid: {
+    paddingBottom: "25px"
+  }
+
+
 });
 
 /* eslint react/prop-types: 0 */
@@ -173,7 +86,7 @@ export class UserProfile extends React.Component {
   }
   render() {
     const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
-    const { classes, dispatch, selectedTab, userprofileInfo = {} } = this.props;
+    const { classes, dispatch, selectedTab, userprofileInfo = {}, value = 1 } = this.props;
 
     const followIngLIClassName = classNames({
       [classes.activeTab]: selectedTab === TAB_TYPE_MAP.FOLLOWING_TAB,
@@ -193,105 +106,58 @@ export class UserProfile extends React.Component {
           <meta name="description" content="Description of UserProfile" />
         </Helmet>
 
-        <Paper elevation={1} className={classes.profilePaper}>
-          <Grid container className={classes.grid2Container}>
-          
-            <Grid item xs={4} md={2} lg={2} className={classes.avaatarGrid}>
-              <div className="avatarWrapper">
+        <Grid container className={classes.topSectionGrid}>
+
+          <Grid item xs={6} md={4} lg={4} >
+            <div className="avatarWrapper">
+              <div className="circleBorder">
                 <Avatar
                   alt="Adelle Charles"
                   src={bgImage}
-                  className={classes.avatar}
+                  className="avatar"
                 />
               </div>
-            </Grid>
-
-            <Grid item xs={8} md={10} lg={10} className="iconGrid">
-              <ul className={classNames(classes.iconUl, 'iconBtnWrapper')}>
-                <li>
-                  <Button className={classes.blockBtn}>
-                    <Block className={classes.btnIcon}/>  Block
-                  </Button>
-                </li>
-
-                <li>
-                  <Button className={classes.messageBtn}>
-                    <Message className={classes.btnIcon}/>  Message
-                  </Button>
-                </li>
-
-                <li>
-                  <Button className={classes.followBtn}>
-                    <img className={classes.followIcon} src={followIcon} alt="Profile Pic" />  Follow
-                  </Button>
-                </li>
-              </ul>
-
-            </Grid>
-
+            </div>
           </Grid>
-        </Paper>
 
-        <div className={classes.profileControlWrapper}>
-          <Paper elevation={1} className={classes.profileWrapperPapper}>
+          <Grid item xs={6} md={8} lg={8}>
+            <div className={classes.userFollowsWrapper}>
+              <Typography variant="h6">Saif ELiyas</Typography>
 
-            <Grid container spacing={16} className={classes.grid3Container}>
+              <Typography variant="body1">
+                <span className={classes.followsCount}> 1793</span>
+                <span className={classes.followsLabel}>Followers</span>
+              </Typography>
 
-              <Grid item md={5} className="userGrid">
-                <div className="tablet-lg-screen justify-flex-end text-center">
-                  <Typography className={classes.userName} variant="h5">
-                    Saif Eliyas
-                  </Typography>
-
-                  <Typography className={classes.userInfo} variant="body2">
-                    Software Developer | chennai, INDIA
-                  </Typography>
-                </div>
-              </Grid>
-
-              <Grid item xs={12} sm={7} md={7} lg={7} className={classes.tabGrid}>
-
-                <ul className={classes.profileNavUl}>
-                  <li
-                    onClick={() => this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)}
-                    className={selectedTab === TAB_TYPE_MAP.ABOUT_TAB ? classes.activeTab : ''}>
-                    About
-                  </li>
-
-                  <li
-                    onClick={() => this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)}
-                    className={selectedTab === TAB_TYPE_MAP.ACHIEVEMENTS_TAB ? classes.activeTab : ''}>
-                    Achievements
-                  </li>
-
-                  <li
-                    onClick={() => this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)}
-                    className={followerLIClassName}>
-                    <span>Followers</span>
-                    <span className={classes.followersCount}>45</span>
-                  </li>
-
-                  <li
-                    onClick={() => this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)}
-                    className={followIngLIClassName}>
-                    <span>Following</span>
-
-                    <span className={classes.followersCount}>74</span>
-                  </li>
-
-                </ul>
-
-              </Grid>
-            </Grid>
-
-          </Paper>
-
-          <Grid container className={classes.aboutGrid}>
-            <Grid item xs={12} md={6} className="margin-auto">
-              {selectedTab === TAB_TYPE_MAP.ABOUT_TAB && <AboutUserComponent userProfile={userprofileInfo}/>}
-            </Grid>
+              <Typography variant="body1">
+                <span className={classes.followsCount}> 1309</span>
+                <span className={classes.followsLabel}>Followings</span>
+              </Typography>
+            </div>
           </Grid>
-        </div>
+
+        </Grid>
+
+        <Grid container>
+          <Grid item xs={12} md={4} lg={4} className={classes.profileTabGrid}>
+            <Typography invarient="body2" className={classes.userDetail}>Software Developer at GMI</Typography>
+
+            <Paper square>
+              <Tabs
+                value={value}
+                indicatorColor="primary"
+                textColor="primary"
+              >
+                <Tab label="About" />
+                <Tab label="Achievements" />
+              </Tabs>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={8} lg={8} className="margin-auto profileFormSection">
+            {selectedTab === TAB_TYPE_MAP.ABOUT_TAB && <AboutUserComponent userProfile={userprofileInfo} />}
+          </Grid>
+        </Grid>
       </div>
     );
   }
