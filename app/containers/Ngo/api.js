@@ -14,3 +14,10 @@ export function fetchNgosApi() {
     .get(URL_WITH_QUERY)
     .then(res => res.data.rows);
 }
+
+export function fetchNgoByIdApi(ngoId) {
+  const URL_WITH_QUERY = `${NGOS_URL}/${ngoId}`;
+  return getAxiosInstance()
+    .get(URL_WITH_QUERY)
+    .then(res => res.data);
+}

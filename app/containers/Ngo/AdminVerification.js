@@ -33,8 +33,8 @@ class NgoAdminVerification extends React.Component {
     this.props.fetchNgos();
   }
 
-  createNewNgo() {
-    this.props.dispatch(replace('/app/ngos/new'));
+  routeToNgoVerifyView(ngo){
+    this.props.dispatch(replace(`/app/ngos/${ngo.id}/verify/details`))
   }
 
   render() {
@@ -48,8 +48,8 @@ class NgoAdminVerification extends React.Component {
             <Tab label="APPROVED" />
           </Tabs>
         </AppBar>
-        {value === 0 && <NgoList ngos={pendingNgos} />}
-        {value === 1 && <NgoList ngos={approvedNgos} />}
+        {value === 0 && <NgoList ngos={pendingNgos} onNgoClick={(ngo) => this.routeToNgoVerifyView(ngo)} />}
+        {value === 1 && <NgoList ngos={approvedNgos} onNgoClick={(ngo) => this.routeToNgoVerifyView(ngo)} />}
       </div>
     );
   }

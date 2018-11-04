@@ -28,7 +28,8 @@ const styles = theme => ({
     minWidth: 275,
     maxWidth:275,
     margin:theme.spacing.unit * 2,
-    display:'inline-block'
+    display:'inline-block',
+    cursor:'pointer'
   },
   title: {
     fontSize: 14,
@@ -38,9 +39,9 @@ const styles = theme => ({
   },
 });
 
-const NgoBox = ({ngoData,classes}) => {
+const NgoBox = ({ngoData,classes,onNgoClick}) => {
   return(
-    <Card className={classes.card} raised={true}>
+    <Card className={classes.card} raised={true} onClick={() => onNgoClick(ngoData)}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           admin : {ngoData.createdBy.name}
@@ -70,10 +71,10 @@ class NgoList extends React.Component {
   }
 
   renderNgos(){
-    const { classes } = this.props;
+    const { classes,onNgoClick } = this.props;
     return(
       <Fragment>
-        {this.props.ngos.map((ngo) => <NgoBox key={ngo.id} classes={classes} ngoData={ngo}/>)}
+        {this.props.ngos.map((ngo) => <NgoBox key={ngo.id} classes={classes} onNgoClick={onNgoClick} ngoData={ngo}/>)}
       </Fragment>
     )
   }
@@ -89,6 +90,7 @@ class NgoList extends React.Component {
 NgoList.propTypes = {
   classes: PropTypes.object.isRequired,
   ngos: PropTypes.array.isRequired,
+  onNgoClick: PropTypes.func,
 };
 
 export default withStyles(styles)(NgoList);

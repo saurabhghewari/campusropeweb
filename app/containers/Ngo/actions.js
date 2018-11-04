@@ -9,6 +9,8 @@ import {
   SUBMIT_NEW_NGO,
   SET_NGOS,
   FETCH_NGOS,
+  SET_INVIEW_NGO,
+  FETCH_NGO_BY_ID,
 } from './constants';
 
 export function defaultAction() {
@@ -31,9 +33,23 @@ export function fetchNgos() {
   };
 }
 
+export function fetchNgoById(ngoId) {
+  return {
+    type: FETCH_NGO_BY_ID,
+    ngoId,
+  };
+}
+
 export function setNgos(ngos) {
   return {
     type: SET_NGOS,
     ngos,
+  };
+}
+
+export function setInViewNgo(ngo) {
+  return {
+    type: SET_INVIEW_NGO,
+    ngo,
   };
 }

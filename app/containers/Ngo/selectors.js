@@ -30,10 +30,14 @@ const makeSelectApprovedNgos = () =>
     substate.fetchedNgos.filter(ngo => ngo.status === 'APPROVED'),
   );
 
+const makeSelectInViewNgo = () =>
+  createSelector(selectNgoDomain, substate => substate.inViewNgo);
+
 export default makeSelectNgo;
 export {
   selectNgoDomain,
   makeSelectFetchedNgos,
   makeSelectPendingNgos,
   makeSelectApprovedNgos,
+  makeSelectInViewNgo,
 };

@@ -4,10 +4,11 @@
  *
  */
 
-import { DEFAULT_ACTION, SET_NGOS } from './constants';
+import { DEFAULT_ACTION, SET_NGOS, SET_INVIEW_NGO } from './constants';
 
 export const initialState = {
   fetchedNgos: [],
+  inViewNgo: {},
 };
 
 function ngoReducer(state = initialState, action) {
@@ -18,6 +19,11 @@ function ngoReducer(state = initialState, action) {
       return {
         ...state,
         fetchedNgos: action.ngos,
+      };
+    case SET_INVIEW_NGO:
+      return {
+        ...state,
+        inViewNgo: action.ngo,
       };
     default:
       return state;

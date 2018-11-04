@@ -44,6 +44,11 @@ const NgoVerification = Loadable({
   loading: () => null,
 });
 
+const NgoVerificationView = Loadable({
+  loader: () => import('./NgoVerificationView'),
+  loading: () => null,
+});
+
 /* eslint-disable react/prefer-stateless-function */
 export class Ngo extends React.Component {
   render() {
@@ -55,6 +60,7 @@ export class Ngo extends React.Component {
         </Helmet>
         <Content>
         <Switch>
+          <PrivateRoute  exact path="/app/ngos/:ngoId/verify/details" component={NgoVerificationView} />
           <PrivateRoute  path="/app/ngos/new" component={NewNgo} />
           <PrivateRoute  path="/app/ngos/my" component={MyNgos} />
           <PrivateRoute   path="/app/ngos/verification"  component={NgoVerification} />
