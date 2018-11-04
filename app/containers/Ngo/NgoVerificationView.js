@@ -16,14 +16,18 @@ import { compose } from 'redux';
 import Button from '@material-ui/core/Button';
 import _isEmpty from 'lodash/isEmpty';
 import IdealImage from 'react-ideal-image';
-import { fetchNgoById } from './actions';
+import { fetchNgoById, updateNgo } from './actions';
 import { makeSelectInViewNgo } from './selectors';
+import { makeSelectStatuses } from '../../store/constants/selectors';
 
 /* eslint-disable*/
 
 const styles = theme => ({
     container: {
         textAlign: 'center'
+    },
+    button:{
+        margin:10
     }
 });
 
@@ -41,13 +45,35 @@ class NgoVerificationView extends React.Component {
         this.props.dispatch(replace('/app/ngos/verification'))
     }
 
+    onApproveNgo(){
+        const { ngo,status} = this.props;
+        const updatedNgo = {
+            ...ngo,
+            createdBy:ngo.createdBy.id,
+            status:status.APPROVED
+        }
+        this.props.updateNgo(updatedNgo)
+    }
+
+
+    onRejectNgo(){
+        const { ngo,status} = this.props;
+        const updatedNgo = {
+            ...ngo,
+            createdBy:ngo.createdBy.id,
+            status:status.REJECTED
+        }
+        this.props.updateNgo(updatedNgo)
+    }
+
     approvedNgoButtons(){
+        const {classes} = this.props;
         return(
             <div>
-                <Button variant="contained">
+                <Button variant="contained" className={classes.button} onClick={() => this.onRejectNgo()}>
                 Reject
                 </Button>
-                <Button variant="contained" onClick={() => this.onCancelClick()}>
+                <Button variant="contained"  className={classes.button} onClick={() => this.onCancelClick()}>
                     Cancel
                 </Button>
             </div>
@@ -55,25 +81,28 @@ class NgoVerificationView extends React.Component {
     }
 
     pendingNgoButtons(){
+        const {classes} = this.props;
         return( <div>
-                <Button variant="contained">
+                <Button variant="contained" className={classes.button} onClick={() => this.onApproveNgo()}>
                     Approve
                 </Button>
-                <Button variant="contained">
+                <Button variant="contained" className={classes.button} onClick={() => this.onRejectNgo()}>
                     Reject
                 </Button>
-                <Button variant="contained" onClick={() => this.onCancelClick()}>
+                <Button variant="contained" className={classes.button} onClick={() => this.onCancelClick()}>
                     Cancel
                 </Button>
             </div>)
     }
 
     renderActions(ngo){
+        const {status} = this.props;
+
         switch(ngo.status){
-            case 'APPROVED':{
+            case status.APPROVED:{
                 return this.approvedNgoButtons()
             }
-            case 'PENDING':{
+            case status.PENDING:{
                 return this.pendingNgoButtons()
             }
         }
@@ -121,12 +150,13 @@ NgoVerificationView.propTypes = {
     classes: PropTypes.object.isRequired,
     ngo: PropTypes.object.isRequired
 };
-const mapStateToProps = createStructuredSelector({ngo: makeSelectInViewNgo()});
+const mapStateToProps = createStructuredSelector({ngo: makeSelectInViewNgo(),status:makeSelectStatuses()});
 
 function mapDispatchToProps(dispatch) {
     return {
         dispatch,
-        fetchNgoById: (ngoId) => dispatch(fetchNgoById(ngoId))
+        fetchNgoById: (ngoId) => dispatch(fetchNgoById(ngoId)),
+        updateNgo: (ngo) => dispatch(updateNgo(ngo))
     };
 }
 

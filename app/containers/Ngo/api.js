@@ -21,3 +21,10 @@ export function fetchNgoByIdApi(ngoId) {
     .get(URL_WITH_QUERY)
     .then(res => res.data);
 }
+
+export function updateNgoApi(ngo) {
+  const URL_WITH_QUERY = `${NGOS_URL}/${ngo.id}`;
+  return getAxiosInstance()
+    .put(URL_WITH_QUERY, ngo)
+    .then(res => res.data);
+}

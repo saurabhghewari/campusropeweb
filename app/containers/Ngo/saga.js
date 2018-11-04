@@ -1,7 +1,17 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { replace } from 'react-router-redux';
-import { SUBMIT_NEW_NGO, FETCH_NGOS, FETCH_NGO_BY_ID } from './constants';
-import { createNewNgoApi, fetchNgosApi, fetchNgoByIdApi } from './api';
+import {
+  SUBMIT_NEW_NGO,
+  FETCH_NGOS,
+  FETCH_NGO_BY_ID,
+  UPDATE_NGO_BY_ID,
+} from './constants';
+import {
+  createNewNgoApi,
+  fetchNgosApi,
+  fetchNgoByIdApi,
+  updateNgoApi,
+} from './api';
 import { setNgos, setInViewNgo } from './actions';
 
 export function* submitNewNgoDetails({ values, actions }) {
@@ -20,6 +30,11 @@ export function* fetchNgosSaga() {
   yield put(setNgos(ngos));
 }
 
+export function* updateNgoSaga({ ngo }) {
+  yield call(updateNgoApi, ngo);
+  yield put(replace('/app/ngos/verification'));
+}
+
 export function* fetchNgoByIdSaga({ ngoId }) {
   const ngo = yield call(fetchNgoByIdApi, ngoId);
   yield put(setInViewNgo(ngo));
@@ -30,5 +45,6 @@ export default function* defaultSaga() {
     takeLatest(SUBMIT_NEW_NGO, submitNewNgoDetails),
     takeLatest(FETCH_NGOS, fetchNgosSaga),
     takeLatest(FETCH_NGO_BY_ID, fetchNgoByIdSaga),
+    takeLatest(UPDATE_NGO_BY_ID, updateNgoSaga),
   ];
 }

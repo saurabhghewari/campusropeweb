@@ -14,10 +14,14 @@ const makeSelectStates = () =>
     Object.keys(_groupBy(substate.CITIES, 'state')),
   );
 
+const makeSelectStatuses = () =>
+  createSelector(selectConstantsDomain, substate => substate.STATUSES);
+
 export default selectConstantsDomain;
 export {
   selectConstantsDomain,
   makeSelectNgoTypes,
   makeSelectStates,
   makeSelectCities,
+  makeSelectStatuses,
 };

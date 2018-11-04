@@ -11,6 +11,7 @@ import {
   FETCH_NGOS,
   SET_INVIEW_NGO,
   FETCH_NGO_BY_ID,
+  UPDATE_NGO_BY_ID,
 } from './constants';
 
 export function defaultAction() {
@@ -50,6 +51,13 @@ export function setNgos(ngos) {
 export function setInViewNgo(ngo) {
   return {
     type: SET_INVIEW_NGO,
+    ngo,
+  };
+}
+
+export function updateNgo(ngo) {
+  return {
+    type: UPDATE_NGO_BY_ID,
     ngo,
   };
 }
