@@ -1,10 +1,11 @@
+/*eslint-disable*/
+
 import axios from 'axios';
 import ls from 'local-storage';
 import { loadProgressBar } from 'axios-progress-bar';
 import 'axios-progress-bar/dist/nprogress.css';
 import { USER_TOKEN } from './constants/local_storage_constants';
 
-/*eslint-disable*/
 const axiosInstance = new axios.create();
 let progressConfigured = false;
 
