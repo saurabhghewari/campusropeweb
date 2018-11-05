@@ -135,7 +135,7 @@ class NgoVerificationView extends React.Component {
             <Typography
               className={classes.title}
               color="textSecondary"
-              gutterBottom={true}
+              gutterBottom
             >
               admin : {ngo.createdBy.name}
             </Typography>
