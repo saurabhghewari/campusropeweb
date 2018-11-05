@@ -39,7 +39,7 @@ const styles = theme => ({
   },
 });
 
-let initalValue = {
+const initalValue = {
   name: '',
   gender: '',
   email: '',
@@ -59,7 +59,7 @@ const getInitialValues = userProfile =>
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
 const AboutUserComponent = props => {
-  let { classes, handleSignUp, userProfile } = props;
+  const { classes, handleSignUp, userProfile } = props;
 
   return (
     <Formik

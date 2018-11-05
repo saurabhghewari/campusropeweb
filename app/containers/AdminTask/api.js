@@ -7,9 +7,8 @@ export function getAdminTasksForUser(userId) {
     return getAxiosInstance()
       .get(URL_WITH_QUERY)
       .then(res => res.data.tasks); // this is called on auto complete . the above if condition is to avoid unwanted network requests
-  } else {
-    return [];
   }
+  return [];
 }
 
 export function saveAdminTasksApi({ tasks, selectedUser }) {
