@@ -13,8 +13,8 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Paper, Grid, Avatar, Typography, Button, Tabs, Tab } from '@material-ui/core';
-import { Block, Message } from '@material-ui/icons';
+import { Paper, Grid, Avatar, Typography, Button, Tabs, Tab, TextField } from '@material-ui/core';
+import { Block, Message, Add } from '@material-ui/icons';
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
 
@@ -23,31 +23,25 @@ import injectReducer from 'utils/injectReducer';
 import { selectUserProfileInfo, makeSelectSelectedTab } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import AddPostComponent from './AddPostComponent';
+import PostComponent from './PostComponent';
 import AboutUserComponent from './AboutUserComponent';
 import ProfileTabType from './ProfileTabTypeModel';
 
-import { tabSelectAction } from './actions';
+import { tabSelectAction, fetchUserProfileAction } from './actions';
 import './user-profile.css';
 import '../App/common.css';
 
 const styles = () => ({
-  root: {
-    margin: '10px auto',
-    display: 'flex',
-    justifyContent: 'space-around',
-    flexWrap: 'wrap',
-    width: '80%',
-    height: '75%',
-    alignItems: 'center',
-  },
   grid2Container: {
     height: '220px',
   },
   topSectionGrid: {
-    minHeight: "250px"
+    minHeight: "200px"
   },
   followsCount: {
-    paddingRight: "10px"
+    paddingRight: "10px",
+    color: "#3f56b5"
   },
   followsLabel: {
     color: "#888484"
@@ -71,9 +65,14 @@ const styles = () => ({
   },
   profileTabGrid: {
     paddingBottom: "25px"
+  },
+  profilePaper: {
+    padding: "0 20px 10px",
+    width: "100%"
+  },
+  postWrapper: {
+    padding: "20px 0"
   }
-
-
 });
 
 /* eslint react/prop-types: 0 */
@@ -83,9 +82,15 @@ export class UserProfile extends React.Component {
   handleProfileTabChange = selectedTab => {
     this.props.onSelectProfileTab(selectedTab);
   };
+
+  componentDidMount() {
+    const userId = this.props.match.params.userId;
+    this.props.fetchUserProfile(userId);
+  }
+
   render() {
     const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
-    const { classes, dispatch, selectedTab, userprofileInfo = {}, value = 1 } = this.props;
+    const { classes, dispatch, selectedTab = TAB_TYPE_MAP.POST_TAB, userprofileInfo = {} } = this.props;
 
     const followIngLIClassName = classNames({
       [classes.activeTab]: selectedTab === TAB_TYPE_MAP.FOLLOWING_TAB,
@@ -98,65 +103,82 @@ export class UserProfile extends React.Component {
     });
 
     return (
-      <div className={classes.root}>
+      <div className="root">
         <Helmet>
           <title>UserProfile</title>
 
           <meta name="description" content="Description of UserProfile" />
         </Helmet>
 
-        <Grid container className={classes.topSectionGrid}>
+        <Paper className={classes.profilePaper}>
+          <Grid container className={classes.topSectionGrid}>
 
-          <Grid item xs={6} md={4} lg={4} >
-            <div className="avatarWrapper">
-              <div className="circleBorder">
-                <Avatar
-                  alt="Adelle Charles"
-                  src={bgImage}
-                  className="avatar"
-                />
+            <Grid item xs={6} md={4} lg={4} >
+              <div className="avatarWrapper">
+                <div className="circleBorder">
+                  <Avatar
+                    alt="Adelle Charles"
+                    src={bgImage}
+                    className="avatar"
+                  />
+                </div>
               </div>
-            </div>
+            </Grid>
+
+            <Grid item xs={6} md={8} lg={8}>
+              <div className={classes.userFollowsWrapper}>
+                <Typography variant="h6">Saif ELiyas</Typography>
+
+                <Typography variant="body1">
+                  <span className={classes.followsCount}> 1793</span>
+                  <span className={classes.followsLabel}>Followers</span>
+                </Typography>
+
+                <Typography variant="body1">
+                  <span className={classes.followsCount}> 1309</span>
+                  <span className={classes.followsLabel}>Followings</span>
+                </Typography>
+              </div>
+            </Grid>
+
           </Grid>
 
-          <Grid item xs={6} md={8} lg={8}>
-            <div className={classes.userFollowsWrapper}>
-              <Typography variant="h6">Saif ELiyas</Typography>
+          <Grid container>
+            <Grid item xs={12} md={4} lg={4} className={classes.profileTabGrid}>
+              <Typography invarient="body2" className={classes.userDetail}>Software Developer at GMI</Typography>
 
-              <Typography variant="body1">
-                <span className={classes.followsCount}> 1793</span>
-                <span className={classes.followsLabel}>Followers</span>
-              </Typography>
+              <Paper square>
+                <Tabs
+                  value={selectedTab}
+                  onChange={(e, value) => this.handleProfileTabChange(value)}
+                  indicatorColor="primary"
+                  textColor="primary"
+                >
+                  <Tab label="About" />
+                  <Tab label="Achievements" />
+                </Tabs>
+              </Paper>
+            </Grid>
 
-              <Typography variant="body1">
-                <span className={classes.followsCount}> 1309</span>
-                <span className={classes.followsLabel}>Followings</span>
-              </Typography>
-            </div>
+            <Grid item xs={12} md={8} lg={8} className="margin-auto profileFormSection">
+              {selectedTab === TAB_TYPE_MAP.ABOUT_TAB &&
+                <AboutUserComponent
+                  userProfile={userprofileInfo}
+                  handleCancel={this.handleProfileTabChange} />}
+
+              {selectedTab === TAB_TYPE_MAP.POST_TAB &&
+                <React.Fragment>
+                  <AddPostComponent />
+
+                  <div className={classes.postWrapper}>
+                    <PostComponent />
+                  </div>
+                </React.Fragment>
+              }
+
+            </Grid>
           </Grid>
-
-        </Grid>
-
-        <Grid container>
-          <Grid item xs={12} md={4} lg={4} className={classes.profileTabGrid}>
-            <Typography invarient="body2" className={classes.userDetail}>Software Developer at GMI</Typography>
-
-            <Paper square>
-              <Tabs
-                value={value}
-                indicatorColor="primary"
-                textColor="primary"
-              >
-                <Tab label="About" />
-                <Tab label="Achievements" />
-              </Tabs>
-            </Paper>
-          </Grid>
-
-          <Grid item xs={12} md={8} lg={8} className="margin-auto profileFormSection">
-            {selectedTab === TAB_TYPE_MAP.ABOUT_TAB && <AboutUserComponent userProfile={userprofileInfo} />}
-          </Grid>
-        </Grid>
+        </Paper>
       </div>
     );
   }
@@ -174,6 +196,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchUserProfile: userId => dispatch(fetchUserProfileAction({ userId })),
     onSelectProfileTab: selectedTab => dispatch(tabSelectAction(selectedTab)),
   };
 }

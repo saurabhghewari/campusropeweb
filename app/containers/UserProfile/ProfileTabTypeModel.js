@@ -1,8 +1,9 @@
 const _typeTypeMap = {
-  ABOUT_TAB: 1,
-  ACHIEVEMENTS_TAB: 2,
-  FOLLOWERS_TAB: 3,
-  FOLLOWING_TAB: 4,
+  ABOUT_TAB: 0,
+  ACHIEVEMENTS_TAB: 1,
+  FOLLOWERS_TAB: 2,
+  FOLLOWING_TAB: 3,
+  POST_TAB: 4
 };
 
 export default class ProfileTabType {
