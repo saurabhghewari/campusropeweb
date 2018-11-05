@@ -19,27 +19,34 @@ import { makeSelectFetchedNgos } from './selectors';
 /* eslint-disable*/
 
 const styles = theme => ({
-  createNgoBtn:{
-    float:'right'
-  }
+  createNgoBtn: {
+    float: 'right',
+  },
 });
 
 class AllNgos extends React.Component {
-
-  componentDidMount(){
-    this.props.fetchNgos()
+  componentDidMount() {
+    this.props.fetchNgos();
   }
- 
-  createNewNgo(){
-    this.props.dispatch(replace('/app/ngos/new'))
+
+  createNewNgo() {
+    this.props.dispatch(replace('/app/ngos/new'));
   }
 
   render() {
-    const { classes ,fetchedNgos} = this.props;
+    const { classes, fetchedNgos } = this.props;
     return (
       <Fragment>
-        <Button variant="contained" className={classes.createNgoBtn} color="secondary" onClick={() => this.createNewNgo()}> Create NGO </Button>
-        <NgoList ngos={fetchedNgos}/>
+        <Button
+          variant="contained"
+          className={classes.createNgoBtn}
+          color="secondary"
+          onClick={() => this.createNewNgo()}
+        >
+          {' '}
+          Create NGO{' '}
+        </Button>
+        <NgoList ngos={fetchedNgos} />
       </Fragment>
     );
   }
@@ -47,18 +54,17 @@ class AllNgos extends React.Component {
 
 AllNgos.propTypes = {
   classes: PropTypes.object.isRequired,
-  dispatch:PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
-
 const mapStateToProps = createStructuredSelector({
-  fetchedNgos:makeSelectFetchedNgos()
+  fetchedNgos: makeSelectFetchedNgos(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchNgos:() => dispatch(fetchNgos())
+    fetchNgos: () => dispatch(fetchNgos()),
   };
 }
 
@@ -66,7 +72,6 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
-
 
 export default compose(
   withStyles(styles),

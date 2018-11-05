@@ -66,49 +66,47 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 
-const renderTrendingNews = (trendingNews,classes) => {
-  return trendingNews.map(trendingNew =>(
+const renderTrendingNews = (trendingNews, classes) => {
+  return trendingNews.map(trendingNew => (
     <Card className={classes.card} key={trendingNew.id}>
- <CardHeader
-   avatar={
-     <Avatar
-     alt={trendingNew.userName}
-     src={trendingNew.profilePictureUrl}
-     className={classNames(classes.avatar, classes.bigAvatar)}
-   />
-   }
-   title={trendingNew.userName}
-   subheader={trendingNew.createdOn}
- />
- <CardContent>
- <Typography component="p">
-       {trendingNew.headLine}
- </Typography>
-</CardContent>
- <CardMedia
-   className={classes.media}
-   image={trendingNew.pictureUrl}
-   title={trendingNew.userName}
- />
- <CardActions className={classes.actions} disableActionSpacing>
-   <IconButton aria-label="Like">
-     <ThumbUpSharp />
-   </IconButton>
- </CardActions>
-</Card>
- ))
+      <CardHeader
+        avatar={
+          <Avatar
+            alt={trendingNew.userName}
+            src={trendingNew.profilePictureUrl}
+            className={classNames(classes.avatar, classes.bigAvatar)}
+          />
+        }
+        title={trendingNew.userName}
+        subheader={trendingNew.createdOn}
+      />
+      <CardContent>
+        <Typography component="p">{trendingNew.headLine}</Typography>
+      </CardContent>
+      <CardMedia
+        className={classes.media}
+        image={trendingNew.pictureUrl}
+        title={trendingNew.userName}
+      />
+      <CardActions className={classes.actions} disableActionSpacing>
+        <IconButton aria-label="Like">
+          <ThumbUpSharp />
+        </IconButton>
+      </CardActions>
+    </Card>
+  ));
 };
 export class TrendingNewsList extends React.Component {
   render() {
-    const { classes,trendingNews,states } = this.props;
+    const { classes, trendingNews, states } = this.props;
     return (
       <Content>
-      <Grid container spacing={16}>
-      <Grid item xs={12} sm={12} md={12} lg={12}>
-      <Search options={states} value="" placeholder="State" />
-    </Grid>
-      </Grid>
-          {renderTrendingNews(trendingNews,classes)}
+        <Grid container spacing={16}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <Search options={states} value="" placeholder="State" />
+          </Grid>
+        </Grid>
+        {renderTrendingNews(trendingNews, classes)}
       </Content>
     );
   }
@@ -123,8 +121,8 @@ TrendingNewsList.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    trendingNews : state.trendingNewsList.trendingNews,
-    states : state.trendingNewsList.states,
+    trendingNews: state.trendingNewsList.trendingNews,
+    states: state.trendingNewsList.states,
   };
 }
 

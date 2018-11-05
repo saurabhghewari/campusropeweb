@@ -7,7 +7,7 @@
 import {
   DEFAULT_ACTION,
   PROFILE_TAB_SELECTION_ACTION,
-  PROFILE_INFO_FETCH_SUCCESS_ACTION
+  PROFILE_INFO_FETCH_SUCCESS_ACTION,
 } from './constants';
 
 export function defaultAction() {

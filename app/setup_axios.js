@@ -1,5 +1,3 @@
-/*eslint-disable*/
-
 import axios from 'axios';
 import ls from 'local-storage';
 import { loadProgressBar } from 'axios-progress-bar';

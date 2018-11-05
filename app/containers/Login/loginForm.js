@@ -107,7 +107,11 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
           {errors.authentication && (
             <span className={classes.error}>{errors.authentication}</span>
           )}
-          <FormControl margin="normal" required fullWidth>
+          <FormControl
+            margin="normal"
+            required="required"
+            fullWidth="fullWidth"
+          >
             <InputLabel htmlFor="email">Email</InputLabel>
             <Input
               id="email"
@@ -115,7 +119,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
               autoComplete="email"
               value={values.email}
               onChange={handleChange}
-              autoFocus
+              autoFocus="autoFocus"
             />{' '}
             {touched.email &&
               errors.email && (
@@ -125,7 +129,11 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
               )}
           </FormControl>
 
-          <FormControl margin="normal" required fullWidth>
+          <FormControl
+            margin="normal"
+            required="required"
+            fullWidth="fullWidth"
+          >
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input
               name="password"
@@ -166,7 +174,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
           </div>
 
           <Button
-            fullWidth
+            fullWidth="fullWidth"
             type="submit"
             variant="contained"
             color="primary"
@@ -208,7 +216,7 @@ const FormPaper = ({
       render={({ onClick }) => (
         <Button
           type="submit"
-          fullWidth
+          fullWidth="fullWidth"
           variant="contained"
           color="secondary"
           onClick={onClick}
@@ -220,12 +228,12 @@ const FormPaper = ({
       )}
     />
 
-    <Typography variant="body2" gutterBottom>
+    <Typography variant="body2" gutterBottom="gutterBottom">
       New to Campusrope ?
     </Typography>
     <Button
       type="submit"
-      fullWidth
+      fullWidth="fullWidth"
       variant="contained"
       color="primary"
       onClick={routeToSignup}

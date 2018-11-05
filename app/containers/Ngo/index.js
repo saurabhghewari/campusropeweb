@@ -59,13 +59,20 @@ export class Ngo extends React.Component {
           <meta name="description" content="Description of Ngo" />
         </Helmet>
         <Content>
-        <Switch>
-          <PrivateRoute  exact path="/app/ngos/:ngoId/verify/details" component={NgoVerificationView} />
-          <PrivateRoute  path="/app/ngos/new" component={NewNgo} />
-          <PrivateRoute  path="/app/ngos/my" component={MyNgos} />
-          <PrivateRoute   path="/app/ngos/verification"  component={NgoVerification} />
-          <PrivateRoute exact path="/app/ngos" component={AllNgos} />
-        </Switch>
+          <Switch>
+            <PrivateRoute
+              exact
+              path="/app/ngos/:ngoId/verify/details"
+              component={NgoVerificationView}
+            />
+            <PrivateRoute path="/app/ngos/new" component={NewNgo} />
+            <PrivateRoute path="/app/ngos/my" component={MyNgos} />
+            <PrivateRoute
+              path="/app/ngos/verification"
+              component={NgoVerification}
+            />
+            <PrivateRoute exact path="/app/ngos" component={AllNgos} />
+          </Switch>
         </Content>
       </div>
     );
@@ -92,7 +99,7 @@ const withConnect = connect(
 );
 
 const withReducer = injectReducer({ key: 'ngo', reducer });
-const withSaga = injectSaga({ key: 'ngo', saga,mode:DAEMON});
+const withSaga = injectSaga({ key: 'ngo', saga, mode: DAEMON });
 
 export default compose(
   withReducer,

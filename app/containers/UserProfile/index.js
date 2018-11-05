@@ -20,13 +20,13 @@ import classNames from 'classnames';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import {selectUserProfileInfo, makeSelectSelectedTab} from './selectors';
+import { selectUserProfileInfo, makeSelectSelectedTab } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import AboutUserComponent from './AboutUserComponent';
 import ProfileTabType from './ProfileTabTypeModel';
 
-import { tabSelectAction } from './actions'
+import { tabSelectAction } from './actions';
 import './user-profile.css';
 import '../App/common.css';
 
@@ -124,7 +124,7 @@ const styles = () => ({
   },
   followIcon: {
     width: '20px',
-    marginRight: "10px",
+    marginRight: '10px',
   },
   secondryGrid: {
     height: '100%',
@@ -158,8 +158,8 @@ const styles = () => ({
     borderBottom: '2px solid #1890ff',
   },
   btnIcon: {
-    marginRight: "10px",
-    fontSize: "18px",
+    marginRight: '10px',
+    fontSize: '18px',
   },
 });
 
@@ -167,10 +167,9 @@ const styles = () => ({
 /* eslint prettier/prettier: 0 */
 /* eslint-disable react/prefer-stateless-function */
 export class UserProfile extends React.Component {
-
-  handleProfileTabChange = (selectedTab) => {
-    this.props.onSelectProfileTab(selectedTab)
-  }
+  handleProfileTabChange = selectedTab => {
+    this.props.onSelectProfileTab(selectedTab);
+  };
   render() {
     const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
     const { classes, dispatch, selectedTab, userprofileInfo = {} } = this.props;
@@ -195,7 +194,6 @@ export class UserProfile extends React.Component {
 
         <Paper elevation={1} className={classes.profilePaper}>
           <Grid container className={classes.grid2Container}>
-          
             <Grid item xs={4} md={2} lg={2} className={classes.avaatarGrid}>
               <div className="avatarWrapper">
                 <Avatar
@@ -210,33 +208,34 @@ export class UserProfile extends React.Component {
               <ul className={classNames(classes.iconUl, 'iconBtnWrapper')}>
                 <li>
                   <Button className={classes.blockBtn}>
-                    <Block className={classes.btnIcon}/>  Block
+                    <Block className={classes.btnIcon} /> Block
                   </Button>
                 </li>
 
                 <li>
                   <Button className={classes.messageBtn}>
-                    <Message className={classes.btnIcon}/>  Message
+                    <Message className={classes.btnIcon} /> Message
                   </Button>
                 </li>
 
                 <li>
                   <Button className={classes.followBtn}>
-                    <img className={classes.followIcon} src={followIcon} alt="Profile Pic" />  Follow
+                    <img
+                      className={classes.followIcon}
+                      src={followIcon}
+                      alt="Profile Pic"
+                    />{' '}
+                    Follow
                   </Button>
                 </li>
               </ul>
-
             </Grid>
-
           </Grid>
         </Paper>
 
         <div className={classes.profileControlWrapper}>
           <Paper elevation={1} className={classes.profileWrapperPapper}>
-
             <Grid container spacing={16} className={classes.grid3Container}>
-
               <Grid item md={5} className="userGrid">
                 <div className="tablet-lg-screen justify-flex-end text-center">
                   <Typography className={classes.userName} variant="h5">
@@ -249,46 +248,71 @@ export class UserProfile extends React.Component {
                 </div>
               </Grid>
 
-              <Grid item xs={12} sm={7} md={7} lg={7} className={classes.tabGrid}>
-
+              <Grid
+                item
+                xs={12}
+                sm={7}
+                md={7}
+                lg={7}
+                className={classes.tabGrid}
+              >
                 <ul className={classes.profileNavUl}>
                   <li
-                    onClick={() => this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)}
-                    className={selectedTab === TAB_TYPE_MAP.ABOUT_TAB ? classes.activeTab : ''}>
+                    onClick={() =>
+                      this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)
+                    }
+                    className={
+                      selectedTab === TAB_TYPE_MAP.ABOUT_TAB
+                        ? classes.activeTab
+                        : ''
+                    }
+                  >
                     About
                   </li>
 
                   <li
-                    onClick={() => this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)}
-                    className={selectedTab === TAB_TYPE_MAP.ACHIEVEMENTS_TAB ? classes.activeTab : ''}>
+                    onClick={() =>
+                      this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)
+                    }
+                    className={
+                      selectedTab === TAB_TYPE_MAP.ACHIEVEMENTS_TAB
+                        ? classes.activeTab
+                        : ''
+                    }
+                  >
                     Achievements
                   </li>
 
                   <li
-                    onClick={() => this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)}
-                    className={followerLIClassName}>
+                    onClick={() =>
+                      this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)
+                    }
+                    className={followerLIClassName}
+                  >
                     <span>Followers</span>
                     <span className={classes.followersCount}>45</span>
                   </li>
 
                   <li
-                    onClick={() => this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)}
-                    className={followIngLIClassName}>
+                    onClick={() =>
+                      this.handleProfileTabChange(TAB_TYPE_MAP.ABOUT_TAB)
+                    }
+                    className={followIngLIClassName}
+                  >
                     <span>Following</span>
 
                     <span className={classes.followersCount}>74</span>
                   </li>
-
                 </ul>
-
               </Grid>
             </Grid>
-
           </Paper>
 
           <Grid container className={classes.aboutGrid}>
             <Grid item xs={12} md={6} className="margin-auto">
-              {selectedTab === TAB_TYPE_MAP.ABOUT_TAB && <AboutUserComponent userProfile={userprofileInfo}/>}
+              {selectedTab === TAB_TYPE_MAP.ABOUT_TAB && (
+                <AboutUserComponent userProfile={userprofileInfo} />
+              )}
             </Grid>
           </Grid>
         </div>
@@ -309,8 +333,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    onSelectProfileTab: (selectedTab) =>
-      dispatch(tabSelectAction(selectedTab)),
+    onSelectProfileTab: selectedTab => dispatch(tabSelectAction(selectedTab)),
   };
 }
 

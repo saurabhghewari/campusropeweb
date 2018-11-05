@@ -15,21 +15,21 @@ import format from 'date-fns/format';
 /* eslint-disable*/
 
 const styles = theme => ({
-  container:{
-    marginTop:60,
-    textAlign:'center'
+  container: {
+    marginTop: 60,
+    textAlign: 'center',
   },
   media: {
     height: 100,
-    width:100,
+    width: 100,
     paddingTop: '56.25%', // 16:9
   },
   card: {
     minWidth: 275,
-    maxWidth:275,
-    margin:theme.spacing.unit * 2,
-    display:'inline-block',
-    cursor:'pointer'
+    maxWidth: 275,
+    margin: theme.spacing.unit * 2,
+    display: 'inline-block',
+    cursor: 'pointer',
   },
   title: {
     fontSize: 14,
@@ -39,51 +39,62 @@ const styles = theme => ({
   },
 });
 
-const NgoBox = ({ngoData,classes,onNgoClick}) => {
-  return(
-    <Card className={classes.card} raised={true} onClick={() => onNgoClick(ngoData)}>
+const NgoBox = ({ ngoData, classes, onNgoClick }) => {
+  return (
+    <Card
+      className={classes.card}
+      raised={true}
+      onClick={() => onNgoClick(ngoData)}
+    >
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+        <Typography
+          className={classes.title}
+          color="textSecondary"
+          gutterBottom
+        >
           admin : {ngoData.createdBy.name}
         </Typography>
         <Typography variant="h5" component="h2">
           {ngoData.name}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          created on : {format(new Date(ngoData.createdAt),"DD-MM-YYYY")}
+          created on : {format(new Date(ngoData.createdAt), 'DD-MM-YYYY')}
         </Typography>
         <Typography component="p">
           contact email: {ngoData.contactEmail}
         </Typography>
       </CardContent>
     </Card>
-
-  )
-}
+  );
+};
 /* eslint-disable react/prefer-stateless-function */
 class NgoList extends React.Component {
-  
-  renderNoNgoLabel(){
-    return (
-    <Typography variant="h4">
-      No NGO found
-    </Typography>)
+  renderNoNgoLabel() {
+    return <Typography variant="h4">No NGO found</Typography>;
   }
 
-  renderNgos(){
-    const { classes,onNgoClick } = this.props;
-    return(
+  renderNgos() {
+    const { classes, onNgoClick } = this.props;
+    return (
       <Fragment>
-        {this.props.ngos.map((ngo) => <NgoBox key={ngo.id} classes={classes} onNgoClick={onNgoClick} ngoData={ngo}/>)}
+        {this.props.ngos.map(ngo => (
+          <NgoBox
+            key={ngo.id}
+            classes={classes}
+            onNgoClick={onNgoClick}
+            ngoData={ngo}
+          />
+        ))}
       </Fragment>
-    )
+    );
   }
   render() {
-    const { classes,ngos } = this.props;
+    const { classes, ngos } = this.props;
     return (
-    <div className={classes.container}>
-      {ngos.length === 0 ? this.renderNoNgoLabel() : this.renderNgos() }
-    </div>);
+      <div className={classes.container}>
+        {ngos.length === 0 ? this.renderNoNgoLabel() : this.renderNgos()}
+      </div>
+    );
   }
 }
 

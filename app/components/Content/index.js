@@ -22,7 +22,7 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-class Content extends React.Component {
+class Content extends React.PureComponent {
   render() {
     const { classes, children } = this.props;
     return (

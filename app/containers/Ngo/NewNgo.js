@@ -36,48 +36,54 @@ import { submitNewNgo } from './actions';
 /* eslint-disable*/
 
 const styles = theme => ({
-  form:{
-
+  form: {},
+  submit: {
+    marginTop: theme.spacing.unit * 2,
   },
-  submit:{
-    marginTop:theme.spacing.unit * 2
+  cancel: {
+    marginLeft: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 2,
   },
-  cancel:{
-      marginLeft:theme.spacing.unit * 2,
-      marginTop:theme.spacing.unit * 2
+  error: {
+    color: 'red',
   },
-  error:{
-      color:'red'
-  },
-  uploadBtn:{
-    marginLeft:0,
+  uploadBtn: {
+    marginLeft: 0,
     margin: theme.spacing.unit,
-  }
+  },
 });
-
 
 /* eslint-disable react/prefer-stateless-function */
 
-const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) => (
+const NewNgoFormComponent = ({
+  classes,
+  onSubmit,
+  onCancel,
+  states,
+  ngo_types,
+}) => (
   <Formik
     initialValues={{
       name: '',
       ngoType: '',
       ngoSiteLink: '',
-      contactEmail:'',
-      documentLink:'',
-      operatingState:'',
-      noteToUser:''
+      contactEmail: '',
+      documentLink: '',
+      operatingState: '',
+      noteToUser: '',
     }}
     validationSchema={Yup.object().shape({
-      name: Yup.string()
-        .required('Please provide name of NGO'),
-        ngoType: Yup.string().required('please provide NGO type'),
-        ngoSiteLink: Yup.string(),
-        contactEmail: Yup.string().email('please provide a valid email').required('Please provide email'),
-        documentLink:Yup.string().required('please upload  document'),
-        operatingState:Yup.string().required('Please provide state of operation'),
-        noteToUser:Yup.string(),
+      name: Yup.string().required('Please provide name of NGO'),
+      ngoType: Yup.string().required('please provide NGO type'),
+      ngoSiteLink: Yup.string(),
+      contactEmail: Yup.string()
+        .email('please provide a valid email')
+        .required('Please provide email'),
+      documentLink: Yup.string().required('please upload  document'),
+      operatingState: Yup.string().required(
+        'Please provide state of operation',
+      ),
+      noteToUser: Yup.string(),
     })}
     onSubmit={(values, actions) => onSubmit(values, actions)}
   >
@@ -89,7 +95,7 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
         isSubmitting,
         handleChange,
         handleSubmit,
-        setFieldValue
+        setFieldValue,
       } = props;
       return (
         <form
@@ -119,27 +125,29 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
             <Select
               value={values.ngoType}
               onChange={handleChange}
-              
               input={<Input id="ngoType" name="ngoType" />}
             >
-              {ngo_types.map((ngo_type)=> <MenuItem key={ngo_type} value={ngo_type}>{ngo_type}</MenuItem>)}
+              {ngo_types.map(ngo_type => (
+                <MenuItem key={ngo_type} value={ngo_type}>
+                  {ngo_type}
+                </MenuItem>
+              ))}
             </Select>
             {touched.ngoType &&
               errors.ngoType && (
-              <FormHelperText className={classes.error}>
-                {errors.ngoType}
-              </FormHelperText>
-            )}
+                <FormHelperText className={classes.error}>
+                  {errors.ngoType}
+                </FormHelperText>
+              )}
           </FormControl>
 
-          <FormControl margin="normal"  fullWidth>
+          <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="name">Website Link</InputLabel>
             <Input
               id="ngoSiteLink"
               name="ngoSiteLink"
               value={values.ngoSiteLink}
               onChange={handleChange}
-              
             />{' '}
             {touched.ngoSiteLink &&
               errors.ngoSiteLink && (
@@ -149,7 +157,7 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
               )}
           </FormControl>
 
-       <FormControl margin="normal" required fullWidth>
+          <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="contactEmail">Contact Email</InputLabel>
             <Input
               id="contactEmail"
@@ -157,7 +165,6 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
               autoComplete="contactEmail"
               value={values.contactEmail}
               onChange={handleChange}
-              
             />{' '}
             {touched.contactEmail &&
               errors.contactEmail && (
@@ -166,61 +173,66 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
                 </FormHelperText>
               )}
           </FormControl>
-          
-          <Upload className={classes.uploadBtn} text='Upload cancelled Check pic' onUploaded={(res)=>setFieldValue('documentLink',res[0].secure_url)}/>
+
+          <Upload
+            className={classes.uploadBtn}
+            text="Upload cancelled Check pic"
+            onUploaded={res => setFieldValue('documentLink', res[0].secure_url)}
+          />
           <Typography variant="caption">
-          Upload a cancelled check of your NGO named to campusope.com with NIL amount, dated for today to get your NGO verified
+            Upload a cancelled check of your NGO named to campusope.com with NIL
+            amount, dated for today to get your NGO verified
           </Typography>
 
-          {
-              errors.documentLink && (
-                <FormHelperText className={classes.error}>
-                  {errors.documentLink}
-                </FormHelperText>
-              )}
+          {errors.documentLink && (
+            <FormHelperText className={classes.error}>
+              {errors.documentLink}
+            </FormHelperText>
+          )}
 
-              {
-                !_isEmpty(values.documentLink) && (
-                  <IdealImage
-                  placeholder={{color:'grey'}}
-                  srcSet={[{src: values.documentLink, width: 100,height:100}]}
-                  alt="cancelled check pic"
-                  width={100}
-                  height={100}
-                />
-                )
-              }
+          {!_isEmpty(values.documentLink) && (
+            <IdealImage
+              placeholder={{ color: 'grey' }}
+              srcSet={[{ src: values.documentLink, width: 100, height: 100 }]}
+              alt="cancelled check pic"
+              width={100}
+              height={100}
+            />
+          )}
 
-
-           <FormControl margin="normal" fullWidth required>
+          <FormControl margin="normal" fullWidth required>
             <InputLabel htmlFor="ngoType">Operating State</InputLabel>
             <Select
               value={values.operatingState}
               onChange={handleChange}
               input={<Input id="operatingState" name="operatingState" />}
             >
-              {states.map((state)=> <MenuItem key={state} value={state}>{state}</MenuItem>)}
+              {states.map(state => (
+                <MenuItem key={state} value={state}>
+                  {state}
+                </MenuItem>
+              ))}
             </Select>
             {touched.operatingState &&
               errors.operatingState && (
-              <FormHelperText className={classes.error}>
-                {errors.operatingState}
-              </FormHelperText>
-            )}
+                <FormHelperText className={classes.error}>
+                  {errors.operatingState}
+                </FormHelperText>
+              )}
           </FormControl>
 
-           <TextField
-          id="noteToUser"
-          label="Note to user"
-          multiline
-          rowsMax="8"
-          value={values.noteToUser}
-          onChange={handleChange}
-          margin="normal"
-          fullWidth
-          helperText="After Successful verification, your NGO will be listed on Campusrope"
-          variant="outlined"
-        />
+          <TextField
+            id="noteToUser"
+            label="Note to user"
+            multiline
+            rowsMax="8"
+            value={values.noteToUser}
+            onChange={handleChange}
+            margin="normal"
+            fullWidth
+            helperText="After Successful verification, your NGO will be listed on Campusrope"
+            variant="outlined"
+          />
 
           <Button
             type="submit"
@@ -236,7 +248,7 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
           <Button
             variant="contained"
             color="secondary"
-            onClick={()=> onCancel()}
+            onClick={() => onCancel()}
             className={classes.cancel}
             disabled={isSubmitting}
           >
@@ -250,27 +262,30 @@ const NewNgoFormComponent = ({ classes, onSubmit, onCancel ,states,ngo_types}) =
 );
 
 class NewNgo extends React.Component {
-  onCancel(){
-    this.props.dispatch(replace('/app/ngos'))
+  onCancel() {
+    this.props.dispatch(replace('/app/ngos'));
   }
-  onSubmit(values,actions){
-    this.props.submitNewNgoDetails({
-      ...values,
-      createdBy:this.props.loggedUser.id
-    },actions)
+  onSubmit(values, actions) {
+    this.props.submitNewNgoDetails(
+      {
+        ...values,
+        createdBy: this.props.loggedUser.id,
+      },
+      actions,
+    );
   }
   render() {
-    const { classes,ngo_types,states } = this.props;
+    const { classes, ngo_types, states } = this.props;
     return (
       <div>
-        <NewNgoFormComponent 
-        classes={classes}
-        onCancel={() => this.onCancel()} 
-        onSubmit={(values,actions) => this.onSubmit(values,actions)} 
-        states={states} 
-        ngo_types={ngo_types} />
+        <NewNgoFormComponent
+          classes={classes}
+          onCancel={() => this.onCancel()}
+          onSubmit={(values, actions) => this.onSubmit(values, actions)}
+          states={states}
+          ngo_types={ngo_types}
+        />
       </div>
-      
     );
   }
 }
@@ -279,18 +294,17 @@ NewNgo.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-
-
 const mapStateToProps = createStructuredSelector({
-  states:makeSelectStates(),
-  ngo_types:makeSelectNgoTypes(),
-  loggedUser:makeSelectLoggedUser()
+  states: makeSelectStates(),
+  ngo_types: makeSelectNgoTypes(),
+  loggedUser: makeSelectLoggedUser(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    submitNewNgoDetails:(values,actions) => dispatch(submitNewNgo(values,actions))
+    submitNewNgoDetails: (values, actions) =>
+      dispatch(submitNewNgo(values, actions)),
   };
 }
 
@@ -299,9 +313,7 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-
 export default compose(
   withStyles(styles),
   withConnect,
 )(NewNgo);
-

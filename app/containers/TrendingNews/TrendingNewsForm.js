@@ -105,10 +105,10 @@ export class TrendingNewsForm extends React.Component {
                       />{' '}
                       {touched.headline &&
                         errors.headline && (
-                        <FormHelperText className={classes.error}>
-                          {errors.headline}
-                        </FormHelperText>
-                      )}
+                          <FormHelperText className={classes.error}>
+                            {errors.headline}
+                          </FormHelperText>
+                        )}
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={12} lg={6}>
@@ -126,10 +126,10 @@ export class TrendingNewsForm extends React.Component {
                       />{' '}
                       {touched.content &&
                         errors.content && (
-                        <FormHelperText className={classes.error}>
-                          {errors.content}
-                        </FormHelperText>
-                      )}
+                          <FormHelperText className={classes.error}>
+                            {errors.content}
+                          </FormHelperText>
+                        )}
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={12} md={6} lg={6}>

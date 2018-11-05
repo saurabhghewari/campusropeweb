@@ -108,7 +108,11 @@ const FormComponent = ({
                   We will send forgot password link to your email.
                 </DialogContentText>
 
-                <FormControl margin="normal" required fullWidth>
+                <FormControl
+                  margin="normal"
+                  required="required"
+                  fullWidth="fullWidth"
+                >
                   <InputLabel htmlFor="email">Email</InputLabel>
                   <Input
                     id="email"
@@ -116,7 +120,7 @@ const FormComponent = ({
                     autoComplete="email"
                     value={values.email}
                     onChange={handleChange}
-                    autoFocus
+                    autoFocus="autoFocus"
                   />{' '}
                   {touched.email &&
                     errors.email && (

@@ -40,9 +40,17 @@ export class TrendingNews extends React.Component {
           <meta name="description" content="TrendingNews" />
         </Helmet>
         <Switch>
-          <PrivateRoute exact path="/app/news/trends" component={TrendingNewsList} />
-          <PrivateRoute exact path="/app/news/trends/admin/trend/new" component={TrendingNewsForm} />
-          </Switch>
+          <PrivateRoute
+            exact
+            path="/app/news/trends"
+            component={TrendingNewsList}
+          />
+          <PrivateRoute
+            exact
+            path="/app/news/trends/admin/trend/new"
+            component={TrendingNewsForm}
+          />
+        </Switch>
       </div>
     );
   }
@@ -52,9 +60,7 @@ TrendingNews.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-
-});
+const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
   return {
