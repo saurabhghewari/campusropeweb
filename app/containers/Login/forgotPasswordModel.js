@@ -110,8 +110,8 @@ const FormComponent = ({
 
                 <FormControl
                   margin="normal"
-                  required="required"
-                  fullWidth="fullWidth"
+                  required
+                  fullWidth
                 >
                   <InputLabel htmlFor="email">Email</InputLabel>
                   <Input
@@ -120,7 +120,7 @@ const FormComponent = ({
                     autoComplete="email"
                     value={values.email}
                     onChange={handleChange}
-                    autoFocus="autoFocus"
+                    autoFocus
                   />{' '}
                   {touched.email &&
                     errors.email && (

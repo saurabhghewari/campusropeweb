@@ -109,7 +109,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
           )}
           <FormControl
             margin="normal"
-            required="required"
+            required
             fullWidth="fullWidth"
           >
             <InputLabel htmlFor="email">Email</InputLabel>
@@ -119,7 +119,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
               autoComplete="email"
               value={values.email}
               onChange={handleChange}
-              autoFocus="autoFocus"
+              autoFocus
             />{' '}
             {touched.email &&
               errors.email && (
@@ -131,7 +131,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
 
           <FormControl
             margin="normal"
-            required="required"
+            required
             fullWidth="fullWidth"
           >
             <InputLabel htmlFor="password">Password</InputLabel>
@@ -228,7 +228,7 @@ const FormPaper = ({
       )}
     />
 
-    <Typography variant="body2" gutterBottom="gutterBottom">
+    <Typography variant="body2" gutterBottom>
       New to Campusrope ?
     </Typography>
     <Button
