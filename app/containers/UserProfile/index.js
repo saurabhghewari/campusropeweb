@@ -4,8 +4,6 @@
  *
  */
 import bgImage from 'images/loginbg.jpg';
-import followIcon from 'images/follow.svg';
-import profileBgImage from 'images/background-image.jpg';
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -13,10 +11,8 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Paper, Grid, Avatar, Typography, Button, Tabs, Tab, TextField } from '@material-ui/core';
-import { Block, Message, Add } from '@material-ui/icons';
+import { Paper, Grid, Avatar, Typography, Tabs, Tab } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
-import classNames from 'classnames';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -28,23 +24,23 @@ import PostComponent from './PostComponent';
 import AboutUserComponent from './AboutUserComponent';
 import ProfileTabType from './ProfileTabTypeModel';
 
-import { tabSelectAction, fetchUserProfileAction } from './actions';
+import { tabSelectAction, fetchUserProfileAction, saveProfileAction } from './actions';
+
 import './user-profile.css';
 import '../App/common.css';
-
 const styles = () => ({
   grid2Container: {
     height: '220px',
   },
   topSectionGrid: {
-    minHeight: "200px"
+    minHeight: "200px",
   },
   followsCount: {
     paddingRight: "10px",
-    color: "#3f56b5"
+    color: "#3f56b5",
   },
   followsLabel: {
-    color: "#888484"
+    color: "#888484",
   },
   userFollowsWrapper: {
     display: "flex",
@@ -55,24 +51,24 @@ const styles = () => ({
     paddingLeft: "50px",
 
     "& p": {
-      padding: "15px 0"
-    }
+      padding: "15px 0",
+    },
   },
   userDetail: {
     paddingBottom: "25px",
     fontSize: "16px",
-    paddingTop: "60px"
+    paddingTop: "60px",
   },
   profileTabGrid: {
-    paddingBottom: "25px"
+    paddingBottom: "25px",
   },
   profilePaper: {
     padding: "0 20px 10px",
-    width: "100%"
+    width: "100%",
   },
   postWrapper: {
-    padding: "20px 0"
-  }
+    padding: "20px 0",
+  },
 });
 
 /* eslint react/prop-types: 0 */
@@ -83,24 +79,19 @@ export class UserProfile extends React.Component {
     this.props.onSelectProfileTab(selectedTab);
   };
 
+  handleProfileSave = (values) => {
+    const {userId} = this.props.match.params;
+    this.props.saveUserProfile({...values, userId})
+  }
+
   componentDidMount() {
-    const userId = this.props.match.params.userId;
+    const {userId} = this.props.match.params;
     this.props.fetchUserProfile(userId);
   }
 
   render() {
     const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
-    const { classes, dispatch, selectedTab = TAB_TYPE_MAP.POST_TAB, userprofileInfo = {} } = this.props;
-
-    const followIngLIClassName = classNames({
-      [classes.activeTab]: selectedTab === TAB_TYPE_MAP.FOLLOWING_TAB,
-      [classes.followerLi]: true,
-    });
-
-    const followerLIClassName = classNames({
-      [classes.activeTab]: selectedTab === TAB_TYPE_MAP.FOLLOWERS_TAB,
-      [classes.followerLi]: true,
-    });
+    const { classes, selectedTab, userprofileInfo = {}, dispatch } = this.props;
 
     return (
       <div className="root">
@@ -163,6 +154,7 @@ export class UserProfile extends React.Component {
             <Grid item xs={12} md={8} lg={8} className="margin-auto profileFormSection">
               {selectedTab === TAB_TYPE_MAP.ABOUT_TAB &&
                 <AboutUserComponent
+                handleProfileSave={this.handleProfileSave}
                   userProfile={userprofileInfo}
                   handleCancel={this.handleProfileTabChange} />}
 
@@ -197,6 +189,7 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fetchUserProfile: userId => dispatch(fetchUserProfileAction({ userId })),
+    saveUserProfile: payload => dispatch(saveProfileAction(payload)),
     onSelectProfileTab: selectedTab => dispatch(tabSelectAction(selectedTab)),
   };
 }

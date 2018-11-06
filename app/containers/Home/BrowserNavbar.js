@@ -96,7 +96,7 @@ const styles = theme => ({
 
 function BrowserNavbar(props) {
   const { classes, toggleDrawer, userInfo } = props;
-  let profileUrl = `/app/profile/${userInfo.id}`;
+  const profileUrl = `/app/profile/${userInfo.id}`;
   return (
     <div>
       <AppBar position="static">
@@ -173,6 +173,7 @@ function BrowserNavbar(props) {
 BrowserNavbar.propTypes = {
   classes: PropTypes.object.isRequired,
   toggleDrawer: PropTypes.func,
+  userInfo: PropTypes.object,
 };
 
 export default withStyles(styles)(BrowserNavbar);

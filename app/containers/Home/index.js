@@ -52,8 +52,8 @@ export class Home extends React.Component {
     });
   };
   render() {
-    let {userInfo} = this.props;
-    let user = userInfo.user || {};
+    const { userInfo } = this.props;
+    const user = userInfo.user || {};
     return (
       <React.Fragment>
         <Helmet>
@@ -61,7 +61,7 @@ export class Home extends React.Component {
           <meta name="description" content="Description of Home" />
         </Helmet>
         <MobileView>
-          <MobileNavBar toggleDrawer={this.toggleDrawer} userInfo={user}/>
+          <MobileNavBar toggleDrawer={this.toggleDrawer} userInfo={user} />
         </MobileView>
         <BrowserView>
           <BrowserNavbar toggleDrawer={this.toggleDrawer} userInfo={user} />
@@ -92,11 +92,12 @@ export class Home extends React.Component {
 Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
   homeMounted: PropTypes.func.isRequired,
+  userInfo: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   home: makeSelectHome(),
-  userInfo: makeSelectLoggedUser()
+  userInfo: makeSelectLoggedUser(),
 });
 
 function mapDispatchToProps(dispatch) {

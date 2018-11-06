@@ -7,3 +7,10 @@ export function getUserProfile(userId) {
     .get(URL_WITH_QUERY)
     .then(res => res.data);
 }
+
+export function saveUserProfile(payload) {
+  const URL_WITH_QUERY = `${USER_PROFILE_URL}`;
+  return getAxiosInstance()
+    .post(URL_WITH_QUERY, {profileOf: payload.userId, ...payload})
+    .then(res => res.data);
+}

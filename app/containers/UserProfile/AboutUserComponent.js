@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import * as Yup from 'yup';
 import {
   Input,
   Select,
@@ -12,12 +16,15 @@ import {
   FormControl,
   InputLabel,
   Typography,
+  TextField
 } from '@material-ui/core';
+import { Add, Delete } from '@material-ui/icons';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Formik } from 'formik';
+import { Formik, FieldArray } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
 import ProfileTabType from './ProfileTabTypeModel';
-import * as Yup from 'yup';
+import { makeSelectLoggedUser } from '../../store/loggeduser/selectors'
+import { createStructuredSelector } from 'reselect';
 import '../App/common.css';
 
 const styles = theme => ({
@@ -35,7 +42,11 @@ const styles = theme => ({
   cancel: {
     background: "#ffc400",
     marginLeft: "10px",
-    color: "white"
+    color: "white",
+
+    '&:hover': {
+      background: "#ecb809"
+    }
   },
   button: {
     marginBottom: theme.spacing.unit,
@@ -45,13 +56,36 @@ const styles = theme => ({
     fontSize: 12,
   },
   panelDetails: {
-    flexDirection: "column"
+    flexDirection: "column",
   },
   aboutUserBtnWrapper: {
     display: "flex",
     justifyContent: "flex-end",
-    marginTop: "10px"
-  }
+    marginTop: "10px",
+  },
+  multiInputBtn: {
+    padding: "5px",
+    minWidth: "30px",
+    height: "40px",
+    width: "40px",
+    marginLeft: 10
+  },
+  multiInputWrapper: {
+    display: "flex",
+    alignItems: "center",
+    position: "relative"
+  },
+  multiInput: {
+    flex: 1
+  },
+  deleteBtn: {
+    background: "#e63d3d",
+    color: "white",
+
+    '&:hover': {
+      background: "#d43a3a"
+    }
+  },
 });
 
 const initalValue = {
@@ -59,28 +93,62 @@ const initalValue = {
   gender: '',
   email: '',
   homeTown: '',
+  country: '',
   currentCity: '',
   politicalView: '',
-  workAndExperience: '',
-  skill: '',
+  workAndExperience: [''],
+  skill: [''],
   college: '',
-  otherDegreeAndCourses: '',
-  careerObjectives: '',
+  otherDegreeAndCourses: [''],
+  careerObjectives: [''],
 };
 
 const getInitialValues = (userProfile) =>
   Object.assign({}, initalValue, { ...userProfile, ...userProfile.createdBy });
 
+let MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChange, name }) => {
+
+  return (
+    <div>
+      {values.map((value, index) => (
+        <div key={index} className={classes.multiInputWrapper}>
+          <TextField
+            id={index}
+            name={`${name}.${index}`}
+            label={label}
+            className={classes.multiInput}
+            value={value}
+            onChange={handleChange}
+          />
+
+          <Button variant="contained" color="primary" className={classes.multiInputBtn}
+            onClick={() => arrayHelpers.insert(index, "")}>
+            <Add />
+          </Button>
+
+          {(values.length > 1) && <Button variant="contained" onClick={() => arrayHelpers.remove(index)}
+            className={classNames(classes.multiInputBtn, classes.deleteBtn)}>
+            <Delete />
+          </Button>}
+        </div>
+      ))
+      }</div>
+  )
+}
+
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
-const AboutUserComponent = props => {
-  const { classes, handleSignUp, userProfile = {}, handleCancel } = props;
+const AboutUserComponent = (props) => {
+
+  const { classes, userProfile = {}, handleCancel, handleProfileSave } = props;
+
   const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
+
   return (
     <Formik
       initialValues={getInitialValues(userProfile)}
       validationSchema={Yup.object().shape({})}
-      onSubmit={(values, actions) => handleSignUp(values, actions)}
+      onSubmit={(values, actions) => handleProfileSave(values, actions)}
     >
       {props => {
         const {
@@ -208,7 +276,7 @@ const AboutUserComponent = props => {
                     name="politicalView"
                     value={values.politicalView}
                     onChange={handleChange}
-                    autoFocus
+                    autoFocus multiline
                   />
                 </FormControl>
 
@@ -219,7 +287,7 @@ const AboutUserComponent = props => {
                     name="religiousView"
                     value={values.religiousView}
                     onChange={handleChange}
-                    autoFocus
+                    autoFocus multiline
                   />
                 </FormControl>
               </ExpansionPanelDetails>
@@ -232,25 +300,19 @@ const AboutUserComponent = props => {
 
               <ExpansionPanelDetails className={classes.panelDetails}>
                 <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Work And Experience</InputLabel>
-                  <Input
-                    id="name"
-                    name="workAndExperience"
-                    value={values.workAndExperience}
-                    onChange={handleChange}
-                    autoFocus
-                  />
+                  <FieldArray name="workAndExperience"
+                    render={(arrayHelpers) =>
+                      <MultiInputComponent arrayHelpers={arrayHelpers}
+                        label="Work And Experience" values={values.workAndExperience}
+                        handleChange={handleChange} classes={classes} name="workAndExperience" />} />
                 </FormControl>
 
                 <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Skill</InputLabel>
-                  <Input
-                    id="skill"
-                    name="skill"
-                    value={values.skill}
-                    onChange={handleChange}
-                    autoFocus
-                  />
+                  <FieldArray name="skill"
+                    render={(arrayHelpers) =>
+                      <MultiInputComponent arrayHelpers={arrayHelpers}
+                        label="skill" values={values.skill} handleChange={handleChange}
+                        classes={classes} name="skill" />} />
                 </FormControl>
 
                 <FormControl margin="normal" required fullWidth>
@@ -265,30 +327,26 @@ const AboutUserComponent = props => {
                 </FormControl>
 
                 <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Other Degree And Courses</InputLabel>
-                  <Input
-                    id="otherDegreeAndCourses"
-                    name="otherDegreeAndCourses"
-                    value={values.otherDegreeAndCourses}
-                    onChange={handleChange}
-                    autoFocus
-                  />
+                  <FieldArray name="otherDegreeAndCourses"
+                    render={(arrayHelpers) =>
+                      <MultiInputComponent arrayHelpers={arrayHelpers}
+                        label="Other Degree and Courses" values={values.otherDegreeAndCourses}
+                        handleChange={handleChange} classes={classes}
+                        name="otherDegreeAndCourses" />} />
                 </FormControl>
 
                 <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Career Objectives</InputLabel>
-                  <Input
-                    id="careerObjectives"
-                    name="careerObjectives"
-                    value={values.careerObjectives}
-                    onChange={handleChange}
-                    autoFocus
-                  />
+                  <FieldArray name="careerObjectives"
+                    render={(arrayHelpers) =>
+                      <MultiInputComponent arrayHelpers={arrayHelpers}
+                        label="Career Objectives" values={values.careerObjectives}
+                        handleChange={handleChange} classes={classes}
+                        name="careerObjectives" />} />
                 </FormControl>
               </ExpansionPanelDetails>
             </ExpansionPanel>
 
-            <div className={classes.aboutUserBtnWrapper}> 
+            <div className={classes.aboutUserBtnWrapper}>
               <Button
                 type="submit"
                 variant="contained"
@@ -315,12 +373,28 @@ const AboutUserComponent = props => {
         );
       }}
     </Formik>
-  );
-};
+  )
+}
 
 AboutUserComponent.propTypes = {
   classes: PropTypes.object,
   handleSubmit: PropTypes.func,
 };
 
-export default withStyles(styles)(AboutUserComponent);
+function mapDispatchToProps(dispatch) {
+  return { dispatch };
+}
+
+const mapStateToProps = createStructuredSelector({
+  loggedUserInfo: makeSelectLoggedUser()
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+const componentWithStyles = withStyles(styles)(AboutUserComponent);
+
+export default compose(
+  withConnect,
+)(componentWithStyles);
