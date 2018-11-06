@@ -25,7 +25,8 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import * as Yup from 'yup';
 import IdealImage from 'react-ideal-image';
-import Search from 'components/Search/Loadable';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Upload from 'components/Upload/Loadable';
 import _isEmpty from 'lodash/isEmpty';
 
@@ -33,6 +34,7 @@ import reducer from './reducer';
 import saga from './saga';
 
 import { getStates } from './selectors';
+import { submitNewTrendingNews } from './actions';
 
 const styles = theme => ({
   container: {
@@ -106,6 +108,14 @@ export class TrendingNewsForm extends React.Component {
     // access to player in all event handlers via event.target
     event.target.pauseVideo();
   }
+  onSubmit(values, actions) {
+    this.props.submitNewTrendingNewsDetails(
+      {
+        ...values
+      },
+      actions,
+    );
+  }
   render() {
     return (
       <Content>
@@ -114,22 +124,24 @@ export class TrendingNewsForm extends React.Component {
             headline: '',
             content: '',
             state: '',
-            photos: '',
-            coverPhoto: '',
-            embedYoutubeVideoUrl: '',
+            photo_urls: '',
+            cover_photo: '',
+            youtube_link: '',
           }}
           validationSchema={Yup.object().shape({
             headline: Yup.string().required('please provide headline'),
             content: Yup.string().required('Please provide content'),
-            photos: Yup.string().required('please upload  Photos'),
+            photo_urls: Yup.string().required('please upload  Photos'),
             state: Yup.string().required('Please choose any one of the State'),
           })}
+          onSubmit={(values, actions) => this.onSubmit(values, actions)}
         >
           {props => {
-            const { values, touched, errors, handleChange,setFieldValue, isSubmitting } = props;
+            const { values, touched, errors, handleChange,setFieldValue,
+              isSubmitting,handleSubmit } = props;
             const { classes, states } = this.props;
             return (
-              <form className={classes.form} noValidate="noValidate">
+              <form className={classes.form} noValidate="noValidate" onSubmit={handleSubmit}>
                 <Grid container spacing={16}>
                   <Grid item xs={12} sm={12} lg={6}>
                     <FormControl margin="normal" required fullWidth>
@@ -174,27 +186,44 @@ export class TrendingNewsForm extends React.Component {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <div style={{marginTop:10}}>
-                      <Search options={states} value="" placeholder="State" />
-                    </div>
+                  <FormControl margin="normal" fullWidth required>
+                  <InputLabel htmlFor="state">State</InputLabel>
+                  <Select
+                    value={values.state}
+                    onChange={handleChange}
+                    input={<Input id="state" name="state" />}
+                  >
+                    {states.map(state => (
+                      <MenuItem key={state.label} value={state.value}>
+                        {state.value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {touched.state &&
+                    errors.state && (
+                      <FormHelperText className={classes.error}>
+                        {errors.state}
+                      </FormHelperText>
+                    )}
+                </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={12} md={6} lg={6}>
                     <Upload
                     className={classes.uploadBtn}
                     text="Upload Photos"
-                    onUploaded={res => setFieldValue('photos', res[0].secure_url)}
+                    onUploaded={res => setFieldValue('photo_urls', res[0].secure_url)}
                   />
-                  {errors.photos && (
+                  {touched.photo_urls && errors.photo_urls && (
                     <FormHelperText className={classes.error}>
-                      {errors.photos}
+                      {errors.photo_urls}
                     </FormHelperText>
                   )}
                   <Grid item xs={12} sm={12} md={12} lg={12}>
-                  {!_isEmpty(values.photos) && (
+                  {!_isEmpty(values.photo_urls) && (
                     <div className={classes.photoContainer}>
                             <IdealImage
                             placeholder={{ color: 'grey' }}
-                            srcSet={[{ src: values.photos, width: 10, height: 100 }]}
+                            srcSet={[{ src: values.photo_urls, width: 10, height: 100 }]}
                             alt="Photos"
                             className={classes.photoPic}
                             height={100}
@@ -212,13 +241,13 @@ export class TrendingNewsForm extends React.Component {
                     <Upload
                     className={classes.uploadBtn}
                     text="Upload Cover Photo"
-                    onUploaded={res => setFieldValue('coverPhoto', res[0].secure_url)}
+                    onUploaded={res => setFieldValue('cover_photo', res[0].secure_url)}
                   />
                   <Grid item xs={12} sm={12} md={12} lg={12}>
-                {!_isEmpty(values.coverPhoto) && (
+                {!_isEmpty(values.cover_photo) && (
                   <IdealImage
                   placeholder={{ color: 'grey' }}
-                  srcSet={[{ src: values.coverPhoto, width: 100, height: 50 }]}
+                  srcSet={[{ src: values.cover_photo, width: 100, height: 50 }]}
                   alt="cover Photo"
                   height={50}
                   width={100}
@@ -227,22 +256,24 @@ export class TrendingNewsForm extends React.Component {
                 </Grid>
                 </Grid>
                 <Grid item xs={12} sm={12} lg={12} md={12}>
-                    <FormControl margin="normal" required fullWidth>
-                      <InputLabel htmlFor="embedYoutubeVideoUrl">Embed YouTube Link</InputLabel>
+                    <FormControl margin="normal" fullWidth>
+                      <InputLabel htmlFor="youtube_link">
+                        Embed YouTube Link
+                      </InputLabel>
                       <Input
-                        id="embedYoutubeVideoUrl"
-                        name="embedYoutubeVideoUrl"
-                        autoComplete="embedYoutubeVideoUrl"
-                        value={values.embedYoutubeVideoUrl}
+                        id="youtube_link"
+                        name="youtube_link"
+                        autoComplete="youtube_link"
+                        value={values.youtube_link}
                         onChange={handleChange}
                         autoFocus
-                      />
+                      />{' '}
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
-                  {!_isEmpty(values.embedYoutubeVideoUrl) && (
+                  {!_isEmpty(values.youtube_link) && (
                     <YouTube
-                    videoId={values.embedYoutubeVideoUrl}
+                    videoId={values.youtube_link}
                     opts={opts}
                     onReady={this._onReady}
                   />
@@ -292,6 +323,8 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    submitNewTrendingNewsDetails: (values, actions) =>
+      dispatch(submitNewTrendingNews(values, actions)),
   };
 }
 
