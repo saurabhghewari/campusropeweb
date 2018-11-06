@@ -6,6 +6,7 @@
 
 import {
   DEFAULT_ACTION,
+  PROFILE_INFO_FETCH_ACTION,
   PROFILE_TAB_SELECTION_ACTION,
   PROFILE_INFO_FETCH_SUCCESS_ACTION,
 } from './constants';
@@ -13,6 +14,13 @@ import {
 export function defaultAction() {
   return {
     type: DEFAULT_ACTION,
+  };
+}
+
+export function fetchUserProfileAction(payload) {
+  return {
+    type: PROFILE_INFO_FETCH_ACTION,
+    payload,
   };
 }
 

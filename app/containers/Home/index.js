@@ -25,6 +25,7 @@ import AboutUs from 'containers/AboutUs/Loadable';
 import PrivateRoute from 'components/PrivateRoute/Loadable';
 
 import makeSelectHome from './selectors';
+import makeSelectLoggedUser from '../../store/loggeduser/selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { homeMounted } from './actions';
@@ -51,6 +52,8 @@ export class Home extends React.Component {
     });
   };
   render() {
+    let {userInfo} = this.props;
+    let user = userInfo.user || {};
     return (
       <React.Fragment>
         <Helmet>
@@ -58,10 +61,10 @@ export class Home extends React.Component {
           <meta name="description" content="Description of Home" />
         </Helmet>
         <MobileView>
-          <MobileNavBar toggleDrawer={this.toggleDrawer} />
+          <MobileNavBar toggleDrawer={this.toggleDrawer} userInfo={user}/>
         </MobileView>
         <BrowserView>
-          <BrowserNavbar toggleDrawer={this.toggleDrawer} />
+          <BrowserNavbar toggleDrawer={this.toggleDrawer} userInfo={user} />
         </BrowserView>
         <Drawer
           open={this.state.drawerOpen}
@@ -73,7 +76,7 @@ export class Home extends React.Component {
           <PrivateRoute path="/app/admintask" component={AdminTask} />
           <PrivateRoute path="/app/news/trends" component={TrendingNews} />
           <PrivateRoute path="/app/ngos" component={Ngo} />
-          <PrivateRoute path="/app/profile" component={Profile} />
+          <PrivateRoute path="/app/profile/:userId" component={Profile} />
           <PrivateRoute path="/app/support" component={Support} />
           <PrivateRoute path="/app/helpline" component={Helpline} />
           <PrivateRoute path="/app/about" component={AboutUs} />
@@ -93,6 +96,7 @@ Home.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   home: makeSelectHome(),
+  userInfo: makeSelectLoggedUser()
 });
 
 function mapDispatchToProps(dispatch) {
