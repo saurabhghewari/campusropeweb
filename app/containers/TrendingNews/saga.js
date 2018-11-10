@@ -8,7 +8,7 @@ export function* submitNewTrendingNewsDetails({ values, actions }) {
   try {
     yield call(createNewTrendingNewsApi, values);
     yield call(resetForm);
-    yield put(replace('/app/news/trends'));
+    yield put(replace('/app/news/trends/admin/trends'));
   } catch (e) {
     yield call(setSubmitting, false);
   }
