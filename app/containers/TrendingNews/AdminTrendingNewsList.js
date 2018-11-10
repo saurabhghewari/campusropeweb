@@ -1,6 +1,6 @@
 /**
  *
- * Ngo
+ * AdminTrendingNewsList
  *
  */
 
@@ -23,7 +23,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import reducer from './reducer';
 import saga from './saga';
 import { fetchTrendingNews } from './actions';
-import RenderTrendingNewsList from './RenderTrendingNewsList';
+import TrendingNews from './TrendingNews';
 
 const styles = theme => ({
   card: {
@@ -111,7 +111,7 @@ export class AdminTrendingNewsList extends React.Component {
           </Grid>
         </Grid>
         {trendingNews.length === 0 ? this.renderNoTrendingNewsLabel(classes) :
-          <RenderTrendingNewsList
+          <TrendingNews
           trendingNews={trendingNews}
           />
         }

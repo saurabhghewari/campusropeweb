@@ -4,12 +4,17 @@
  *
  */
 
-import { DEFAULT_ACTION, SET_TRENDING_NEWS } from './constants';
+import {
+  DEFAULT_ACTION,
+  SET_TRENDING_NEWS,
+  SET_SELECTED_TRENDING_NEWS,
+} from './constants';
 import { getState } from '../../constants/cities';
 /* eslint-disable*/
 export const initialState = {
   states: getState(),
   trendingNewsList: [],
+  selectedTrendingNews: {},
 };
 
 function trendingNewsReducer(state = initialState, action) {
@@ -20,6 +25,11 @@ function trendingNewsReducer(state = initialState, action) {
       return {
         ...state,
         trendingNewsList: action.trendingNews,
+      };
+      case SET_SELECTED_TRENDING_NEWS:
+      return {
+        ...state,
+        selectedTrendingNews: action.selectedTrendingNews,
       };
     default:
       return state;

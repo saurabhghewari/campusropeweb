@@ -1,6 +1,6 @@
 /**
  *
- * Ngo
+ * TrendingNews
  *
  */
 
@@ -26,6 +26,7 @@ const styles = theme => ({
   card: {
     marginTop: theme.spacing.unit * 1,
     marginBottom: theme.spacing.unit * 3,
+    cursor: 'pointer',
   },
   media: {
     height: 0,
@@ -51,7 +52,47 @@ const opts = {
   }
 };
 
-export class RenderTrendingNewsList extends React.Component {
+const TrendingNewsBox = ({ trendingNewsData, classes, onTrendingNewsClick, getCreatedOnDate, _onReady }) => {
+  return (
+    <Card className={classes.card}
+    onClick={()=> onTrendingNewsClick(trendingNewsData)}
+    >
+          <CardHeader
+            avatar={
+              <Avatar
+                alt={trendingNewsData.headline}
+                src={trendingNewsData.photo_urls[0]}
+                className={classNames(classes.avatar, classes.bigAvatar)}
+              />
+            }
+            title={trendingNewsData.headline}
+            subheader={getCreatedOnDate(trendingNewsData.createdAt)}
+          />
+          <CardContent>
+            <Typography component="p">{trendingNewsData.content}</Typography>
+          </CardContent>
+          {!_isEmpty(trendingNewsData.cover_photo) && (
+            <CardMedia
+            className={classes.media}
+            image={trendingNewsData.cover_photo}
+          />
+          )}
+          {!_isEmpty(trendingNewsData.youtube_link) && (
+            <YouTube videoId={trendingNewsData.youtube_link}
+                      opts={opts}
+                      onReady={_onReady}
+            />
+          )}
+          <CardActions className={classes.actions} disableActionSpacing>
+            <IconButton aria-label="Like">
+              <ThumbUpSharp />
+            </IconButton>
+          </CardActions>
+      </Card>
+  );
+};
+
+export class TrendingNews extends React.Component {
   _onReady(event) {
     // access to player in all event handlers via event.target
     event.target.pauseVideo();
@@ -64,55 +105,31 @@ export class RenderTrendingNewsList extends React.Component {
   }
 
   render() {
-    const { classes, trendingNews } = this.props;
+    const { classes, trendingNews, onTrendingNewsClick } = this.props;
     return (
       <Fragment>
       {trendingNews.map(trendingNew => (
-        <Card className={classes.card} key={trendingNew.id}>
-          <CardHeader
-            avatar={
-              <Avatar
-                alt={trendingNew.headline}
-                src={trendingNew.photo_urls[0]}
-                className={classNames(classes.avatar, classes.bigAvatar)}
-              />
-            }
-            title={trendingNew.headline}
-            subheader={this.getCreatedOnDate(trendingNew.createdAt)}
-          />
-          <CardContent>
-            <Typography component="p">{trendingNew.content}</Typography>
-          </CardContent>
-          {!_isEmpty(trendingNew.cover_photo) && (
-            <CardMedia
-            className={classes.media}
-            image={trendingNew.cover_photo}
-          />
-          )}
-          {!_isEmpty(trendingNew.youtube_link) && (
-            <YouTube videoId={trendingNew.youtube_link}
-                      opts={opts}
-                      onReady={this._onReady}
-            />
-          )}
-          <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="Like">
-              <ThumbUpSharp />
-            </IconButton>
-          </CardActions>
-        </Card>
+        <TrendingNewsBox
+        key={trendingNew.id}
+        classes={classes}
+        onTrendingNewsClick={onTrendingNewsClick}
+        trendingNewsData={trendingNew}
+        getCreatedOnDate={this.getCreatedOnDate}
+        _onReady={this._onReady}
+        />
       ))}
       </Fragment>
     );
   }
 }
 
-RenderTrendingNewsList.propTypes = {
+TrendingNews.propTypes = {
   classes: PropTypes.object.isRequired,
-  trendingNews: PropTypes.array.isRequired
+  trendingNews: PropTypes.array.isRequired,
+  onTrendingNewsClick: PropTypes.func,
 };
 
 
-const componentWithStyles = withStyles(styles)(RenderTrendingNewsList);
+const componentWithStyles = withStyles(styles)(TrendingNews);
 
 export default componentWithStyles;
