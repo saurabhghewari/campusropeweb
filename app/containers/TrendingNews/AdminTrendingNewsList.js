@@ -41,6 +41,10 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
+  noTrendingNewsLabel: {
+    textAlign: 'center',
+    marginTop: theme.spacing.unit * 4,
+  },
 });
 
 /* eslint-disable*/
@@ -62,8 +66,10 @@ export class AdminTrendingNewsList extends React.Component {
       state: value
     })
   }
-  renderNoTrendingNewsLabel() {
-    return <Typography variant="h4">No Trending News Created</Typography>;
+  renderNoTrendingNewsLabel(classes) {
+    return <Typography variant="h4" className={classes.noTrendingNewsLabel}>
+                  No Trending News Created
+            </Typography>;
   }
 
   _onReady(event) {
@@ -104,7 +110,7 @@ export class AdminTrendingNewsList extends React.Component {
         </FormControl>
           </Grid>
         </Grid>
-        {trendingNews.length === 0 ? this.renderNoTrendingNewsLabel() :
+        {trendingNews.length === 0 ? this.renderNoTrendingNewsLabel(classes) :
           <RenderTrendingNewsList
           trendingNews={trendingNews}
           />
