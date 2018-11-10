@@ -14,17 +14,7 @@ import injectReducer from 'utils/injectReducer';
 import Content from 'components/Content/Loadable';
 
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
-import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import ThumbUpSharp from '@material-ui/icons/ThumbUpSharp';
 import { replace } from 'react-router-redux';
 
 import { Input, Grid, Select, MenuItem, FormControl } from '@material-ui/core';
@@ -32,6 +22,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 
 import reducer from './reducer';
 import saga from './saga';
+import { fetchTrendingNews } from './actions';
+import RenderTrendingNewsList from './RenderTrendingNewsList';
 
 const styles = theme => ({
   card: {
@@ -45,23 +37,6 @@ const styles = theme => ({
   actions: {
     display: 'flex',
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-    marginLeft: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      marginRight: -8,
-    },
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  bigAvatar: {
-    width: 60,
-    height: 60,
-  },
   createBtnContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -71,40 +46,12 @@ const styles = theme => ({
 /* eslint-disable*/
 
 /* eslint-disable react/prefer-stateless-function */
-
-const renderAdminTrendingNews = (trendingNews, classes) => {
-  return trendingNews.map(trendingNew => (
-    <Card className={classes.card} key={trendingNew.id}>
-      <CardHeader
-        avatar={
-          <Avatar
-            alt={trendingNew.userName}
-            src={trendingNew.profilePictureUrl}
-            className={classNames(classes.avatar, classes.bigAvatar)}
-          />
-        }
-        title={trendingNew.userName}
-        subheader={trendingNew.createdOn}
-      />
-      <CardContent>
-        <Typography component="p">{trendingNew.headLine}</Typography>
-      </CardContent>
-      <CardMedia
-        className={classes.media}
-        image={trendingNew.pictureUrl}
-        title={trendingNew.userName}
-      />
-      <CardActions className={classes.actions} disableActionSpacing>
-        <IconButton aria-label="Like">
-          <ThumbUpSharp />
-        </IconButton>
-      </CardActions>
-    </Card>
-  ));
-};
 export class AdminTrendingNewsList extends React.Component {
   state={
     state:''
+  }
+  componentDidMount() {
+    this.props.fetchTrendingNews();
   }
   createNewTrendingNews() {
     this.props.dispatch(replace('/app/news/trends/admin/trend/new'));
@@ -114,6 +61,14 @@ export class AdminTrendingNewsList extends React.Component {
     this.setState({
       state: value
     })
+  }
+  renderNoTrendingNewsLabel() {
+    return <Typography variant="h4">No Trending News Created</Typography>;
+  }
+
+  _onReady(event) {
+    // access to player in all event handlers via event.target
+    event.target.pauseVideo();
   }
 
   render() {
@@ -149,7 +104,11 @@ export class AdminTrendingNewsList extends React.Component {
         </FormControl>
           </Grid>
         </Grid>
-        {renderAdminTrendingNews(trendingNews, classes)}
+        {trendingNews.length === 0 ? this.renderNoTrendingNewsLabel() :
+          <RenderTrendingNewsList
+          trendingNews={trendingNews}
+          />
+        }
       </Content>
     );
   }
@@ -164,7 +123,7 @@ AdminTrendingNewsList.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    trendingNews: [],
+    trendingNews: state.trendingNews.trendingNewsList,
     states: state.trendingNews.states,
   };
 }
@@ -172,6 +131,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchTrendingNews: () => dispatch(fetchTrendingNews()),
   };
 }
 
