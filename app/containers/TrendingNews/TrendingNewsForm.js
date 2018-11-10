@@ -14,6 +14,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Content from 'components/Content/Loadable';
 import YouTube from 'react-youtube';
+import { replace } from 'react-router-redux';
 
 import { Formik } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -115,6 +116,10 @@ export class TrendingNewsForm extends React.Component {
       },
       actions,
     );
+  }
+
+  onCancel() {
+    this.props.dispatch(replace('/app/news/trends/admin/trends'));
   }
   render() {
     return (
@@ -294,6 +299,7 @@ export class TrendingNewsForm extends React.Component {
                 <Button
                   variant="contained"
                   color="secondary"
+                  onClick={()=>this.onCancel()}
                   className={classes.cancel}
                   disabled={isSubmitting}
                 >
