@@ -60,6 +60,11 @@ export class TrendingNews extends React.Component {
           path="/app/news/trends/:trendingNewsId/details"
           component={TrendingNewsView}
         />
+        <PrivateRoute
+        exact
+        path="/app/news/trends/admin/:trendingNewsId/details"
+        component={TrendingNewsView}
+      />
           <PrivateRoute
           exact
           path="/app/news/trends/admin/trends"
