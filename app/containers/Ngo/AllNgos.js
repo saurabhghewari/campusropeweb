@@ -46,7 +46,7 @@ class AllNgos extends React.Component {
           {' '}
           Create NGO{' '}
         </Button>
-        <NgoList ngos={fetchedNgos} />
+        <NgoList ngos={fetchedNgos} onNgoClick={() => {}} />
       </Fragment>
     );
   }

@@ -110,7 +110,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
           <FormControl
             margin="normal"
             required
-            fullWidth="fullWidth"
+            fullWidth
           >
             <InputLabel htmlFor="email">Email</InputLabel>
             <Input
@@ -132,7 +132,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
           <FormControl
             margin="normal"
             required
-            fullWidth="fullWidth"
+            fullWidth
           >
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input
@@ -174,7 +174,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
           </div>
 
           <Button
-            fullWidth="fullWidth"
+            fullWidth
             type="submit"
             variant="contained"
             color="primary"
@@ -216,7 +216,7 @@ const FormPaper = ({
       render={({ onClick }) => (
         <Button
           type="submit"
-          fullWidth="fullWidth"
+          fullWidth
           variant="contained"
           color="secondary"
           onClick={onClick}
@@ -233,7 +233,7 @@ const FormPaper = ({
     </Typography>
     <Button
       type="submit"
-      fullWidth="fullWidth"
+      fullWidth
       variant="contained"
       color="primary"
       onClick={routeToSignup}
