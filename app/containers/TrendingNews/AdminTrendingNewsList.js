@@ -1,6 +1,6 @@
 /**
  *
- * Ngo
+ * AdminTrendingNewsList
  *
  */
 
@@ -19,11 +19,12 @@ import { replace } from 'react-router-redux';
 
 import { Input, Grid, Select, MenuItem, FormControl } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
+import Typography from '@material-ui/core/Typography';
 
 import reducer from './reducer';
 import saga from './saga';
 import { fetchTrendingNews } from './actions';
-import RenderTrendingNewsList from './RenderTrendingNewsList';
+import TrendingNews from './TrendingNews';
 
 const styles = theme => ({
   card: {
@@ -59,6 +60,10 @@ export class AdminTrendingNewsList extends React.Component {
   }
   createNewTrendingNews() {
     this.props.dispatch(replace('/app/news/trends/admin/trend/new'));
+  }
+
+  routeToTrendingNewsView(selectedTrendingNews) {
+    this.props.dispatch(replace(`/app/news/trends/admin/${selectedTrendingNews.id}/details`));
   }
 
   handleChange(value){
@@ -111,8 +116,9 @@ export class AdminTrendingNewsList extends React.Component {
           </Grid>
         </Grid>
         {trendingNews.length === 0 ? this.renderNoTrendingNewsLabel(classes) :
-          <RenderTrendingNewsList
+          <TrendingNews
           trendingNews={trendingNews}
+          onTrendingNewsClick={selectedTrendingNews => this.routeToTrendingNewsView(selectedTrendingNews)}
           />
         }
       </Content>

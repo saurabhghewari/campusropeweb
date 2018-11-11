@@ -107,19 +107,23 @@ function BrowserNavbar(props) {
 
           <div className={classes.sectionDesktop}>
             <div className={classes.seperator}>
-              <Link to="/app" className={classes.link}>
+              <Link to="/app" className={classes.link} href="/app">
                 <IconButton color="inherit" className={classes.iconList}>
                   <HomeIcon />
                 </IconButton>
               </Link>
             </div>
-            <Link to="/app/news/trends" replace>
-              <div className={classes.seperator}>
+            <div className={classes.seperator}>
+              <Link
+                to="/app/news/trends"
+                className={classes.link}
+                href="/app/news/trends"
+              >
                 <IconButton color="inherit" className={classes.iconList}>
                   <Title />
                 </IconButton>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
 
           <div className={classes.search}>
@@ -137,7 +141,7 @@ function BrowserNavbar(props) {
           </div>
           <div className={classes.sectionDesktopRight}>
             <div className={classes.seperator}>
-              <Link to={profileUrl} className={classes.link}>
+              <Link to={profileUrl} className={classes.link} href={profileUrl}>
                 <IconButton color="inherit" className={classes.iconList}>
                   <AccountCircle />
                 </IconButton>

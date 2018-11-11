@@ -14,3 +14,10 @@ export function fetchTrendingNewsApi() {
     .get(URL_WITH_QUERY)
     .then(res => res.data.rows);
 }
+
+export function fetchTrendingNewsByIdApi(trendingNewsId) {
+  const URL_WITH_QUERY = `${TRENDING_NEWS_URL}/${trendingNewsId}`;
+  return getAxiosInstance()
+    .get(URL_WITH_QUERY)
+    .then(res => res.data);
+}

@@ -1,6 +1,6 @@
 /**
  *
- * Ngo
+ * TrendingNewsList
  *
  */
 
@@ -14,12 +14,14 @@ import injectReducer from 'utils/injectReducer';
 import Content from 'components/Content/Loadable';
 import { withStyles } from '@material-ui/core/styles';
 
+import { replace } from 'react-router-redux';
+
 import Typography from '@material-ui/core/Typography';
 import { Input, Grid, Select, MenuItem, FormControl } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import { fetchTrendingNews } from './actions';
-import RenderTrendingNewsList from './RenderTrendingNewsList';
+import TrendingNews from './TrendingNews';
 
 import reducer from './reducer';
 import saga from './saga';
@@ -40,6 +42,10 @@ export class TrendingNewsList extends React.Component {
   }
   componentDidMount() {
     this.props.fetchTrendingNews();
+  }
+
+  routeToTrendingNewsView(selectedTrendingNews) {
+    this.props.dispatch(replace(`/app/news/trends/${selectedTrendingNews.id}/details`));
   }
 
   handleChange(value){
@@ -78,8 +84,9 @@ export class TrendingNewsList extends React.Component {
           </Grid>
         </Grid>
         {trendingNews.length === 0 ? this.renderNoTrendingNewsLabel() :
-          <RenderTrendingNewsList
+          <TrendingNews
             trendingNews={trendingNews}
+            onTrendingNewsClick={selectedTrendingNews => this.routeToTrendingNewsView(selectedTrendingNews)}
           />
         }
       </Content>
