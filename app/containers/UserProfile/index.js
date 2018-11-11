@@ -79,9 +79,9 @@ export class UserProfile extends React.Component {
     this.props.onSelectProfileTab(selectedTab);
   };
 
-  handleProfileSave = (values) => {
+  handleProfileSave = (values, actions) => {
     const {userId} = this.props.match.params;
-    this.props.saveUserProfile({...values, userId})
+    this.props.saveUserProfile({...values, userId}, actions)
   }
 
   componentDidMount() {
@@ -189,7 +189,7 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fetchUserProfile: userId => dispatch(fetchUserProfileAction({ userId })),
-    saveUserProfile: payload => dispatch(saveProfileAction(payload)),
+    saveUserProfile: (payload, actions) => dispatch(saveProfileAction(payload, actions)),
     onSelectProfileTab: selectedTab => dispatch(tabSelectAction(selectedTab)),
   };
 }

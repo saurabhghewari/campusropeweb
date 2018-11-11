@@ -16,15 +16,15 @@ import {
   FormControl,
   InputLabel,
   Typography,
-  TextField
+  TextField,
 } from '@material-ui/core';
 import { Add, Delete } from '@material-ui/icons';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Formik, FieldArray } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { createStructuredSelector } from 'reselect';
 import ProfileTabType from './ProfileTabTypeModel';
 import { makeSelectLoggedUser } from '../../store/loggeduser/selectors'
-import { createStructuredSelector } from 'reselect';
 import '../App/common.css';
 
 const styles = theme => ({
@@ -45,8 +45,8 @@ const styles = theme => ({
     color: "white",
 
     '&:hover': {
-      background: "#ecb809"
-    }
+      background: "#ecb809",
+    },
   },
   button: {
     marginBottom: theme.spacing.unit,
@@ -68,23 +68,23 @@ const styles = theme => ({
     minWidth: "30px",
     height: "40px",
     width: "40px",
-    marginLeft: 10
+    marginLeft: 10,
   },
   multiInputWrapper: {
     display: "flex",
     alignItems: "center",
-    position: "relative"
+    position: "relative",
   },
   multiInput: {
-    flex: 1
+    flex: 1,
   },
   deleteBtn: {
     background: "#e63d3d",
     color: "white",
 
     '&:hover': {
-      background: "#d43a3a"
-    }
+      background: "#d43a3a",
+    },
   },
 });
 
@@ -95,46 +95,54 @@ const initalValue = {
   homeTown: '',
   country: '',
   currentCity: '',
+  religiousView: '',
   politicalView: '',
-  workAndExperience: [''],
-  skill: [''],
+  workAndExperience: [],
+  skills: [],
   college: '',
-  otherDegreeAndCourses: [''],
-  careerObjectives: [''],
+  otherDegreeAndCourses: [],
+  careerObjectives: [],
 };
 
-const getInitialValues = (userProfile) =>
-  Object.assign({}, initalValue, { ...userProfile, ...userProfile.createdBy });
+const getInitialValues = (userProfile) => {
+  let updatedInitalValue = Object.assign({}, initalValue,
+    { ...userProfile, profileId: userProfile.id, ...userProfile.profileOf });
+  return updatedInitalValue;
+}
 
-let MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChange, name }) => {
-
-  return (
-    <div>
-      {values.map((value, index) => (
+const MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChange, name }) => (
+  <div>
+    {values.length ?
+      (values.map((value, index) => (
         <div key={index} className={classes.multiInputWrapper}>
           <TextField
-            id={index}
-            name={`${name}.${index}`}
+            id={"" + index}
+            name={name+"."+index}
             label={label}
             className={classes.multiInput}
             value={value}
             onChange={handleChange}
           />
 
-          <Button variant="contained" color="primary" className={classes.multiInputBtn}
+          <Button
+            variant="contained" color="primary" className={classes.multiInputBtn}
             onClick={() => arrayHelpers.insert(index, "")}>
             <Add />
           </Button>
 
-          {(values.length > 1) && <Button variant="contained" onClick={() => arrayHelpers.remove(index)}
+          {(values.length > 1) && <Button
+            variant="contained" onClick={() => arrayHelpers.remove(index)}
             className={classNames(classes.multiInputBtn, classes.deleteBtn)}>
             <Delete />
           </Button>}
         </div>
-      ))
-      }</div>
-  )
-}
+      ))) : 
+        (<Button variant="contained" color="primary" onClick={() => arrayHelpers.push('')}>
+          Add {name}
+      </Button>)
+    }
+  </div>
+)
 
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
@@ -173,7 +181,7 @@ const AboutUserComponent = (props) => {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">Name</InputLabel>
                   <Input
                     id="name"
@@ -182,11 +190,11 @@ const AboutUserComponent = (props) => {
                     value={values.name}
                     onChange={handleChange}
                     autoFocus
-                    fullWidth="true"
+                    fullWidth={true}
                   />
                 </FormControl>
 
-                <FormControl margin="normal" fullWidth>
+                <FormControl margin="normal" fullWidth={true}>
                   <InputLabel htmlFor="gender">Gender</InputLabel>
                   <Select
                     value={values.gender}
@@ -205,13 +213,14 @@ const AboutUserComponent = (props) => {
                     )}
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="email">Email</InputLabel>
                   <Input
                     id="email"
                     name="email"
                     autoComplete="email"
                     value={values.email}
+                    disabled
                     onChange={handleChange}
                   />{' '}
                   {touched.email &&
@@ -227,7 +236,7 @@ const AboutUserComponent = (props) => {
                   )}
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">Country</InputLabel>
                   <Input
                     id="country"
@@ -238,7 +247,7 @@ const AboutUserComponent = (props) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">Home Town</InputLabel>
                   <Input
                     id="homeTown"
@@ -249,7 +258,7 @@ const AboutUserComponent = (props) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">Current City</InputLabel>
                   <Input
                     id="currentCity"
@@ -269,7 +278,7 @@ const AboutUserComponent = (props) => {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">Political View</InputLabel>
                   <Input
                     id="politicalView"
@@ -280,7 +289,7 @@ const AboutUserComponent = (props) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">Religious View</InputLabel>
                   <Input
                     id="religiousView"
@@ -299,23 +308,27 @@ const AboutUserComponent = (props) => {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth>
-                  <FieldArray name="workAndExperience"
+                <FormControl margin="normal" required fullWidth={true}>
+                  <FieldArray
+                    name="workAndExperience"
                     render={(arrayHelpers) =>
-                      <MultiInputComponent arrayHelpers={arrayHelpers}
+                      <MultiInputComponent
+                        arrayHelpers={arrayHelpers}
                         label="Work And Experience" values={values.workAndExperience}
                         handleChange={handleChange} classes={classes} name="workAndExperience" />} />
                 </FormControl>
 
                 <FormControl margin="normal" required fullWidth>
-                  <FieldArray name="skill"
+                  <FieldArray
+                    name="skills"
                     render={(arrayHelpers) =>
-                      <MultiInputComponent arrayHelpers={arrayHelpers}
-                        label="skill" values={values.skill} handleChange={handleChange}
-                        classes={classes} name="skill" />} />
+                      <MultiInputComponent
+                        arrayHelpers={arrayHelpers}
+                        label="skills" values={values.skills} handleChange={handleChange}
+                        classes={classes} name="skills" />} />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">College</InputLabel>
                   <Input
                     id="college"
@@ -326,19 +339,23 @@ const AboutUserComponent = (props) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
-                  <FieldArray name="otherDegreeAndCourses"
+                <FormControl margin="normal" required fullWidth={true}>
+                  <FieldArray
+                    name="otherDegreeAndCourses"
                     render={(arrayHelpers) =>
-                      <MultiInputComponent arrayHelpers={arrayHelpers}
+                      <MultiInputComponent
+                        arrayHelpers={arrayHelpers}
                         label="Other Degree and Courses" values={values.otherDegreeAndCourses}
                         handleChange={handleChange} classes={classes}
                         name="otherDegreeAndCourses" />} />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
-                  <FieldArray name="careerObjectives"
+                <FormControl margin="normal" required fullWidth={true}>
+                  <FieldArray
+                    name="careerObjectives"
                     render={(arrayHelpers) =>
-                      <MultiInputComponent arrayHelpers={arrayHelpers}
+                      <MultiInputComponent
+                        arrayHelpers={arrayHelpers}
                         label="Career Objectives" values={values.careerObjectives}
                         handleChange={handleChange} classes={classes}
                         name="careerObjectives" />} />
@@ -386,7 +403,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  loggedUserInfo: makeSelectLoggedUser()
+  loggedUserInfo: makeSelectLoggedUser(),
 });
 
 const withConnect = connect(
