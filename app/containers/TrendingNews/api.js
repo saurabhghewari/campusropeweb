@@ -7,3 +7,17 @@ export function createNewTrendingNewsApi(newTrendingNewsDetails) {
     .post(URL_WITH_QUERY, newTrendingNewsDetails)
     .then(res => res.data);
 }
+
+export function fetchTrendingNewsApi() {
+  const URL_WITH_QUERY = `${TRENDING_NEWS_URL}`;
+  return getAxiosInstance()
+    .get(URL_WITH_QUERY)
+    .then(res => res.data.rows);
+}
+
+export function fetchTrendingNewsByIdApi(trendingNewsId) {
+  const URL_WITH_QUERY = `${TRENDING_NEWS_URL}/${trendingNewsId}`;
+  return getAxiosInstance()
+    .get(URL_WITH_QUERY)
+    .then(res => res.data);
+}

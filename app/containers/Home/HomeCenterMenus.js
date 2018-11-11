@@ -14,6 +14,7 @@ import AccountBalance from '@material-ui/icons/AccountBalanceRounded';
 import Gavel from '@material-ui/icons/Gavel';
 import SettingsPhone from '@material-ui/icons/SettingsPhone';
 import InfoOutline from '@material-ui/icons/InfoOutlined';
+import Title from '@material-ui/icons/Title';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
@@ -93,6 +94,12 @@ const menus = [
     iconBgColor: '#006064',
     icon: <InfoOutline />,
     linkTo: '/app/ngos/verification',
+  },
+  {
+    title: 'Admin Trends',
+    iconBgColor: '#006064',
+    icon: <Title />,
+    linkTo: '/app/news/trends/admin/trends',
   },
 ];
 
