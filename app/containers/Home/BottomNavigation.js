@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { replace } from 'react-router-redux';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import TrendingUp from '@material-ui/icons/TrendingUp';
@@ -24,6 +27,16 @@ class AppBottomNavigation extends React.Component {
 
   handleChange = (event, value) => {
     this.setState({ value });
+    switch (value) {
+      case 0:
+        this.props.dispatch(replace('/app'));
+        break;
+      case 1:
+        this.props.dispatch(replace('/app/news/trends'));
+        break;
+      default:
+        this.props.dispatch(replace('/app'));
+    }
   };
 
   render() {
@@ -51,7 +64,24 @@ class AppBottomNavigation extends React.Component {
 }
 
 AppBottomNavigation.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AppBottomNavigation);
+function mapStateToProps() {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const componentWithStyles = withStyles(styles)(AppBottomNavigation);
+export default compose(withConnect)(componentWithStyles);

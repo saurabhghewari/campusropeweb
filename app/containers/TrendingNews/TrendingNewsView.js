@@ -1,6 +1,6 @@
 /**
  *
- * AdminTrendingNewsList
+ * TrendingNewsView
  *
  */
 
@@ -29,21 +29,6 @@ import saga from './saga';
 import { fetchTrendingNewsById } from './actions';
 
 const styles = theme => ({
-  card: {
-    marginTop: theme.spacing.unit * 1,
-    marginBottom: theme.spacing.unit * 3,
-  },
-  media: {
-    height: 0,
-    paddingTop: '38%', // 16:9
-  },
-  actions: {
-    display: 'flex',
-  },
-  createBtnContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
   noTrendingNewsLabel: {
     textAlign: 'center',
     marginTop: theme.spacing.unit * 4,
@@ -146,13 +131,13 @@ export class TrendingNewsView extends React.Component {
                     placeholder={{ color: 'grey' }}
                     srcSet={[{ src: trendingNewsDetails.photo_urls[0], width: 10, height: 100 }]}
                     alt="Photos"
-                    className={classes.photoPic}
                     height={100}
                     width={10}
                   />
                   )}
                   </Grid>
                   <Grid item xs={12} sm={12} lg={12} md={12}>
+                  {!_isEmpty(trendingNewsDetails.youtube_link) && (
                     <FormControl margin="normal" fullWidth>
                       <InputLabel htmlFor="youtube_link">
                         Embed YouTube Link
@@ -161,10 +146,12 @@ export class TrendingNewsView extends React.Component {
                         id="youtube_link"
                         name="youtube_link"
                         autoComplete="youtube_link"
+                        readOnly={true}
                         value={trendingNewsDetails.youtube_link}
                         autoFocus
                       />{' '}
                     </FormControl>
+                  )}
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                   {!_isEmpty(trendingNewsDetails.youtube_link) && (
