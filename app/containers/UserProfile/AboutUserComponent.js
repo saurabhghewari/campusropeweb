@@ -117,7 +117,7 @@ const MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChang
         <div key={index} className={classes.multiInputWrapper}>
           <TextField
             id={"" + index}
-            name={name+"."+index}
+            name={name + "." + index}
             label={label}
             className={classes.multiInput}
             value={value}
@@ -136,9 +136,9 @@ const MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChang
             <Delete />
           </Button>}
         </div>
-      ))) : 
-        (<Button variant="contained" color="primary" onClick={() => arrayHelpers.push('')}>
-          Add {name}
+      ))) :
+      (<Button variant="contained" color="primary" onClick={() => arrayHelpers.push('')}>
+        Add {name}
       </Button>)
     }
   </div>
@@ -148,7 +148,7 @@ const MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChang
 /* eslint prettier/prettier: 0 */
 const AboutUserComponent = (props) => {
 
-  const { classes, userProfile = {}, handleCancel, handleProfileSave } = props;
+  const { classes, userProfile = {}, handleCancel, handleProfileSave, isOwner } = props;
 
   const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
 
@@ -364,7 +364,7 @@ const AboutUserComponent = (props) => {
             </ExpansionPanel>
 
             <div className={classes.aboutUserBtnWrapper}>
-              <Button
+              {isOwner ? <Button
                 type="submit"
                 variant="contained"
                 color="primary"
@@ -373,7 +373,7 @@ const AboutUserComponent = (props) => {
               >
                 {' '}
                 Save
-              </Button>
+              </Button> : ""}
 
               <Button
                 onClick={() => handleCancel(TAB_TYPE_MAP.POST_TAB)}
@@ -396,6 +396,7 @@ const AboutUserComponent = (props) => {
 AboutUserComponent.propTypes = {
   classes: PropTypes.object,
   handleSubmit: PropTypes.func,
+  isOwner: PropTypes.bool.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {

@@ -43,6 +43,6 @@ export function saveProfileAction(payload, actions) {
   return {
     type: SAVE_PROFILE_ACTION,
     payload,
-    actions
+    actions,
   };
 }

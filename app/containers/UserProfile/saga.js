@@ -26,11 +26,12 @@ export function* saveUserProfileSaga(action) {
   try {
     yield call(saveUserProfile, payload);
     yield put({
-      type: PROFILE_INFO_FETCH_ACTION, payload: {
-        userId: payload.profileOf.id
-      }
+      type: PROFILE_INFO_FETCH_ACTION,
+      payload: {
+        userId: payload.profileOf.id,
+      },
     });
-    actions.setSubmitting(false)
+    actions.setSubmitting(false);
   } catch (e) {
     console.log(e);
   }
