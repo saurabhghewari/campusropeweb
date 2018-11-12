@@ -7,31 +7,32 @@ import { getUserProfile, saveUserProfile } from './api';
 export default function* defaultSaga() {
   yield [
     takeLatest(PROFILE_INFO_FETCH_ACTION, fetchUserProfile),
-    takeLatest(SAVE_PROFILE_ACTION, saveUserProfileSaga)
+    takeLatest(SAVE_PROFILE_ACTION, saveUserProfileSaga),
   ];
 }
 
 export function* fetchUserProfile({ payload }) {
-  let { userId } = payload;
-  try{
+  const { userId } = payload;
+  try {
     const userProfile = yield call(getUserProfile, userId);
     yield put(setUserProfileAction(userProfile));
-  } catch(e){
-
+  } catch (e) {
+    console.log(e);
   }
 }
 
 export function* saveUserProfileSaga(action) {
-  let { payload } = action;
-  try{
-    const userProfile = yield call(saveUserProfile, payload);
-    yield put({ type: PROFILE_INFO_FETCH_ACTION });
-  } catch(e){
-    
+  const { payload, actions } = action;
+  try {
+    yield call(saveUserProfile, payload);
+    yield put({
+      type: PROFILE_INFO_FETCH_ACTION,
+      payload: {
+        userId: payload.profileOf.id,
+      },
+    });
+    actions.setSubmitting(false);
+  } catch (e) {
+    console.log(e);
   }
-}
-
-export function* saveAdminTaskToDB() {
-  const { tasks, selectedUser } = yield select(selectAdminTaskDomain);
-  yield call(saveAdminTasksApi, { tasks, selectedUser });
 }

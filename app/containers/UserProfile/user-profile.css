@@ -26,7 +26,7 @@
 
 .root {
   width: 90%;
-  margin: 10px auto;
+  margin: 15px auto;
   height: 75%;
   display: flex;
   flex-wrap: wrap;
@@ -34,9 +34,15 @@
   justify-content: space-around;
 }
 
+.userDetail {
+  font-size: 16px;
+  padding-top: 60px;
+  padding-bottom: 25px;
+}
+
 @media only screen and (max-width: 700px) {
   .circleBorder{
-    top: 10%;
+    top: 5%;
   }
 
   .profileFormSection{
@@ -46,5 +52,16 @@
   .root{
     width: 99%;
   }
+  
+  .userDetail {
+    padding-top: 10px;
+  }
+}
+
+.userActionWrapper{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 15px 0;
 }
 
