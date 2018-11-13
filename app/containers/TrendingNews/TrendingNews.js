@@ -19,6 +19,8 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ThumbUpSharp from '@material-ui/icons/ThumbUpSharp';
+import Comment from '@material-ui/icons/Comment';
+import Share from '@material-ui/icons/Share';
 
 import _isEmpty from 'lodash/isEmpty';
 
@@ -55,7 +57,7 @@ const opts = {
 const TrendingNewsBox = ({ trendingNewsData, classes, onTrendingNewsClick, getCreatedOnDate, _onReady }) => {
   return (
     <Card className={classes.card}
-    onClick={()=> onTrendingNewsClick(trendingNewsData)}
+      onClick={()=> onTrendingNewsClick(trendingNewsData)}
     >
           <CardHeader
             avatar={
@@ -87,6 +89,12 @@ const TrendingNewsBox = ({ trendingNewsData, classes, onTrendingNewsClick, getCr
             <IconButton aria-label="Like">
               <ThumbUpSharp />
             </IconButton>
+            <IconButton aria-label="Comment">
+            <Comment />
+          </IconButton>
+          <IconButton aria-label="Share">
+          <Share />
+        </IconButton>
           </CardActions>
       </Card>
   );

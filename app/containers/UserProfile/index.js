@@ -6,17 +6,20 @@
 import bgImage from 'images/loginbg.jpg';
 
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Paper, Grid, Avatar, Typography, Tabs, Tab } from '@material-ui/core';
+import { Paper, Grid, Avatar, Typography, Tabs, Tab, Button } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { BrowserView, MobileView } from 'react-device-detect';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { selectUserProfileInfo, makeSelectSelectedTab } from './selectors';
+import { makeSelectLoggedUser } from '../../store/loggeduser/selectors';
 import reducer from './reducer';
 import saga from './saga';
 import AddPostComponent from './AddPostComponent';
@@ -33,7 +36,7 @@ const styles = () => ({
     height: '220px',
   },
   topSectionGrid: {
-    minHeight: "200px",
+    minHeight: "185px",
   },
   followsCount: {
     paddingRight: "10px",
@@ -54,11 +57,6 @@ const styles = () => ({
       padding: "15px 0",
     },
   },
-  userDetail: {
-    paddingBottom: "25px",
-    fontSize: "16px",
-    paddingTop: "60px",
-  },
   profileTabGrid: {
     paddingBottom: "25px",
   },
@@ -68,6 +66,15 @@ const styles = () => ({
   },
   postWrapper: {
     padding: "20px 0",
+  },
+  followBtn: {
+
+  },
+  messageBtn: {
+
+  },
+  moreBtn: {
+
   },
 });
 
@@ -79,14 +86,20 @@ export class UserProfile extends React.Component {
     this.props.onSelectProfileTab(selectedTab);
   };
 
-  handleProfileSave = (values) => {
-    const {userId} = this.props.match.params;
-    this.props.saveUserProfile({...values, userId})
+  handleProfileSave = (values, actions) => {
+    const { userId } = this.props.match.params;
+    this.props.saveUserProfile({ ...values, userId }, actions)
   }
 
   componentDidMount() {
-    const {userId} = this.props.match.params;
+    const { userId } = this.props.match.params;
     this.props.fetchUserProfile(userId);
+  }
+
+  isOwner() {
+    const { userId } = this.props.match.params;
+    const user = this.props.loggedUserInfo && this.props.loggedUserInfo.user || {};
+    return user.id === userId;
   }
 
   render() {
@@ -129,6 +142,27 @@ export class UserProfile extends React.Component {
                   <span className={classes.followsCount}> 1309</span>
                   <span className={classes.followsLabel}>Followings</span>
                 </Typography>
+
+                {!this.isOwner() ?
+                  <BrowserView viewClassName="userActionWrapper">
+                    <Button
+                      variant="contained" color="primary"
+                      className={classNames(classes.userActionBtn, classes.followBtn)}>
+                      Follow
+                </Button>
+
+                    <Button
+                      variant="contained" color="primary"
+                      className={classNames(classes.userActionBtn, classes.messageBtn)}>
+                      Message
+                </Button>
+
+                    <Button
+                      variant="contained" color="primary"
+                      className={classNames(classes.userActionBtn, classes.moreBtn)}>
+                      More
+                </Button>
+                  </BrowserView> : ""}
               </div>
             </Grid>
 
@@ -136,7 +170,28 @@ export class UserProfile extends React.Component {
 
           <Grid container>
             <Grid item xs={12} md={4} lg={4} className={classes.profileTabGrid}>
-              <Typography invarient="body2" className={classes.userDetail}>Software Developer at GMI</Typography>
+              {!this.isOwner() ?
+                <MobileView viewClassName="userActionWrapper">
+                  <Button
+                    variant="contained" color="primary"
+                    className={classNames(classes.userActionBtn, classes.followBtn)}>
+                    Follow
+                </Button>
+
+                  <Button
+                    variant="contained" color="primary"
+                    className={classNames(classes.userActionBtn, classes.messageBtn)}>
+                    Message
+                </Button>
+
+                  <Button
+                    variant="contained" color="primary"
+                    className={classNames(classes.userActionBtn, classes.moreBtn)}>
+                    More
+                </Button>
+                </MobileView> : ""}
+
+              <Typography invarient="body2" className="userDetail">Software Developer at GMI</Typography>
 
               <Paper square>
                 <Tabs
@@ -154,7 +209,8 @@ export class UserProfile extends React.Component {
             <Grid item xs={12} md={8} lg={8} className="margin-auto profileFormSection">
               {selectedTab === TAB_TYPE_MAP.ABOUT_TAB &&
                 <AboutUserComponent
-                handleProfileSave={this.handleProfileSave}
+                  isOwner={this.isOwner()}
+                  handleProfileSave={this.handleProfileSave}
                   userProfile={userprofileInfo}
                   handleCancel={this.handleProfileTabChange} />}
 
@@ -183,13 +239,14 @@ UserProfile.propTypes = {
 const mapStateToProps = createStructuredSelector({
   selectedTab: makeSelectSelectedTab(),
   userprofileInfo: selectUserProfileInfo(),
+  loggedUserInfo: makeSelectLoggedUser()
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fetchUserProfile: userId => dispatch(fetchUserProfileAction({ userId })),
-    saveUserProfile: payload => dispatch(saveProfileAction(payload)),
+    saveUserProfile: (payload, actions) => dispatch(saveProfileAction(payload, actions)),
     onSelectProfileTab: selectedTab => dispatch(tabSelectAction(selectedTab)),
   };
 }
