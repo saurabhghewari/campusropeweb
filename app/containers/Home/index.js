@@ -15,7 +15,7 @@ import { BrowserView, MobileView } from 'react-device-detect';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Drawer from 'components/Drawer';
-import AdminTask from 'containers/AdminTask/Loadable';
+import AdminTask from 'containers/AssignAdminTask/Loadable';
 import TrendingNews from 'containers/TrendingNews/Loadable';
 import Ngo from 'containers/Ngo';
 import Profile from 'containers/UserProfile/Loadable';
@@ -81,7 +81,7 @@ export class Home extends React.Component {
             path="/app"
             component={() => <HomeCenterMenus menus={this.props.homeMenus} />}
           />
-          <PrivateRoute path="/app/admintask" component={AdminTask} />
+          <PrivateRoute path="/app/admintaskassignment" component={AdminTask} />
           <PrivateRoute path="/app/news/trends" component={TrendingNews} />
           <PrivateRoute path="/app/ngos" component={Ngo} />
           <PrivateRoute path="/app/profile/:userId" component={Profile} />

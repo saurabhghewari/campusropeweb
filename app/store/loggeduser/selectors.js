@@ -13,10 +13,10 @@ const makeSelectLoggedUser = () =>
 
 const makeSelectLoggedUserMenus = () =>
   createSelector(selectLoggedUserDomain, loggedUserState => {
-    if (loggedUserState.user.role === 'user') {
+    if (loggedUserState.user && loggedUserState.user.role === 'user') {
       return userDrawerMenus;
     }
-    if (loggedUserState.user.role === 'admin') {
+    if (loggedUserState.user && loggedUserState.user.role === 'admin') {
       return adminDrawerMenus;
     }
     return [];
@@ -24,10 +24,10 @@ const makeSelectLoggedUserMenus = () =>
 
 const makeSelectLoggedUserHomeMenus = () =>
   createSelector(selectLoggedUserDomain, loggedUserState => {
-    if (loggedUserState.user.role === 'user') {
+    if (loggedUserState.user && loggedUserState.user.role === 'user') {
       return userHomeMenus;
     }
-    if (loggedUserState.user.role === 'admin') {
+    if (loggedUserState.user && loggedUserState.user.role === 'admin') {
       return adminHomeMenus;
     }
     return [];

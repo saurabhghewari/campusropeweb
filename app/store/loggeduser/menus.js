@@ -152,10 +152,10 @@ export const adminHomeMenus = [
     linkTo: '/app/about',
   },
   {
-    title: 'Admin tasks',
+    title: 'Assign Admin tasks',
     iconBgColor: '#006064',
     icon: <InfoOutline />,
-    linkTo: '/app/admintask',
+    linkTo: '/app/admintaskassignment',
   },
   {
     title: 'NGO verification',

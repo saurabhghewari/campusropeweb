@@ -42,7 +42,7 @@ const styles = () => ({
     padding: 10,
   },
   menuTitleSize: {
-    fontSize: 25,
+    fontSize: 18,
   },
   menuItemButton: {
     width: 240,
