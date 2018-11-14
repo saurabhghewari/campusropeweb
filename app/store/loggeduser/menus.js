@@ -4,6 +4,7 @@ import Gavel from '@material-ui/icons/Gavel';
 import SettingsPhone from '@material-ui/icons/SettingsPhone';
 import InfoOutline from '@material-ui/icons/InfoOutlined';
 import Title from '@material-ui/icons/Title';
+import { replace } from 'react-router-redux';
 import { logOut } from '../../containers/Login/actions';
 
 export const userDrawerMenus = [
@@ -20,7 +21,8 @@ export const userDrawerMenus = [
   {
     id: 3,
     iconName: 'assignment',
-    menuLabel: 'My Admin sTasks',
+    menuLabel: 'My Admin Tasks',
+    trigger: dispatch => dispatch(replace('/app/my/admintasks')),
   },
   {
     id: 4,
