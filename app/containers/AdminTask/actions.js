@@ -10,6 +10,7 @@ import {
   SET_ADMIN_TASKS,
   TOGGLE_ADMIN_TASK_SELECTION,
   SAVE_ADMIN_TASKS,
+  CLEAR_TASKS,
 } from './constants';
 
 export function defaultAction() {
@@ -42,5 +43,11 @@ export function setAdminTasks(tasks) {
 export function saveAdminTasks() {
   return {
     type: SAVE_ADMIN_TASKS,
+  };
+}
+
+export function clearTasks() {
+  return {
+    type: CLEAR_TASKS,
   };
 }

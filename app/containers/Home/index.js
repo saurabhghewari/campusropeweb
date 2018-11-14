@@ -25,7 +25,10 @@ import AboutUs from 'containers/AboutUs/Loadable';
 import PrivateRoute from 'components/PrivateRoute/Loadable';
 
 import makeSelectHome from './selectors';
-import makeSelectLoggedUser from '../../store/loggeduser/selectors';
+import makeSelectLoggedUser, {
+  makeSelectLoggedUserMenus,
+  makeSelectLoggedUserHomeMenus,
+} from '../../store/loggeduser/selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { homeMounted } from './actions';
@@ -70,9 +73,14 @@ export class Home extends React.Component {
           open={this.state.drawerOpen}
           toggleDrawer={this.toggleDrawer}
           dispatch={this.props.dispatch}
+          menuItems={this.props.drawerMenus}
         />
         <Switch>
-          <PrivateRoute exact path="/app" component={HomeCenterMenus} />
+          <PrivateRoute
+            exact
+            path="/app"
+            component={() => <HomeCenterMenus menus={this.props.homeMenus} />}
+          />
           <PrivateRoute path="/app/admintask" component={AdminTask} />
           <PrivateRoute path="/app/news/trends" component={TrendingNews} />
           <PrivateRoute path="/app/ngos" component={Ngo} />
@@ -93,11 +101,15 @@ Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
   homeMounted: PropTypes.func.isRequired,
   userInfo: PropTypes.object,
+  homeMenus: PropTypes.array,
+  drawerMenus: PropTypes.array,
 };
 
 const mapStateToProps = createStructuredSelector({
   home: makeSelectHome(),
   userInfo: makeSelectLoggedUser(),
+  drawerMenus: makeSelectLoggedUserMenus(),
+  homeMenus: makeSelectLoggedUserHomeMenus(),
 });
 
 function mapDispatchToProps(dispatch) {

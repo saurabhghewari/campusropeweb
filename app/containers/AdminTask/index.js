@@ -27,6 +27,7 @@ import {
   fetchAdminTasksOfGivenUser,
   toggleAdminTaskSelection,
   saveAdminTasks,
+  clearTasks,
 } from './actions';
 
 const styles = theme => ({
@@ -73,6 +74,10 @@ export class AdminTask extends React.PureComponent {
   handleCheckboxChange = taskId => {
     this.props.toggleAdminTaskSelection(taskId);
   };
+
+  componentDidMount() {
+    this.props.clearTasks();
+  }
 
   renderAdminTasks() {
     const { classes, adminTasks } = this.props;
@@ -150,6 +155,7 @@ AdminTask.propTypes = {
   toggleAdminTaskSelection: PropTypes.func.isRequired,
   onSelectUser: PropTypes.func.isRequired,
   saveAdminTasksDispatch: PropTypes.func.isRequired,
+  clearTasks: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -164,6 +170,7 @@ function mapDispatchToProps(dispatch) {
     toggleAdminTaskSelection: taskId =>
       dispatch(toggleAdminTaskSelection(taskId)),
     saveAdminTasksDispatch: () => dispatch(saveAdminTasks()),
+    clearTasks: () => dispatch(clearTasks()),
   };
 }
 

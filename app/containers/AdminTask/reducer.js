@@ -9,6 +9,7 @@ import {
   SET_ADMIN_TASKS,
   TOGGLE_ADMIN_TASK_SELECTION,
   FETCH_ADMIN_TASKS_OF_GIVEN_USER,
+  CLEAR_TASKS,
 } from './constants';
 
 export const initialState = {
@@ -25,6 +26,12 @@ function adminTaskReducer(state = initialState, action) {
       return {
         ...state,
         tasks: action.tasks,
+      };
+    }
+    case CLEAR_TASKS: {
+      return {
+        ...state,
+        tasks: [],
       };
     }
 

@@ -5,16 +5,11 @@
  */
 
 import React from 'react';
-
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
-import AccountBalance from '@material-ui/icons/AccountBalanceRounded';
-import Gavel from '@material-ui/icons/Gavel';
-import SettingsPhone from '@material-ui/icons/SettingsPhone';
-import InfoOutline from '@material-ui/icons/InfoOutlined';
-import Title from '@material-ui/icons/Title';
+
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
@@ -58,55 +53,10 @@ const styles = () => ({
   },
 });
 
-const menus = [
-  {
-    title: 'NGOs',
-    iconBgColor: '#FF6D00',
-    icon: <AccountBalance />,
-    linkTo: '/app/ngos',
-  },
-  {
-    title: 'Helpline',
-    iconBgColor: '#D81B60',
-    icon: <SettingsPhone />,
-    linkTo: '/app/helpline',
-  },
-  {
-    title: 'Support',
-    iconBgColor: '#3F51B5',
-    icon: <Gavel />,
-    linkTo: 'app/support',
-  },
-  {
-    title: 'About Us',
-    iconBgColor: '#006064',
-    icon: <InfoOutline />,
-    linkTo: '/app/about',
-  },
-  {
-    title: 'Admin tasks',
-    iconBgColor: '#006064',
-    icon: <InfoOutline />,
-    linkTo: '/app/admintask',
-  },
-  {
-    title: 'NGO verification',
-    iconBgColor: '#006064',
-    icon: <InfoOutline />,
-    linkTo: '/app/ngos/verification',
-  },
-  {
-    title: 'Admin Trends',
-    iconBgColor: '#006064',
-    icon: <Title />,
-    linkTo: '/app/news/trends/admin/trends',
-  },
-];
-
 /* eslint-disable  */
-export class HomeCenterMenus extends React.Component {
+export class HomeCenterMenus extends React.PureComponent {
   render() {
-    const { classes } = this.props;
+    const { classes ,menus} = this.props;
     return (
       <div className={classes.root}>
         {menus.map(menu => (
@@ -142,6 +92,7 @@ export class HomeCenterMenus extends React.Component {
 
 HomeCenterMenus.propTypes = {
   classes: PropTypes.object.isRequired,
+  menus: PropTypes.array.isRequired,
 };
 
 const componentWithStyles = withStyles(styles)(HomeCenterMenus);
