@@ -30,7 +30,7 @@ class Content extends React.PureComponent {
         <Grid item lg={2} />
         <Grid item xs={12} lg={8}>
           <Paper className={classes.root} elevation={10}>
-            {children}
+            <div id="content">{children}</div>
           </Paper>
         </Grid>
         <Grid item lg={2} />

@@ -9,8 +9,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
 import Content from 'components/Content/Loadable';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -20,9 +18,6 @@ import { replace } from 'react-router-redux';
 import { Input, Grid, Select, MenuItem, FormControl } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import Typography from '@material-ui/core/Typography';
-
-import reducer from './reducer';
-import saga from './saga';
 import { fetchTrendingNews } from './actions';
 import { makeSelectTrendingNews } from './selectors';
 import TrendingNews from './TrendingNews';
@@ -152,12 +147,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'adminTrendingNewsList', reducer });
-const withSaga = injectSaga({ key: 'adminTrendingNewsList', saga });
 const componentWithStyles = withStyles(styles)(AdminTrendingNewsList);
 
 export default compose(
-  withReducer,
-  withSaga,
   withConnect,
 )(componentWithStyles);

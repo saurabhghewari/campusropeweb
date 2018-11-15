@@ -105,6 +105,10 @@ const opts = {
   }
 };
 export class TrendingNewsForm extends React.Component {
+
+  width = 100;
+  height = 100;
+
   _onReady(event) {
     // access to player in all event handlers via event.target
     event.target.pauseVideo();
@@ -116,6 +120,12 @@ export class TrendingNewsForm extends React.Component {
       },
       actions,
     );
+  }
+
+  
+  componentDidMount(){
+     this.width = document.querySelector('#content').getBoundingClientRect().width,
+     this.height = document.querySelector('#content').getBoundingClientRect().height
   }
 
   onYoutubeLinkChange(event,setFieldValue){
@@ -233,11 +243,11 @@ export class TrendingNewsForm extends React.Component {
                     <div className={classes.photoContainer}>
                             <IdealImage
                             placeholder={{ color: 'grey' }}
-                            srcSet={[{ src: values.photo_urls, width: 200, height: 200}]}
+                            srcSet={[{ src: values.photo_urls, width: this.width, height: this.height}]}
                             alt="Photos"
                             className={classes.photoPic}
-                            height={200}
-                            width={200}
+                            height={this.height}
+                            width={this.width}
                           />
                         <Button variant="fab" mini color="secondary" aria-label="Delete"
                         className={classes.button}>
@@ -257,10 +267,10 @@ export class TrendingNewsForm extends React.Component {
                 {!_isEmpty(values.cover_photo) && (
                   <IdealImage
                   placeholder={{ color: 'grey' }}
-                  srcSet={[{ src: values.cover_photo, width: 100, height: 50 }]}
+                  srcSet={[{ src: values.cover_photo, width: this.width, height: this.height }]}
                   alt="cover Photo"
-                  height={50}
-                  width={100}
+                  height={this.height}
+                  width={this.width}
                 />
                 )}
                 </Grid>

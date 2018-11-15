@@ -13,9 +13,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Content from 'components/Content/Loadable';
 import { withStyles } from '@material-ui/core/styles';
-
 import { replace } from 'react-router-redux';
-
 import Typography from '@material-ui/core/Typography';
 import { Input, Grid, Select, MenuItem, FormControl } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -39,7 +37,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 export class TrendingNewsList extends React.Component {
   state={
-    state:''
+    state:'',
   }
   componentDidMount() {
     this.props.fetchTrendingNews();
