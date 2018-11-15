@@ -9,9 +9,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
 import Content from 'components/Content/Loadable';
 import YouTube from 'react-youtube';
 import { replace } from 'react-router-redux';
@@ -23,16 +20,13 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import { Input, Grid } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
 import * as Yup from 'yup';
-import IdealImage from 'react-ideal-image';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
 import Upload from 'components/Upload/Loadable';
 import _isEmpty from 'lodash/isEmpty';
-
-import reducer from './reducer';
-import saga from './saga';
 
 import { makeSelectStatesForOptions } from '../../store/constants/selectors';
 import { submitNewTrendingNews } from './actions';
@@ -94,6 +88,13 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
   },
+  card: {
+    margin: theme.spacing.unit * 4,
+  },
+  media: {
+    // ⚠️ object-fit is not supported by IE 11.
+    objectFit: 'cover',
+  },
 });
 
 /* eslint-disable */
@@ -144,7 +145,7 @@ export class TrendingNewsForm extends React.Component {
             headline: '',
             content: '',
             state: '',
-            photo_urls: '',
+            photo_urls: [],
             cover_photo: '',
             youtube_link: '',
           }}
@@ -227,11 +228,11 @@ export class TrendingNewsForm extends React.Component {
                     )}
                 </FormControl>
                   </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={6}>
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Upload
                     className={classes.uploadBtn}
                     text="Upload Photos"
-                    onUploaded={res => setFieldValue('photo_urls', res[0].secure_url)}
+                    onUploaded={res => setFieldValue('photo_urls', res.map((pic) => pic.secure_url))}
                   />
                   {touched.photo_urls && errors.photo_urls && (
                     <FormHelperText className={classes.error}>
@@ -240,24 +241,21 @@ export class TrendingNewsForm extends React.Component {
                   )}
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                   {!_isEmpty(values.photo_urls) && (
-                    <div className={classes.photoContainer}>
-                            <IdealImage
-                            placeholder={{ color: 'grey' }}
-                            srcSet={[{ src: values.photo_urls, width: this.width, height: this.height}]}
-                            alt="Photos"
-                            className={classes.photoPic}
-                            height={this.height}
-                            width={this.width}
-                          />
-                        <Button variant="fab" mini color="secondary" aria-label="Delete"
-                        className={classes.button}>
-                        <DeleteIcon />
-                      </Button>
-                    </div>
-                  )}
+                    values.photo_urls.map((pic) => <Card key={pic} className={classes.card}>
+                      <CardMedia
+                        component="img"
+                        alt="trending news image"
+                        className={classes.media}
+                        height={this.height}
+                        height={this.width}
+                        src={pic}
+                        title="Contemplative Reptile"
+                      />
+                  </Card>
+                  ))}
                   </Grid>
                 </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={6}>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Upload
                     className={classes.uploadBtn}
                     text="Upload Cover Photo"
@@ -265,13 +263,17 @@ export class TrendingNewsForm extends React.Component {
                   />
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                 {!_isEmpty(values.cover_photo) && (
-                  <IdealImage
-                  placeholder={{ color: 'grey' }}
-                  srcSet={[{ src: values.cover_photo, width: this.width, height: this.height }]}
-                  alt="cover Photo"
-                  height={this.height}
-                  width={this.width}
-                />
+                  <Card className={classes.card}>
+                  <CardMedia
+                    component="img"
+                    alt="trending news image"
+                    className={classes.media}
+                    height={this.height}
+                    height={this.width}
+                    src={values.cover_photo}
+                    title="Contemplative Reptile"
+                  />
+              </Card>
                 )}
                 </Grid>
                 </Grid>
@@ -354,12 +356,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'trendingNewsForm', reducer });
-const withSaga = injectSaga({ key: 'trendingNewsForm', saga });
 const componentWithStyles = withStyles(styles)(TrendingNewsForm);
 
 export default compose(
-  withReducer,
-  withSaga,
   withConnect,
 )(componentWithStyles);

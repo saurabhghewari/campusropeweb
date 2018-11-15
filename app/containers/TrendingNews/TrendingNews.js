@@ -54,7 +54,7 @@ const opts = {
   }
 };
 
-const TrendingNewsBox = ({ trendingNewsData, classes, onTrendingNewsClick, getCreatedOnDate, _onReady }) => {
+const TrendingNewsBox = ({ trendingNewsData, classes, onTrendingNewsClick, getCreatedOnDate }) => {
   return (
     <Card className={classes.card}
       onClick={()=> onTrendingNewsClick(trendingNewsData)}
@@ -82,7 +82,7 @@ const TrendingNewsBox = ({ trendingNewsData, classes, onTrendingNewsClick, getCr
           {!_isEmpty(trendingNewsData.youtube_link) && (
             <YouTube videoId={trendingNewsData.youtube_link}
                       opts={opts}
-                      onReady={_onReady}
+                      onReady={(event) => event.target.pauseVideo()}
             />
           )}
           <CardActions className={classes.actions} disableActionSpacing>
@@ -102,12 +102,6 @@ const TrendingNewsBox = ({ trendingNewsData, classes, onTrendingNewsClick, getCr
 
 export class TrendingNews extends React.Component {
 
-  
-  _onReady(event) {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
-  }
-
   getCreatedOnDate(date) {
     const myDate = new Date(date);
     const trendingNewsCreationDate = myDate.getDate()+"/"+(myDate.getMonth()+1)+"/"+myDate.getFullYear();
@@ -120,12 +114,11 @@ export class TrendingNews extends React.Component {
       <Fragment>
       {trendingNews.map(trendingNew => (
         <TrendingNewsBox
-        key={trendingNew.id}
-        classes={classes}
-        onTrendingNewsClick={onTrendingNewsClick}
-        trendingNewsData={trendingNew}
-        getCreatedOnDate={this.getCreatedOnDate}
-        _onReady={this._onReady}
+            key={trendingNew.id}
+            classes={classes}
+            onTrendingNewsClick={onTrendingNewsClick}
+            trendingNewsData={trendingNew}
+            getCreatedOnDate={this.getCreatedOnDate}
         />
       ))}
       </Fragment>
