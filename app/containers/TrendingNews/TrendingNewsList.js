@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-
+import { createStructuredSelector } from 'reselect';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Content from 'components/Content/Loadable';
@@ -22,7 +22,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 
 import { fetchTrendingNews } from './actions';
 import TrendingNews from './TrendingNews';
-
+import { makeSelectStates } from '../../store/constants/selectors';
+import { makeSelectTrendingNews } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -101,12 +102,10 @@ TrendingNewsList.propTypes = {
   states: PropTypes.array.isRequired,
 };
 
-function mapStateToProps(state) {
-  return {
-    trendingNews: state.trendingNewsList.trendingNewsList,
-    states: state.trendingNewsList.states,
-  };
-}
+const mapStateToProps = createStructuredSelector ({
+  trendingNews: makeSelectTrendingNews(),
+  states: makeSelectStates()
+});
 
 function mapDispatchToProps(dispatch) {
   return {

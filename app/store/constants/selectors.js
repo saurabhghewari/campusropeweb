@@ -17,6 +17,14 @@ const makeSelectStates = () =>
 const makeSelectStatuses = () =>
   createSelector(selectConstantsDomain, substate => substate.STATUSES);
 
+const makeSelectStatesForOptions = () =>
+  createSelector(selectConstantsDomain, substate =>
+    Object.keys(_groupBy(substate.CITIES, 'state')).map(stateString => ({
+      label: stateString,
+      value: stateString,
+    })),
+  );
+
 export default selectConstantsDomain;
 export {
   selectConstantsDomain,
@@ -24,4 +32,5 @@ export {
   makeSelectStates,
   makeSelectCities,
   makeSelectStatuses,
+  makeSelectStatesForOptions,
 };

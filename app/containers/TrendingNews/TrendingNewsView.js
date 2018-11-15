@@ -9,10 +9,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
 import Content from 'components/Content/Loadable';
-
+import { createStructuredSelector } from 'reselect';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { replace } from 'react-router-redux';
@@ -24,9 +22,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import _isEmpty from 'lodash/isEmpty';
 import _includes from 'lodash/includes';
 
-import reducer from './reducer';
-import saga from './saga';
 import { fetchTrendingNewsById } from './actions';
+import { makeSelectStatesForOptions } from '../../store/constants/selectors';
+import { makeSelectSelectedTrendingNews } from './selectors';
 
 const styles = theme => ({
   noTrendingNewsLabel: {
@@ -184,12 +182,10 @@ TrendingNewsView.propTypes = {
   states: PropTypes.array.isRequired,
 };
 
-function mapStateToProps(state) {
-  return {
-    trendingNewsDetails: state.trendingNewsView.selectedTrendingNews,
-    states: state.trendingNewsView.states,
-  };
-}
+const mapStateToProps = createStructuredSelector ({
+  trendingNewsDetails: makeSelectSelectedTrendingNews(),
+  states: makeSelectStatesForOptions()
+});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -203,12 +199,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'trendingNewsView', reducer });
-const withSaga = injectSaga({ key: 'trendingNewsView', saga });
 const componentWithStyles = withStyles(styles)(TrendingNewsView);
 
 export default compose(
-  withReducer,
-  withSaga,
   withConnect,
 )(componentWithStyles);

@@ -26,7 +26,7 @@ import saga from './saga';
 import { fetchTrendingNews } from './actions';
 import { makeSelectTrendingNews } from './selectors';
 import TrendingNews from './TrendingNews';
-import { makeSelectStates } from '../../store/constants/selectors';
+import { makeSelectStatesForOptions } from '../../store/constants/selectors';
 
 const styles = theme => ({
   card: {
@@ -137,7 +137,7 @@ AdminTrendingNewsList.propTypes = {
 
 const mapStateToProps = createStructuredSelector ({
     trendingNews: makeSelectTrendingNews(),
-    states: makeSelectStates()
+    states: makeSelectStatesForOptions()
 });
 
 function mapDispatchToProps(dispatch) {

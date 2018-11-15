@@ -34,7 +34,7 @@ import _isEmpty from 'lodash/isEmpty';
 import reducer from './reducer';
 import saga from './saga';
 
-import { makeSelectStates } from '../../store/constants/selectors';
+import { makeSelectStatesForOptions } from '../../store/constants/selectors';
 import { submitNewTrendingNews } from './actions';
 
 const styles = theme => ({
@@ -118,8 +118,9 @@ export class TrendingNewsForm extends React.Component {
     );
   }
 
-  onYoutubeLinkChange(event,formikHandleChange){
-      console.log(event.target.value)
+  onYoutubeLinkChange(event,setFieldValue){
+    const playBackId = event.target.value.substring(event.target.value.length - 11); // no of characters in playbackid
+    setFieldValue('youtube_link',playBackId)
   }
 
   onCancel() {
@@ -232,11 +233,11 @@ export class TrendingNewsForm extends React.Component {
                     <div className={classes.photoContainer}>
                             <IdealImage
                             placeholder={{ color: 'grey' }}
-                            srcSet={[{ src: values.photo_urls, width: 10, height: 100 }]}
+                            srcSet={[{ src: values.photo_urls, width: 200, height: 200}]}
                             alt="Photos"
                             className={classes.photoPic}
-                            height={100}
-                            width={10}
+                            height={200}
+                            width={200}
                           />
                         <Button variant="fab" mini color="secondary" aria-label="Delete"
                         className={classes.button}>
@@ -274,7 +275,7 @@ export class TrendingNewsForm extends React.Component {
                         name="youtube_link"
                         autoComplete="youtube_link"
                         value={values.youtube_link}
-                        onChange={(e) => this.onYoutubeLinkChange(e,handleChange)}
+                        onChange={(e) => this.onYoutubeLinkChange(e,setFieldValue)}
                         autoFocus
                       />{' '}
                     </FormControl>
@@ -327,7 +328,7 @@ TrendingNewsForm.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  states: makeSelectStates(),
+  states: makeSelectStatesForOptions(),
 });
 
 function mapDispatchToProps(dispatch) {
