@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-
+import { createStructuredSelector } from 'reselect';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import Content from 'components/Content/Loadable';
@@ -24,7 +24,9 @@ import Typography from '@material-ui/core/Typography';
 import reducer from './reducer';
 import saga from './saga';
 import { fetchTrendingNews } from './actions';
+import { makeSelectTrendingNews } from './selectors';
 import TrendingNews from './TrendingNews';
+import { makeSelectStates } from '../../store/constants/selectors';
 
 const styles = theme => ({
   card: {
@@ -133,12 +135,10 @@ AdminTrendingNewsList.propTypes = {
   states: PropTypes.array.isRequired,
 };
 
-function mapStateToProps(state) {
-  return {
-    trendingNews: state.trendingNews.trendingNewsList,
-    states: state.trendingNews.states,
-  };
-}
+const mapStateToProps = createStructuredSelector ({
+    trendingNews: makeSelectTrendingNews(),
+    states: makeSelectStates()
+});
 
 function mapDispatchToProps(dispatch) {
   return {

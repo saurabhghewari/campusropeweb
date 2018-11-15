@@ -34,7 +34,7 @@ import _isEmpty from 'lodash/isEmpty';
 import reducer from './reducer';
 import saga from './saga';
 
-import { getStates } from './selectors';
+import { makeSelectStates } from '../../store/constants/selectors';
 import { submitNewTrendingNews } from './actions';
 
 const styles = theme => ({
@@ -116,6 +116,10 @@ export class TrendingNewsForm extends React.Component {
       },
       actions,
     );
+  }
+
+  onYoutubeLinkChange(event,formikHandleChange){
+      console.log(event.target.value)
   }
 
   onCancel() {
@@ -270,7 +274,7 @@ export class TrendingNewsForm extends React.Component {
                         name="youtube_link"
                         autoComplete="youtube_link"
                         value={values.youtube_link}
-                        onChange={handleChange}
+                        onChange={(e) => this.onYoutubeLinkChange(e,handleChange)}
                         autoFocus
                       />{' '}
                     </FormControl>
@@ -323,7 +327,7 @@ TrendingNewsForm.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  states: getStates(),
+  states: makeSelectStates(),
 });
 
 function mapDispatchToProps(dispatch) {

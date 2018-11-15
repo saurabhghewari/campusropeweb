@@ -6,11 +6,16 @@ import { createSelector } from 'reselect';
 
 const selectTrendingNewsDomain = state => state.trendingNews;
 
-/**
- * Other specific selectors
- */
-const getStates = () =>
-  createSelector(selectTrendingNewsDomain, substate => substate.states);
+const makeSelectTrendingNews = () =>
+  createSelector(
+    selectTrendingNewsDomain,
+    substate => substate.trendingNewsList,
+  );
 
-export default getStates;
-export { selectTrendingNewsDomain, getStates };
+const makeSelectSelectedTrendingNews = () =>
+  createSelector(
+    selectTrendingNewsDomain,
+    substate => substate.selectedTrendingNews,
+  );
+export default selectTrendingNewsDomain;
+export { makeSelectTrendingNews, makeSelectSelectedTrendingNews };
