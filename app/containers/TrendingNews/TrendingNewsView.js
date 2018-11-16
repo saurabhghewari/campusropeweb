@@ -17,8 +17,8 @@ import { replace } from 'react-router-redux';
 import IdealImage from 'react-ideal-image';
 import YouTube from 'react-youtube';
 
-import { Input, Grid, Select, MenuItem, FormControl } from '@material-ui/core';
-import InputLabel from '@material-ui/core/InputLabel';
+import { Grid } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import _isEmpty from 'lodash/isEmpty';
 import _includes from 'lodash/includes';
 
@@ -43,17 +43,18 @@ const opts = {
 };
 /* eslint-disable react/prefer-stateless-function */
 export class TrendingNewsView extends React.Component {
+  width = 100;
   _onReady(event) {
     // access to player in all event handlers via event.target
-    event.target.pauseVideo();
   }
 
   componentDidMount() {
+     this.width = document.querySelector('#content').getBoundingClientRect().width || 200;
     const trendingNewsId = this.props.match.params.trendingNewsId;
     this.props.fetchTrendingNewsById(trendingNewsId);
   }
 
-  cancelTrendingNewsView() {
+  onBack() {
     const isAdminTrendingView = _includes(this.props.match.url, 'admin');
     if(isAdminTrendingView){
       this.props.dispatch(replace('/app/news/trends/admin/trends'));
@@ -76,79 +77,28 @@ export class TrendingNewsView extends React.Component {
             width={100}
             />
           )}
-          <Grid item xs={12} sm={12} lg={6}>
-                    <FormControl margin="normal" fullWidth>
-                      <InputLabel htmlFor="headline">Headline</InputLabel>
-                      <Input
-                        id="headline"
-                        name="headline"
-                        multiline
-                        rows="4"
-                        autoComplete="headline"
-                        value={trendingNewsDetails.headline}
-                        readOnly={true}
-                        autoFocus
-                      />{' '}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={12} lg={6}>
-                    <FormControl margin="normal" fullWidth>
-                      <InputLabel htmlFor="content">Content</InputLabel>
-                      <Input
-                        id="content"
-                        name="content"
-                        multiline
-                        rows="4"
-                        autoComplete="content"
-                        value={trendingNewsDetails.content}
-                        readOnly={true}
-                        autoFocus
-                      />{' '}
-                    </FormControl>
-                  </Grid>
+          <Grid item xs={12} sm={12} lg={12}>
+              <Typography variant="headline">Headline : </Typography>
+              <Typography variant="subtitle1">{trendingNewsDetails.headline}</Typography>
+          </Grid>
+                <Grid item xs={12} sm={12} lg={12}>
+                <Typography variant="headline">content : </Typography>
+                    <Typography variant="subtitle1">{trendingNewsDetails.headline}</Typography>
+                </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <FormControl margin="normal" fullWidth>
-                  <InputLabel htmlFor="state">State</InputLabel>
-                  <Select
-                    value={trendingNewsDetails.state}
-                    readOnly
-                    input={<Input id="state" name="state" />}
-                  >
-                  {states.map(state => (
-                    <MenuItem key={state.label} value={state.value}>
-                      {state.value}
-                    </MenuItem>
-                  ))}
-                  </Select>
-                </FormControl>
+                   <Typography variant="subtitle1">state : {trendingNewsDetails.headline}</Typography>
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                   {trendingNewsDetails.photo_urls &&
                     trendingNewsDetails.photo_urls.length && (
-                    <IdealImage
+                   trendingNewsDetails.photo_urls.map((pic) => <IdealImage
+                    key={pic}
                     placeholder={{ color: 'grey' }}
-                    srcSet={[{ src: trendingNewsDetails.photo_urls[0], width: 10, height: 100 }]}
+                    srcSet={[{ src: pic, width: this.width, height: 200 }]}
                     alt="Photos"
-                    height={100}
-                    width={10}
-                  />
-                  )}
-                  </Grid>
-                  <Grid item xs={12} sm={12} lg={12} md={12}>
-                  {!_isEmpty(trendingNewsDetails.youtube_link) && (
-                    <FormControl margin="normal" fullWidth>
-                      <InputLabel htmlFor="youtube_link">
-                        Embed YouTube Link
-                      </InputLabel>
-                      <Input
-                        id="youtube_link"
-                        name="youtube_link"
-                        autoComplete="youtube_link"
-                        readOnly={true}
-                        value={trendingNewsDetails.youtube_link}
-                        autoFocus
-                      />{' '}
-                    </FormControl>
+                    height={200}
+                    width={this.width}
+                  /> ) 
                   )}
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -164,10 +114,10 @@ export class TrendingNewsView extends React.Component {
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={()=>this.cancelTrendingNewsView()}
+                  onClick={()=>this.onBack()}
                 >
                   {' '}
-                  Cancel
+                  back
                 </Button>
                   </Grid>
         </Grid>
