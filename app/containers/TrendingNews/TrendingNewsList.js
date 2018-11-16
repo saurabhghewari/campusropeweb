@@ -1,128 +1,136 @@
 /**
  *
- * TrendingNewsList
+ * TrendingNews
  *
  */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import Content from 'components/Content/Loadable';
-import { withStyles } from '@material-ui/core/styles';
-import { replace } from 'react-router-redux';
-import Typography from '@material-ui/core/Typography';
-import { Input, Grid, Select, MenuItem, FormControl } from '@material-ui/core';
-import InputLabel from '@material-ui/core/InputLabel';
 
-import { fetchTrendingNews } from './actions';
-import TrendingNews from './TrendingNews';
-import { makeSelectStates } from '../../store/constants/selectors';
-import { makeSelectTrendingNews } from './selectors';
-import reducer from './reducer';
-import saga from './saga';
+import { withStyles } from '@material-ui/core/styles';
+import YouTube from 'react-youtube';
+import classNames from 'classnames';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import ThumbUpSharp from '@material-ui/icons/ThumbUpSharp';
+import Comment from '@material-ui/icons/Comment';
+import Share from '@material-ui/icons/Share';
+
+import _isEmpty from 'lodash/isEmpty';
 
 const styles = theme => ({
-  noTrendingNewsLabel: {
-    textAlign: 'center',
-    marginTop: theme.spacing.unit * 4,
+  card: {
+    marginTop: theme.spacing.unit * 1,
+    marginBottom: theme.spacing.unit * 3,
+    cursor: 'pointer',
+  },
+  media: {
+    height: 0,
+    paddingTop: '38%', // 16:9
+  },
+  actions: {
+    display: 'flex',
+  },
+  bigAvatar: {
+    width: 60,
+    height: 60,
   },
 });
 
 /* eslint-disable*/
 
 /* eslint-disable react/prefer-stateless-function */
+const opts = {
+  height: '390',
+  width: '100%',
+  playerVars: {
+    autoplay: 1
+  }
+};
+
+const TrendingNewsBox = ({ trendingNewsData, classes, onTrendingNewsClick, getCreatedOnDate }) => {
+  return (
+    <Card className={classes.card}
+      onClick={()=> onTrendingNewsClick(trendingNewsData)}
+    >
+          <CardHeader
+            avatar={
+              <Avatar
+                className={classNames(classes.avatar, classes.bigAvatar)}
+              >CR</Avatar>
+            }
+            title={'Campusrope'}
+            subheader={getCreatedOnDate(trendingNewsData.createdAt)}
+          />
+          <CardContent>
+            <Typography component="p">{trendingNewsData.headline}</Typography>
+          </CardContent>
+          {!_isEmpty(trendingNewsData.cover_photo) && (
+            <CardMedia
+            className={classes.media}
+            image={trendingNewsData.cover_photo}
+          />
+          )}
+          {!_isEmpty(trendingNewsData.youtube_link) && (
+            <YouTube videoId={trendingNewsData.youtube_link}
+                      opts={opts}
+                      onReady={(event) => event.target.pauseVideo()}
+            />
+          )}
+          <CardActions className={classes.actions} disableActionSpacing>
+            <IconButton aria-label="Like">
+              <ThumbUpSharp />
+            </IconButton>
+            <IconButton aria-label="Comment">
+            <Comment />
+          </IconButton>
+          <IconButton aria-label="Share">
+          <Share />
+        </IconButton>
+          </CardActions>
+      </Card>
+  );
+};
+
 export class TrendingNewsList extends React.Component {
-  state={
-    state:'',
-  }
-  componentDidMount() {
-    this.props.fetchTrendingNews();
-  }
 
-  routeToTrendingNewsView(selectedTrendingNews) {
-    this.props.dispatch(replace(`/app/news/trends/${selectedTrendingNews.id}/details`));
-  }
-
-  handleChange(value){
-    this.setState({
-      state: value
-    })
-  }
-  renderNoTrendingNewsLabel() {
-    const { classes } = this.props;
-    return <Typography variant="h4" className={classes.noTrendingNewsLabel}>
-                No Trending News Created
-            </Typography>;
+  getCreatedOnDate(date) {
+    const myDate = new Date(date);
+    const trendingNewsCreationDate = myDate.getDate()+"/"+(myDate.getMonth()+1)+"/"+myDate.getFullYear();
+    return trendingNewsCreationDate;
   }
 
   render() {
-    const { trendingNews, states } = this.props;
-    const { state } = this.state;
+    const { classes, trendingNews, onTrendingNewsClick } = this.props;
     return (
-      <Content>
-        <Grid container spacing={16}>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-          <FormControl margin="normal" fullWidth>
-          <InputLabel htmlFor="state">State</InputLabel>
-          <Select
-            value={state}
-            onChange={(e)=>this.handleChange(e.target.value)}
-            input={<Input id="state" name="state" />}
-          >
-            {states.map(state => (
-              <MenuItem key={state.label} value={state.value}>
-                {state.value}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-          </Grid>
-        </Grid>
-        {trendingNews.length === 0 ? this.renderNoTrendingNewsLabel() :
-          <TrendingNews
-            trendingNews={trendingNews}
-            onTrendingNewsClick={selectedTrendingNews => this.routeToTrendingNewsView(selectedTrendingNews)}
-          />
-        }
-      </Content>
+      <Fragment>
+      {trendingNews.map(trendingNew => (
+        <TrendingNewsBox
+            key={trendingNew.id}
+            classes={classes}
+            onTrendingNewsClick={onTrendingNewsClick}
+            trendingNewsData={trendingNew}
+            getCreatedOnDate={this.getCreatedOnDate}
+        />
+      ))}
+      </Fragment>
     );
   }
 }
 
 TrendingNewsList.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   trendingNews: PropTypes.array.isRequired,
-  states: PropTypes.array.isRequired,
+  onTrendingNewsClick: PropTypes.func,
 };
 
-const mapStateToProps = createStructuredSelector ({
-  trendingNews: makeSelectTrendingNews(),
-  states: makeSelectStates()
-});
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-    fetchTrendingNews: () => dispatch(fetchTrendingNews()),
-  };
-}
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-
-const withReducer = injectReducer({ key: 'trendingNewsList', reducer });
-const withSaga = injectSaga({ key: 'trendingNewsList', saga });
 const componentWithStyles = withStyles(styles)(TrendingNewsList);
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(componentWithStyles);
+export default componentWithStyles;

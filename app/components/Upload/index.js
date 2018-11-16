@@ -30,6 +30,7 @@ class Upload extends React.Component {
         cloud_name: 'campusrope',
         upload_preset: 'vbvm62go',
         apiKey: 969738646161883,
+        maxFiles: 4,
       },
       (error, result) => {
         if (error) {

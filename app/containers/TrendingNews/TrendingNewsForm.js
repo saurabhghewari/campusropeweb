@@ -246,8 +246,7 @@ export class TrendingNewsForm extends React.Component {
                         component="img"
                         alt="trending news image"
                         className={classes.media}
-                        height={this.height}
-                        height={this.width}
+                        width={this.width}
                         src={pic}
                         title="Contemplative Reptile"
                       />
@@ -268,8 +267,7 @@ export class TrendingNewsForm extends React.Component {
                     component="img"
                     alt="trending news image"
                     className={classes.media}
-                    height={this.height}
-                    height={this.width}
+                    width={this.width}
                     src={values.cover_photo}
                     title="Contemplative Reptile"
                   />
