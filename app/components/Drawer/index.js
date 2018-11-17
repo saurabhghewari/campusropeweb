@@ -13,61 +13,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
-import { logOut } from '../../containers/Login/actions';
-
-const menuItemsConfig = [
-  {
-    id: 1,
-    iconName: 'home',
-    menuLabel: 'Home',
-  },
-  {
-    id: 2,
-    iconName: 'assessment',
-    menuLabel: 'My NGOs',
-  },
-  {
-    id: 3,
-    iconName: 'message',
-    menuLabel: 'Messages',
-  },
-  {
-    id: 4,
-    iconName: 'insert_invitation',
-    menuLabel: 'Invite Friends',
-  },
-  {
-    id: 5,
-    iconName: 'perm_identity',
-    menuLabel: 'Friend Suggestions',
-  },
-  {
-    id: 6,
-    iconName: 'rss_feed',
-    menuLabel: 'Feeds',
-  },
-  {
-    id: 7,
-    iconName: 'settings',
-    menuLabel: 'Settings',
-  },
-  {
-    id: 8,
-    iconName: 'feedback',
-    menuLabel: 'Suggestions and Feedback',
-  },
-  {
-    id: 9,
-    iconName: 'help',
-    menuLabel: 'Help',
-  },
-  {
-    id: 10,
-    iconName: 'person',
-    menuLabel: 'Log Out',
-    trigger: dispatch => dispatch(logOut()),
-  },
-];
 
 const MenuItems = (menus, dispatch) =>
   menus.map(menu => (
@@ -91,7 +36,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 class TemporaryDrawer extends React.Component {
   render() {
-    const { dispatch } = this.props;
+    const { dispatch, menuItems } = this.props;
     return (
       <Drawer
         anchor="right"
@@ -103,7 +48,7 @@ class TemporaryDrawer extends React.Component {
         onKeyDown={() => this.props.toggleDrawer(false)}
       >
         <div style={styles.list}>
-          <List>{MenuItems(menuItemsConfig, dispatch)}</List>
+          <List>{MenuItems(menuItems, dispatch)}</List>
         </div>
       </Drawer>
     );
@@ -114,6 +59,7 @@ TemporaryDrawer.propTypes = {
   open: PropTypes.bool,
   toggleDrawer: PropTypes.func,
   dispatch: PropTypes.func,
+  menuItems: PropTypes.array,
 };
 
 export default TemporaryDrawer;

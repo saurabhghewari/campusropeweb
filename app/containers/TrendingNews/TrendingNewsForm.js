@@ -9,9 +9,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
 import Content from 'components/Content/Loadable';
 import YouTube from 'react-youtube';
 import { replace } from 'react-router-redux';
@@ -23,18 +20,15 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import { Input, Grid } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
 import * as Yup from 'yup';
-import IdealImage from 'react-ideal-image';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
 import Upload from 'components/Upload/Loadable';
 import _isEmpty from 'lodash/isEmpty';
 
-import reducer from './reducer';
-import saga from './saga';
-
-import { getStates } from './selectors';
+import { makeSelectStatesForOptions } from '../../store/constants/selectors';
 import { submitNewTrendingNews } from './actions';
 
 const styles = theme => ({
@@ -94,6 +88,13 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
   },
+  card: {
+    margin: theme.spacing.unit * 4,
+  },
+  media: {
+    // ⚠️ object-fit is not supported by IE 11.
+    objectFit: 'cover',
+  },
 });
 
 /* eslint-disable */
@@ -105,6 +106,10 @@ const opts = {
   }
 };
 export class TrendingNewsForm extends React.Component {
+
+  width = 100;
+  height = 100;
+
   _onReady(event) {
     // access to player in all event handlers via event.target
     event.target.pauseVideo();
@@ -118,6 +123,17 @@ export class TrendingNewsForm extends React.Component {
     );
   }
 
+  
+  componentDidMount(){
+     this.width = document.querySelector('#content').getBoundingClientRect().width,
+     this.height = document.querySelector('#content').getBoundingClientRect().height
+  }
+
+  onYoutubeLinkChange(event,setFieldValue){
+    const playBackId = event.target.value.substring(event.target.value.length - 11); // no of characters in playbackid
+    setFieldValue('youtube_link',playBackId)
+  }
+
   onCancel() {
     this.props.dispatch(replace('/app/news/trends/admin/trends'));
   }
@@ -129,7 +145,7 @@ export class TrendingNewsForm extends React.Component {
             headline: '',
             content: '',
             state: '',
-            photo_urls: '',
+            photo_urls: [],
             cover_photo: '',
             youtube_link: '',
           }}
@@ -212,11 +228,11 @@ export class TrendingNewsForm extends React.Component {
                     )}
                 </FormControl>
                   </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={6}>
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Upload
                     className={classes.uploadBtn}
                     text="Upload Photos"
-                    onUploaded={res => setFieldValue('photo_urls', res[0].secure_url)}
+                    onUploaded={res => setFieldValue('photo_urls', res.map((pic) => pic.secure_url))}
                   />
                   {touched.photo_urls && errors.photo_urls && (
                     <FormHelperText className={classes.error}>
@@ -225,24 +241,20 @@ export class TrendingNewsForm extends React.Component {
                   )}
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                   {!_isEmpty(values.photo_urls) && (
-                    <div className={classes.photoContainer}>
-                            <IdealImage
-                            placeholder={{ color: 'grey' }}
-                            srcSet={[{ src: values.photo_urls, width: 10, height: 100 }]}
-                            alt="Photos"
-                            className={classes.photoPic}
-                            height={100}
-                            width={10}
-                          />
-                        <Button variant="fab" mini color="secondary" aria-label="Delete"
-                        className={classes.button}>
-                        <DeleteIcon />
-                      </Button>
-                    </div>
-                  )}
+                    values.photo_urls.map((pic) => <Card key={pic} className={classes.card}>
+                      <CardMedia
+                        component="img"
+                        alt="trending news image"
+                        className={classes.media}
+                        width={this.width}
+                        src={pic}
+                        title="Contemplative Reptile"
+                      />
+                  </Card>
+                  ))}
                   </Grid>
                 </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={6}>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Upload
                     className={classes.uploadBtn}
                     text="Upload Cover Photo"
@@ -250,13 +262,16 @@ export class TrendingNewsForm extends React.Component {
                   />
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                 {!_isEmpty(values.cover_photo) && (
-                  <IdealImage
-                  placeholder={{ color: 'grey' }}
-                  srcSet={[{ src: values.cover_photo, width: 100, height: 50 }]}
-                  alt="cover Photo"
-                  height={50}
-                  width={100}
-                />
+                  <Card className={classes.card}>
+                  <CardMedia
+                    component="img"
+                    alt="trending news image"
+                    className={classes.media}
+                    width={this.width}
+                    src={values.cover_photo}
+                    title="Contemplative Reptile"
+                  />
+              </Card>
                 )}
                 </Grid>
                 </Grid>
@@ -270,7 +285,7 @@ export class TrendingNewsForm extends React.Component {
                         name="youtube_link"
                         autoComplete="youtube_link"
                         value={values.youtube_link}
-                        onChange={handleChange}
+                        onChange={(e) => this.onYoutubeLinkChange(e,setFieldValue)}
                         autoFocus
                       />{' '}
                     </FormControl>
@@ -323,7 +338,7 @@ TrendingNewsForm.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  states: getStates(),
+  states: makeSelectStatesForOptions(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -339,12 +354,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'trendingNewsForm', reducer });
-const withSaga = injectSaga({ key: 'trendingNewsForm', saga });
 const componentWithStyles = withStyles(styles)(TrendingNewsForm);
 
 export default compose(
-  withReducer,
-  withSaga,
   withConnect,
 )(componentWithStyles);

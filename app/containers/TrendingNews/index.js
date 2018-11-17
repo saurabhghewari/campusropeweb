@@ -18,6 +18,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
+import { DAEMON } from '../../utils/constants';
 /* eslint-disable*/
 
 const TrendingNewsForm = Loadable({
@@ -25,8 +26,8 @@ const TrendingNewsForm = Loadable({
   loading: () => null,
 });
 
-const TrendingNewsList = Loadable({
-  loader: () => import('./TrendingNewsList'),
+const UserTrendingNewsList = Loadable({
+  loader: () => import('./UserTrendingNewsList'),
   loading: () => null,
 });
 
@@ -53,7 +54,7 @@ export class TrendingNews extends React.Component {
           <PrivateRoute
             exact
             path="/app/news/trends"
-            component={TrendingNewsList}
+            component={UserTrendingNewsList}
           />
           <PrivateRoute
           exact
@@ -99,7 +100,7 @@ const withConnect = connect(
 );
 
 const withReducer = injectReducer({ key: 'trendingNews', reducer });
-const withSaga = injectSaga({ key: 'trendingNews', saga });
+const withSaga = injectSaga({ key: 'trendingNews', saga ,mode:DAEMON});
 
 export default compose(
   withReducer,

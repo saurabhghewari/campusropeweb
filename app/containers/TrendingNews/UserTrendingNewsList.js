@@ -1,6 +1,6 @@
 /**
  *
- * AdminTrendingNewsList
+ * TrendingNewsList
  *
  */
 
@@ -10,35 +10,18 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import Content from 'components/Content/Loadable';
-
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import { replace } from 'react-router-redux';
-
+import Typography from '@material-ui/core/Typography';
 import { Input, Grid, Select, MenuItem, FormControl } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
-import Typography from '@material-ui/core/Typography';
+
 import { fetchTrendingNews } from './actions';
-import { makeSelectTrendingNews } from './selectors';
 import TrendingNewsList from './TrendingNewsList';
-import { makeSelectStatesForOptions } from '../../store/constants/selectors';
+import { makeSelectStates } from '../../store/constants/selectors';
+import { makeSelectTrendingNews } from './selectors';
 
 const styles = theme => ({
-  card: {
-    marginTop: theme.spacing.unit * 1,
-    marginBottom: theme.spacing.unit * 3,
-  },
-  media: {
-    height: 0,
-    paddingTop: '38%', // 16:9
-  },
-  actions: {
-    display: 'flex',
-  },
-  createBtnContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
   noTrendingNewsLabel: {
     textAlign: 'center',
     marginTop: theme.spacing.unit * 4,
@@ -48,19 +31,16 @@ const styles = theme => ({
 /* eslint-disable*/
 
 /* eslint-disable react/prefer-stateless-function */
-export class AdminTrendingNewsList extends React.Component {
+export class UserTrendingNewsList extends React.Component {
   state={
-    state:''
+    state:'',
   }
   componentDidMount() {
     this.props.fetchTrendingNews();
   }
-  createNewTrendingNews() {
-    this.props.dispatch(replace('/app/news/trends/admin/trend/new'));
-  }
 
   routeToTrendingNewsView(selectedTrendingNews) {
-    this.props.dispatch(replace(`/app/news/trends/admin/${selectedTrendingNews.id}/details`));
+    this.props.dispatch(replace(`/app/news/trends/${selectedTrendingNews.id}/details`));
   }
 
   handleChange(value){
@@ -68,33 +48,19 @@ export class AdminTrendingNewsList extends React.Component {
       state: value
     })
   }
-  renderNoTrendingNewsLabel(classes) {
+  renderNoTrendingNewsLabel() {
+    const { classes } = this.props;
     return <Typography variant="h4" className={classes.noTrendingNewsLabel}>
-                  No Trending News Created
+                No Trending News Created
             </Typography>;
   }
 
-  _onReady(event) {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
-  }
-
   render() {
-    const { classes, trendingNews, states } = this.props;
+    const { trendingNews, states } = this.props;
     const { state } = this.state;
     return (
       <Content>
         <Grid container spacing={16}>
-        <Grid item xs={12} sm={12} md={12} lg={12}  className={classes.createBtnContainer}>
-          <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => this.createNewTrendingNews()}
-        >
-          {' '}
-          Create{' '}
-        </Button>
-        </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
           <FormControl margin="normal" fullWidth>
           <InputLabel htmlFor="state">State</InputLabel>
@@ -112,10 +78,10 @@ export class AdminTrendingNewsList extends React.Component {
         </FormControl>
           </Grid>
         </Grid>
-        {trendingNews.length === 0 ? this.renderNoTrendingNewsLabel(classes) :
+        {trendingNews.length === 0 ? this.renderNoTrendingNewsLabel() :
           <TrendingNewsList
-          trendingNews={trendingNews}
-          onTrendingNewsClick={selectedTrendingNews => this.routeToTrendingNewsView(selectedTrendingNews)}
+            trendingNews={trendingNews}
+            onTrendingNewsClick={selectedTrendingNews => this.routeToTrendingNewsView(selectedTrendingNews)}
           />
         }
       </Content>
@@ -123,7 +89,7 @@ export class AdminTrendingNewsList extends React.Component {
   }
 }
 
-AdminTrendingNewsList.propTypes = {
+UserTrendingNewsList.propTypes = {
   dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   trendingNews: PropTypes.array.isRequired,
@@ -131,8 +97,8 @@ AdminTrendingNewsList.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector ({
-    trendingNews: makeSelectTrendingNews(),
-    states: makeSelectStatesForOptions()
+  trendingNews: makeSelectTrendingNews(),
+  states: makeSelectStates()
 });
 
 function mapDispatchToProps(dispatch) {
@@ -147,7 +113,7 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const componentWithStyles = withStyles(styles)(AdminTrendingNewsList);
+const componentWithStyles = withStyles(styles)(UserTrendingNewsList);
 
 export default compose(
   withConnect,

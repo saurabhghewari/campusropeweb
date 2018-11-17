@@ -142,6 +142,7 @@
     ]
   },
   "dependencies": {
+    "@feathersjs/client": "^3.7.5",
     "@material-ui/core": "^3.0.2",
     "@material-ui/icons": "^3.0.1",
     "axios": "^0.18.0",
@@ -186,6 +187,7 @@
     "redux-saga": "0.16.0",
     "reselect": "3.0.1",
     "sanitize.css": "4.1.0",
+    "socket.io-client": "^2.1.1",
     "styled-components": "3.3.2",
     "warning": "4.0.1",
     "whatwg-fetch": "2.0.4",
