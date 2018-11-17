@@ -105,7 +105,7 @@ const initalValue = {
 };
 
 const getInitialValues = (userProfile) => {
-  let updatedInitalValue = Object.assign({}, initalValue,
+  const updatedInitalValue = Object.assign({}, initalValue,
     { ...userProfile, profileId: userProfile.id, ...userProfile.profileOf });
   return updatedInitalValue;
 }
@@ -116,8 +116,8 @@ const MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChang
       (values.map((value, index) => (
         <div key={index} className={classes.multiInputWrapper}>
           <TextField
-            id={"" + index}
-            name={name + "." + index}
+            id={`${  index}`}
+            name={`${name  }.${  index}`}
             label={label}
             className={classes.multiInput}
             value={value}
@@ -146,9 +146,9 @@ const MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChang
 
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
-const AboutUserComponent = (props) => {
+const AboutUserComponent = (parentProps) => {
 
-  const { classes, userProfile = {}, handleCancel, handleProfileSave, isOwner } = props;
+  const { classes, userProfile = {}, handleCancel, handleProfileSave, isOwner } = parentProps;
 
   const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
 
@@ -181,7 +181,7 @@ const AboutUserComponent = (props) => {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth="true">
                   <InputLabel htmlFor="name">Name</InputLabel>
                   <Input
                     id="name"
@@ -190,11 +190,11 @@ const AboutUserComponent = (props) => {
                     value={values.name}
                     onChange={handleChange}
                     autoFocus
-                    fullWidth={true}
+                    fullWidth="true"
                   />
                 </FormControl>
 
-                <FormControl margin="normal" fullWidth={true}>
+                <FormControl margin="normal" fullWidth="true">
                   <InputLabel htmlFor="gender">Gender</InputLabel>
                   <Select
                     value={values.gender}
@@ -213,7 +213,7 @@ const AboutUserComponent = (props) => {
                     )}
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth="true">
                   <InputLabel htmlFor="email">Email</InputLabel>
                   <Input
                     id="email"
@@ -236,7 +236,7 @@ const AboutUserComponent = (props) => {
                   )}
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth="true">
                   <InputLabel htmlFor="name">Country</InputLabel>
                   <Input
                     id="country"
@@ -247,7 +247,7 @@ const AboutUserComponent = (props) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth="true">
                   <InputLabel htmlFor="name">Home Town</InputLabel>
                   <Input
                     id="homeTown"
@@ -258,7 +258,7 @@ const AboutUserComponent = (props) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth="true">
                   <InputLabel htmlFor="name">Current City</InputLabel>
                   <Input
                     id="currentCity"
@@ -278,7 +278,7 @@ const AboutUserComponent = (props) => {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth="true">
                   <InputLabel htmlFor="name">Political View</InputLabel>
                   <Input
                     id="politicalView"
@@ -289,7 +289,7 @@ const AboutUserComponent = (props) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth="true">
                   <InputLabel htmlFor="name">Religious View</InputLabel>
                   <Input
                     id="religiousView"
@@ -308,7 +308,7 @@ const AboutUserComponent = (props) => {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth="true">
                   <FieldArray
                     name="workAndExperience"
                     render={(arrayHelpers) =>
@@ -318,7 +318,7 @@ const AboutUserComponent = (props) => {
                         handleChange={handleChange} classes={classes} name="workAndExperience" />} />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="normal" required fullWidth="true">
                   <FieldArray
                     name="skills"
                     render={(arrayHelpers) =>
@@ -328,7 +328,7 @@ const AboutUserComponent = (props) => {
                         classes={classes} name="skills" />} />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth="true">
                   <InputLabel htmlFor="name">College</InputLabel>
                   <Input
                     id="college"
@@ -339,7 +339,7 @@ const AboutUserComponent = (props) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth="true">
                   <FieldArray
                     name="otherDegreeAndCourses"
                     render={(arrayHelpers) =>
@@ -350,7 +350,7 @@ const AboutUserComponent = (props) => {
                         name="otherDegreeAndCourses" />} />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth="true">
                   <FieldArray
                     name="careerObjectives"
                     render={(arrayHelpers) =>
