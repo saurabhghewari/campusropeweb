@@ -11,6 +11,7 @@
   border: 2px solid #e0e0e0;
   height: 100%;
   max-width: 210px !important;
+  max-height: 210px !important;
   border-radius: 50%;
   display: flex;
   justify-content: center;

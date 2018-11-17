@@ -24,6 +24,7 @@ import { Formik, FieldArray } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { createStructuredSelector } from 'reselect';
 import ProfileTabType from './ProfileTabTypeModel';
+import Upload from 'components/Upload/Loadable';
 import { makeSelectLoggedUser } from '../../store/loggeduser/selectors'
 import '../App/common.css';
 
@@ -100,12 +101,13 @@ const initalValue = {
   workAndExperience: [],
   skills: [],
   college: '',
+  picture: '',
   otherDegreeAndCourses: [],
   careerObjectives: [],
 };
 
 const getInitialValues = (userProfile) => {
-  let updatedInitalValue = Object.assign({}, initalValue,
+  const updatedInitalValue = Object.assign({}, initalValue,
     { ...userProfile, profileId: userProfile.id, ...userProfile.profileOf });
   return updatedInitalValue;
 }
@@ -116,8 +118,8 @@ const MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChang
       (values.map((value, index) => (
         <div key={index} className={classes.multiInputWrapper}>
           <TextField
-            id={"" + index}
-            name={name + "." + index}
+            id={""+index}
+            name={name+"."+index}
             label={label}
             className={classes.multiInput}
             value={value}
@@ -146,9 +148,9 @@ const MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChang
 
 /* eslint react/prop-types: 0 */
 /* eslint prettier/prettier: 0 */
-const AboutUserComponent = (props) => {
+const AboutUserComponent = (parentProps) => {
 
-  const { classes, userProfile = {}, handleCancel, handleProfileSave, isOwner } = props;
+  const { classes, userProfile = {}, handleCancel, handleProfileSave, isOwner } = parentProps;
 
   const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
 
@@ -166,6 +168,7 @@ const AboutUserComponent = (props) => {
           isSubmitting,
           handleChange,
           handleSubmit,
+          setFieldValue
         } = props;
         return (
           <form
@@ -269,6 +272,11 @@ const AboutUserComponent = (props) => {
                   />
                 </FormControl>
 
+                <Upload
+                  text="Upload Your profile picture"
+                  onUploaded={res => setFieldValue('picture', res[0].secure_url)}
+                />
+              
               </ExpansionPanelDetails>
             </ExpansionPanel>
 
@@ -318,7 +326,7 @@ const AboutUserComponent = (props) => {
                         handleChange={handleChange} classes={classes} name="workAndExperience" />} />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
+                <FormControl margin="normal" required fullWidth={true}>
                   <FieldArray
                     name="skills"
                     render={(arrayHelpers) =>
