@@ -105,6 +105,7 @@ export class UserProfile extends React.Component {
   render() {
     const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
     const { classes, selectedTab, userprofileInfo = {}, dispatch } = this.props;
+    const { picture } = userprofileInfo.profileOf;
 
     return (
       <div className="root">
@@ -122,7 +123,7 @@ export class UserProfile extends React.Component {
                 <div className="circleBorder">
                   <Avatar
                     alt="Adelle Charles"
-                    src={bgImage}
+                    src={picture}
                     className="avatar"
                   />
                 </div>

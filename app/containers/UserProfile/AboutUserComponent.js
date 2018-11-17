@@ -24,6 +24,7 @@ import { Formik, FieldArray } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { createStructuredSelector } from 'reselect';
 import ProfileTabType from './ProfileTabTypeModel';
+import Upload from 'components/Upload/Loadable';
 import { makeSelectLoggedUser } from '../../store/loggeduser/selectors'
 import '../App/common.css';
 
@@ -100,6 +101,7 @@ const initalValue = {
   workAndExperience: [],
   skills: [],
   college: '',
+  picture: '',
   otherDegreeAndCourses: [],
   careerObjectives: [],
 };
@@ -116,8 +118,8 @@ const MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChang
       (values.map((value, index) => (
         <div key={index} className={classes.multiInputWrapper}>
           <TextField
-            id={`${  index}`}
-            name={`${name  }.${  index}`}
+            id={""+index}
+            name={name+"."+index}
             label={label}
             className={classes.multiInput}
             value={value}
@@ -166,6 +168,7 @@ const AboutUserComponent = (parentProps) => {
           isSubmitting,
           handleChange,
           handleSubmit,
+          setFieldValue
         } = props;
         return (
           <form
@@ -181,7 +184,7 @@ const AboutUserComponent = (parentProps) => {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth="true">
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">Name</InputLabel>
                   <Input
                     id="name"
@@ -190,11 +193,11 @@ const AboutUserComponent = (parentProps) => {
                     value={values.name}
                     onChange={handleChange}
                     autoFocus
-                    fullWidth="true"
+                    fullWidth={true}
                   />
                 </FormControl>
 
-                <FormControl margin="normal" fullWidth="true">
+                <FormControl margin="normal" fullWidth={true}>
                   <InputLabel htmlFor="gender">Gender</InputLabel>
                   <Select
                     value={values.gender}
@@ -213,7 +216,7 @@ const AboutUserComponent = (parentProps) => {
                     )}
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth="true">
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="email">Email</InputLabel>
                   <Input
                     id="email"
@@ -236,7 +239,7 @@ const AboutUserComponent = (parentProps) => {
                   )}
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth="true">
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">Country</InputLabel>
                   <Input
                     id="country"
@@ -247,7 +250,7 @@ const AboutUserComponent = (parentProps) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth="true">
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">Home Town</InputLabel>
                   <Input
                     id="homeTown"
@@ -258,7 +261,7 @@ const AboutUserComponent = (parentProps) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth="true">
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">Current City</InputLabel>
                   <Input
                     id="currentCity"
@@ -269,6 +272,11 @@ const AboutUserComponent = (parentProps) => {
                   />
                 </FormControl>
 
+                <Upload
+                  text="Upload Your profile picture"
+                  onUploaded={res => setFieldValue('picture', res[0].secure_url)}
+                />
+              
               </ExpansionPanelDetails>
             </ExpansionPanel>
 
@@ -278,7 +286,7 @@ const AboutUserComponent = (parentProps) => {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth="true">
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">Political View</InputLabel>
                   <Input
                     id="politicalView"
@@ -289,7 +297,7 @@ const AboutUserComponent = (parentProps) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth="true">
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">Religious View</InputLabel>
                   <Input
                     id="religiousView"
@@ -308,7 +316,7 @@ const AboutUserComponent = (parentProps) => {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth="true">
+                <FormControl margin="normal" required fullWidth={true}>
                   <FieldArray
                     name="workAndExperience"
                     render={(arrayHelpers) =>
@@ -318,7 +326,7 @@ const AboutUserComponent = (parentProps) => {
                         handleChange={handleChange} classes={classes} name="workAndExperience" />} />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth="true">
+                <FormControl margin="normal" required fullWidth={true}>
                   <FieldArray
                     name="skills"
                     render={(arrayHelpers) =>
@@ -328,7 +336,7 @@ const AboutUserComponent = (parentProps) => {
                         classes={classes} name="skills" />} />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth="true">
+                <FormControl margin="normal" required fullWidth={true}>
                   <InputLabel htmlFor="name">College</InputLabel>
                   <Input
                     id="college"
@@ -339,7 +347,7 @@ const AboutUserComponent = (parentProps) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth="true">
+                <FormControl margin="normal" required fullWidth={true}>
                   <FieldArray
                     name="otherDegreeAndCourses"
                     render={(arrayHelpers) =>
@@ -350,7 +358,7 @@ const AboutUserComponent = (parentProps) => {
                         name="otherDegreeAndCourses" />} />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth="true">
+                <FormControl margin="normal" required fullWidth={true}>
                   <FieldArray
                     name="careerObjectives"
                     render={(arrayHelpers) =>
