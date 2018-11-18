@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -15,12 +15,27 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { replace } from 'react-router-redux';
 
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import Tooltip from '@material-ui/core/Tooltip';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+
 import { Input, Grid, Select, MenuItem, FormControl } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
-import Typography from '@material-ui/core/Typography';
 import { fetchTrendingNews } from './actions';
 import { makeSelectTrendingNews } from './selectors';
-import TrendingNewsList from './TrendingNewsList';
 import { makeSelectStatesForOptions } from '../../store/constants/selectors';
 
 const styles = theme => ({
@@ -45,12 +60,78 @@ const styles = theme => ({
   },
 });
 
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
+
 /* eslint-disable*/
+const TrendingNewsCards = (props) => {
+  const { trendingNewsData, classes, getCreatedOnDate, openDeleteConfirmationModal } = props
+  return (
+    <Card className={classes.card}>
+      <CardHeader
+        title={trendingNewsData.headline}
+        subheader={getCreatedOnDate(trendingNewsData.createdAt)}
+      />
+      <CardContent>
+        <Typography component="p">
+        {trendingNewsData.content}
+        </Typography>
+      </CardContent>
+      <CardActions className={classes.actions}>
+      <Tooltip title="Edit">
+        <IconButton color="primary" aria-label="Edit">
+          <EditIcon />
+        </IconButton>
+        </Tooltip>
+        <Tooltip title="Delete">
+        <IconButton color="secondary" aria-label="Delete"
+          onClick={openDeleteConfirmationModal}>
+          <DeleteIcon />
+        </IconButton>
+      </Tooltip>
+      </CardActions>
+  </Card>
+  );
+};
+
+const RenderDeleteConfirmationModal = (props) => {
+  const { isDeletedModalOpen, closeDeleteConfirmationModal } = props
+  return (
+    <Dialog
+          open={isDeletedModalOpen}
+          TransitionComponent={Transition}
+          keepMounted
+          disableBackdropClick={true}
+          onClose={closeDeleteConfirmationModal}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            {"Delete Confirmation"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+            Are You Sure You Want to delete it.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closeDeleteConfirmationModal} color="default">
+              Cancel
+            </Button>
+            <Button onClick={closeDeleteConfirmationModal} color="primary">
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+  );
+};
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminTrendingNewsList extends React.Component {
   state={
-    state:''
+    state:'',
+    isDeletedModalOpen : false
   }
   componentDidMount() {
     this.props.fetchTrendingNews();
@@ -61,6 +142,12 @@ export class AdminTrendingNewsList extends React.Component {
 
   routeToTrendingNewsView(selectedTrendingNews) {
     this.props.dispatch(replace(`/app/news/trends/admin/${selectedTrendingNews.id}/details`));
+  }
+
+  getCreatedOnDate(date) {
+    const myDate = new Date(date);
+    const trendingNewsCreationDate = myDate.getDate()+"/"+(myDate.getMonth()+1)+"/"+myDate.getFullYear();
+    return trendingNewsCreationDate;
   }
 
   handleChange(value){
@@ -74,9 +161,38 @@ export class AdminTrendingNewsList extends React.Component {
             </Typography>;
   }
 
+  openDeleteConfirmationModal = () => {
+    this.setState({ isDeletedModalOpen: true });
+  };
+
+  closeDeleteConfirmationModal = () => {
+    this.setState({ isDeletedModalOpen: false });
+  };
+
   _onReady(event) {
     // access to player in all event handlers via event.target
     event.target.pauseVideo();
+  }
+
+  renderTrendingNews() {
+    const { classes } = this.props;
+    return (
+      <Fragment>
+        {this.props.trendingNews.map(trendingNews => (
+          <TrendingNewsCards
+            key={trendingNews.id}
+            classes={classes}
+            getCreatedOnDate={this.getCreatedOnDate}
+            openDeleteConfirmationModal={this.openDeleteConfirmationModal}
+            trendingNewsData={trendingNews}
+          />
+        ))}
+        <RenderDeleteConfirmationModal
+          isDeletedModalOpen={this.state.isDeletedModalOpen}
+          closeDeleteConfirmationModal={this.closeDeleteConfirmationModal}
+        />
+      </Fragment>
+    );
   }
 
   render() {
@@ -113,10 +229,7 @@ export class AdminTrendingNewsList extends React.Component {
           </Grid>
         </Grid>
         {trendingNews.length === 0 ? this.renderNoTrendingNewsLabel(classes) :
-          <TrendingNewsList
-          trendingNews={trendingNews}
-          onTrendingNewsClick={selectedTrendingNews => this.routeToTrendingNewsView(selectedTrendingNews)}
-          />
+          this.renderTrendingNews()
         }
       </Content>
     );

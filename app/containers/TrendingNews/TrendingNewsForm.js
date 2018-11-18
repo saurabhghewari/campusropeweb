@@ -100,10 +100,7 @@ const styles = theme => ({
 /* eslint-disable */
 const opts = {
   height: '390',
-  width: '100%',
-  playerVars: {
-    autoplay: 1
-  }
+  width: '100%'
 };
 export class TrendingNewsForm extends React.Component {
 
@@ -123,7 +120,7 @@ export class TrendingNewsForm extends React.Component {
     );
   }
 
-  
+
   componentDidMount(){
      this.width = document.querySelector('#content').getBoundingClientRect().width,
      this.height = document.querySelector('#content').getBoundingClientRect().height
@@ -152,7 +149,6 @@ export class TrendingNewsForm extends React.Component {
           validationSchema={Yup.object().shape({
             headline: Yup.string().required('please provide headline'),
             content: Yup.string().required('Please provide content'),
-            photo_urls: Yup.string().required('please upload  Photos'),
             state: Yup.string().required('Please choose any one of the State'),
           })}
           onSubmit={(values, actions) => this.onSubmit(values, actions)}
@@ -234,11 +230,6 @@ export class TrendingNewsForm extends React.Component {
                     text="Upload Photos"
                     onUploaded={res => setFieldValue('photo_urls', res.map((pic) => pic.secure_url))}
                   />
-                  {touched.photo_urls && errors.photo_urls && (
-                    <FormHelperText className={classes.error}>
-                      {errors.photo_urls}
-                    </FormHelperText>
-                  )}
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                   {!_isEmpty(values.photo_urls) && (
                     values.photo_urls.map((pic) => <Card key={pic} className={classes.card}>
