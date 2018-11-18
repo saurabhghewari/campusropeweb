@@ -76,8 +76,8 @@ const TrendingNewsBox = ({ trendingNewsData, classes, onTrendingNewsClick, getCr
           )}
           {!_isEmpty(trendingNewsData.youtube_link) && (
             <YouTube videoId={trendingNewsData.youtube_link}
+                      controls
                       opts={opts}
-                      onReady={(event) => event.target.pauseVideo()}
             />
           )}
           <CardActions className={classes.actions} disableActionSpacing>
