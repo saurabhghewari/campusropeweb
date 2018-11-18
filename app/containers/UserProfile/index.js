@@ -3,7 +3,6 @@
  * UserProfile
  *
  */
-import bgImage from 'images/loginbg.jpg';
 
 import React from 'react';
 import classNames from 'classnames';
@@ -240,7 +239,7 @@ UserProfile.propTypes = {
 const mapStateToProps = createStructuredSelector({
   selectedTab: makeSelectSelectedTab(),
   userprofileInfo: selectUserProfileInfo(),
-  loggedUserInfo: makeSelectLoggedUser()
+  loggedUserInfo: makeSelectLoggedUser(),
 });
 
 function mapDispatchToProps(dispatch) {

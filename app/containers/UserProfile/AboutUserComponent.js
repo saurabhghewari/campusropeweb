@@ -118,8 +118,8 @@ const MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChang
       (values.map((value, index) => (
         <div key={index} className={classes.multiInputWrapper}>
           <TextField
-            id={""+index}
-            name={name+"."+index}
+            id={`${index}`}
+            name={`${name}.${index}`}
             label={label}
             className={classes.multiInput}
             value={value}
@@ -168,7 +168,7 @@ const AboutUserComponent = (parentProps) => {
           isSubmitting,
           handleChange,
           handleSubmit,
-          setFieldValue
+          setFieldValue,
         } = props;
         return (
           <form
@@ -184,7 +184,7 @@ const AboutUserComponent = (parentProps) => {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="name">Name</InputLabel>
                   <Input
                     id="name"
@@ -193,11 +193,11 @@ const AboutUserComponent = (parentProps) => {
                     value={values.name}
                     onChange={handleChange}
                     autoFocus
-                    fullWidth={true}
+                    fullWidth
                   />
                 </FormControl>
 
-                <FormControl margin="normal" fullWidth={true}>
+                <FormControl margin="normal" fullWidth>
                   <InputLabel htmlFor="gender">Gender</InputLabel>
                   <Select
                     value={values.gender}
@@ -216,7 +216,7 @@ const AboutUserComponent = (parentProps) => {
                     )}
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="email">Email</InputLabel>
                   <Input
                     id="email"
@@ -239,7 +239,7 @@ const AboutUserComponent = (parentProps) => {
                   )}
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="name">Country</InputLabel>
                   <Input
                     id="country"
@@ -250,7 +250,7 @@ const AboutUserComponent = (parentProps) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="name">Home Town</InputLabel>
                   <Input
                     id="homeTown"
@@ -261,7 +261,7 @@ const AboutUserComponent = (parentProps) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="name">Current City</InputLabel>
                   <Input
                     id="currentCity"
@@ -286,7 +286,7 @@ const AboutUserComponent = (parentProps) => {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="name">Political View</InputLabel>
                   <Input
                     id="politicalView"
@@ -297,7 +297,7 @@ const AboutUserComponent = (parentProps) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="name">Religious View</InputLabel>
                   <Input
                     id="religiousView"
@@ -316,7 +316,7 @@ const AboutUserComponent = (parentProps) => {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth>
                   <FieldArray
                     name="workAndExperience"
                     render={(arrayHelpers) =>
@@ -326,7 +326,7 @@ const AboutUserComponent = (parentProps) => {
                         handleChange={handleChange} classes={classes} name="workAndExperience" />} />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth>
                   <FieldArray
                     name="skills"
                     render={(arrayHelpers) =>
@@ -336,7 +336,7 @@ const AboutUserComponent = (parentProps) => {
                         classes={classes} name="skills" />} />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="name">College</InputLabel>
                   <Input
                     id="college"
@@ -347,7 +347,7 @@ const AboutUserComponent = (parentProps) => {
                   />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth>
                   <FieldArray
                     name="otherDegreeAndCourses"
                     render={(arrayHelpers) =>
@@ -358,7 +358,7 @@ const AboutUserComponent = (parentProps) => {
                         name="otherDegreeAndCourses" />} />
                 </FormControl>
 
-                <FormControl margin="normal" required fullWidth={true}>
+                <FormControl margin="normal" required fullWidth>
                   <FieldArray
                     name="careerObjectives"
                     render={(arrayHelpers) =>
