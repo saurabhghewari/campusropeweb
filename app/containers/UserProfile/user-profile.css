@@ -21,6 +21,19 @@
   top: 15%;
 }
 
+.userFollowsWrapper{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 50px;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.userFollowsWrapper p {
+  padding-top: 5px;
+}
+
 .profileFormSection{
   padding: 0 25px
 }
@@ -33,6 +46,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
+  margin-bottom: 40px;
 }
 
 .userDetail {
@@ -41,9 +55,17 @@
   padding-bottom: 25px;
 }
 
+.userActionWrapper{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 15px 0;
+}
+
 @media only screen and (max-width: 700px) {
   .circleBorder{
     top: 5%;
+    height: 95%;
   }
 
   .profileFormSection{
@@ -57,12 +79,16 @@
   .userDetail {
     padding-top: 10px;
   }
+
+  .userFollowsWrapper{
+    padding-left: 0;
+  }
 }
 
-.userActionWrapper{
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  margin: 15px 0;
-}
 
+@media only screen and (max-width: 400px) {
+  .circleBorder{
+    top: 20%;
+    height: 70%;
+  }
+}

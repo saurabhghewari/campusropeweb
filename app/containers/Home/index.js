@@ -92,7 +92,7 @@ export class Home extends React.Component {
           <PrivateRoute path="/app/about" component={AboutUs} />
         </Switch>
         <MobileView>
-          <AppBottomNavigation />
+          <AppBottomNavigation profileId={user.id}/>
         </MobileView>
       </React.Fragment>
     );

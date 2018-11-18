@@ -17,7 +17,14 @@ const styles = {
     width: '100%',
     position: 'fixed',
     bottom: 0,
+    justifyContent: 'space-around',
   },
+  navButtons: {
+    minWidth: 'inherit',
+    maxWidth: 'inherit',
+    padding: 0,
+    flex: 'inherit'
+  }
 };
 
 class AppBottomNavigation extends React.Component {
@@ -33,6 +40,9 @@ class AppBottomNavigation extends React.Component {
         break;
       case 1:
         this.props.dispatch(replace('/app/news/trends'));
+        break;
+      case 4:
+        this.props.dispatch(replace('/app/profile/'+ this.props.profileId));
         break;
       default:
         this.props.dispatch(replace('/app'));
@@ -50,14 +60,15 @@ class AppBottomNavigation extends React.Component {
         showLabels
         className={classes.root}
       >
-        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-        <BottomNavigationAction label="Trends" icon={<TrendingUp />} />
-        <BottomNavigationAction label="Messages" icon={<MessageIcon />} />
+        <BottomNavigationAction label="Home" icon={<HomeIcon />} className={classes.navButtons}/>
+        <BottomNavigationAction label="Trends" icon={<TrendingUp />} className={classes.navButtons}/>
+        <BottomNavigationAction label="Messages" icon={<MessageIcon />} className={classes.navButtons}/>
         <BottomNavigationAction
           label="Notifications"
           icon={<NotificationsIcon />}
+          className={classes.navButtons}
         />
-        <BottomNavigationAction label="Profile" icon={<AccountCircle />} />
+        <BottomNavigationAction label="Profile" icon={<AccountCircle />} className={classes.navButtons}/>
       </BottomNavigation>
     );
   }

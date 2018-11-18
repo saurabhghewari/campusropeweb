@@ -44,18 +44,6 @@ const styles = () => ({
   followsLabel: {
     color: "#888484",
   },
-  userFollowsWrapper: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-    paddingLeft: "50px",
-
-    "& p": {
-      padding: "15px 0",
-    },
-  },
   profileTabGrid: {
     paddingBottom: "25px",
   },
@@ -66,15 +54,11 @@ const styles = () => ({
   postWrapper: {
     padding: "20px 0",
   },
-  followBtn: {
-
-  },
-  messageBtn: {
-
-  },
-  moreBtn: {
-
-  },
+  followsTypo: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  }
 });
 
 /* eslint react/prop-types: 0 */
@@ -103,8 +87,8 @@ export class UserProfile extends React.Component {
 
   render() {
     const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
-    const { classes, selectedTab, userprofileInfo = {}, dispatch } = this.props;
-    const { picture } = userprofileInfo.profileOf;
+    const { classes, selectedTab, userprofileInfo = {} } = this.props;
+    const { picture } = userprofileInfo.profileOf || {};
 
     return (
       <div className="root">
@@ -130,17 +114,17 @@ export class UserProfile extends React.Component {
             </Grid>
 
             <Grid item xs={6} md={8} lg={8}>
-              <div className={classes.userFollowsWrapper}>
+              <div className="userFollowsWrapper">
                 <Typography variant="h6">Saif ELiyas</Typography>
 
-                <Typography variant="body1">
-                  <span className={classes.followsCount}> 1793</span>
+                <Typography variant="body1" className={classes.followsTypo}>
                   <span className={classes.followsLabel}>Followers</span>
+                  <span className={classes.followsCount}> 1793</span>
                 </Typography>
 
-                <Typography variant="body1">
-                  <span className={classes.followsCount}> 1309</span>
+                <Typography variant="body1" className={classes.followsTypo}>
                   <span className={classes.followsLabel}>Followings</span>
+                  <span className={classes.followsCount}> 1309</span>
                 </Typography>
 
                 {!this.isOwner() ?
