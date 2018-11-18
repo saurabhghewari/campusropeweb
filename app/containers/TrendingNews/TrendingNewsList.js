@@ -48,10 +48,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 const opts = {
   height: '390',
-  width: '100%',
-  playerVars: {
-    autoplay: 0
-  }
+  width: '100%'
 };
 
 const TrendingNewsBox = ({ trendingNewsData, classes, onTrendingNewsClick, getCreatedOnDate }) => {
