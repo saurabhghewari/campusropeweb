@@ -70,8 +70,8 @@ export class UserTrendingNewsList extends React.Component {
             input={<Input id="state" name="state" />}
           >
             {states.map(state => (
-              <MenuItem key={state.label} value={state.value}>
-                {state.value}
+              <MenuItem key={state} value={state}>
+                {state}
               </MenuItem>
             ))}
           </Select>

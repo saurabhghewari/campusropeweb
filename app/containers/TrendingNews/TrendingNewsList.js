@@ -50,7 +50,7 @@ const opts = {
   height: '390',
   width: '100%',
   playerVars: {
-    autoplay: 1
+    autoplay: 0
   }
 };
 
@@ -79,8 +79,8 @@ const TrendingNewsBox = ({ trendingNewsData, classes, onTrendingNewsClick, getCr
           )}
           {!_isEmpty(trendingNewsData.youtube_link) && (
             <YouTube videoId={trendingNewsData.youtube_link}
+                      controls
                       opts={opts}
-                      onReady={(event) => event.target.pauseVideo()}
             />
           )}
           <CardActions className={classes.actions} disableActionSpacing>
