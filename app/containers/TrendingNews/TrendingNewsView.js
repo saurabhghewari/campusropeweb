@@ -83,7 +83,7 @@ export class TrendingNewsView extends React.Component {
           </Grid>
                 <Grid item xs={12} sm={12} lg={12}>
                 <Typography variant="headline">content : </Typography>
-                    <Typography variant="subtitle1">{trendingNewsDetails.headline}</Typography>
+                    <Typography variant="subtitle1">{trendingNewsDetails.content}</Typography>
                 </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                    <Typography variant="subtitle1">state : {trendingNewsDetails.state}</Typography>
