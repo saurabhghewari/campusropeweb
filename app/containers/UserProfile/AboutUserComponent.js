@@ -23,9 +23,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Formik, FieldArray } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { createStructuredSelector } from 'reselect';
-import ProfileTabType from './ProfileTabTypeModel';
 import Upload from 'components/Upload/Loadable';
-import { makeSelectLoggedUser } from '../../store/loggeduser/selectors'
+import ProfileTabType from './ProfileTabTypeModel';
+import { makeSelectLoggedUser } from '../../store/loggeduser/selectors';
 import '../App/common.css';
 
 const styles = theme => ({
@@ -41,12 +41,12 @@ const styles = theme => ({
   },
   submit: {},
   cancel: {
-    background: "#ffc400",
-    marginLeft: "10px",
-    color: "white",
+    background: '#ffc400',
+    marginLeft: '10px',
+    color: 'white',
 
     '&:hover': {
-      background: "#ecb809",
+      background: '#ecb809',
     },
   },
   button: {
@@ -57,34 +57,34 @@ const styles = theme => ({
     fontSize: 12,
   },
   panelDetails: {
-    flexDirection: "column",
+    flexDirection: 'column',
   },
   aboutUserBtnWrapper: {
-    display: "flex",
-    justifyContent: "flex-end",
-    marginTop: "10px",
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginTop: '10px',
   },
   multiInputBtn: {
-    padding: "5px",
-    minWidth: "30px",
-    height: "40px",
-    width: "40px",
+    padding: '5px',
+    minWidth: '30px',
+    height: '40px',
+    width: '40px',
     marginLeft: 10,
   },
   multiInputWrapper: {
-    display: "flex",
-    alignItems: "center",
-    position: "relative",
+    display: 'flex',
+    alignItems: 'center',
+    position: 'relative',
   },
   multiInput: {
     flex: 1,
   },
   deleteBtn: {
-    background: "#e63d3d",
-    color: "white",
+    background: '#e63d3d',
+    color: 'white',
 
     '&:hover': {
-      background: "#d43a3a",
+      background: '#d43a3a',
     },
   },
 });
@@ -106,17 +106,27 @@ const initalValue = {
   careerObjectives: [],
 };
 
-const getInitialValues = (userProfile) => {
-  const updatedInitalValue = Object.assign({}, initalValue,
-    { ...userProfile, profileId: userProfile.id, ...userProfile.profileOf });
+const getInitialValues = userProfile => {
+  const updatedInitalValue = Object.assign({}, initalValue, {
+    ...userProfile,
+    profileId: userProfile.id,
+    ...userProfile.profileOf,
+  });
   return updatedInitalValue;
-}
+};
 
-const MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChange, name }) => (
+const MultiInputComponent = ({
+  arrayHelpers,
+  values,
+  classes,
+  label,
+  handleChange,
+  name,
+}) => (
   <div>
-    {values.length ?
-      (values.map((value, index) => (
-        <div key={index} className={classes.multiInputWrapper}>
+    {values.length ? (
+      values.map((value, index) => (
+        <div key={`${name}`} className={classes.multiInputWrapper}>
           <TextField
             id={`${index}`}
             name={`${name}.${index}`}
@@ -127,283 +137,402 @@ const MultiInputComponent = ({ arrayHelpers, values, classes, label, handleChang
           />
 
           <Button
-            variant="contained" color="primary" className={classes.multiInputBtn}
-            onClick={() => arrayHelpers.insert(index, "")}>
+            variant="contained"
+            color="primary"
+            className={classes.multiInputBtn}
+            onClick={() => arrayHelpers.insert(index, '')}
+          >
             <Add />
           </Button>
 
-          {(values.length > 1) && <Button
-            variant="contained" onClick={() => arrayHelpers.remove(index)}
-            className={classNames(classes.multiInputBtn, classes.deleteBtn)}>
-            <Delete />
-          </Button>}
+          {values.length > 1 && (
+            <Button
+              variant="contained"
+              onClick={() => arrayHelpers.remove(index)}
+              className={classNames(classes.multiInputBtn, classes.deleteBtn)}
+            >
+              <Delete />
+            </Button>
+          )}
         </div>
-      ))) :
-      (<Button variant="contained" color="primary" onClick={() => arrayHelpers.push('')}>
+      ))
+    ) : (
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => arrayHelpers.push('')}
+      >
         Add {name}
-      </Button>)
-    }
+      </Button>
+    )}
   </div>
-)
+);
 
 /* eslint react/prop-types: 0 */
-/* eslint prettier/prettier: 0 */
-const AboutUserComponent = (parentProps) => {
+class AboutUserComponent extends React.Component {
+  state = {
+    expanded: null,
+  };
 
-  const { classes, userProfile = {}, handleCancel, handleProfileSave, isOwner } = parentProps;
+  handleChange = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false,
+    });
+  };
 
-  const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
+  render() {
+    const {
+      classes,
+      userProfile = {},
+      handleCancel,
+      handleProfileSave,
+      isOwner,
+    } = this.props;
+    const { expanded } = this.state;
+    const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
+    return (
+      <Formik
+        initialValues={getInitialValues(userProfile)}
+        validationSchema={Yup.object().shape({})}
+        onSubmit={(values, actions) => handleProfileSave(values, actions)}
+      >
+        {props => {
+          const {
+            values,
+            touched,
+            errors,
+            isSubmitting,
+            handleChange,
+            handleSubmit,
+            setFieldValue,
+          } = props;
+          return (
+            <form
+              className={classes.form}
+              noValidate="noValidate"
+              onSubmit={handleSubmit}
+            >
+              <Typography variant="h5" className="text-center">
+                About
+              </Typography>
 
-  return (
-    <Formik
-      initialValues={getInitialValues(userProfile)}
-      validationSchema={Yup.object().shape({})}
-      onSubmit={(values, actions) => handleProfileSave(values, actions)}
-    >
-      {props => {
-        const {
-          values,
-          touched,
-          errors,
-          isSubmitting,
-          handleChange,
-          handleSubmit,
-          setFieldValue,
-        } = props;
-        return (
-          <form
-            className={classes.form}
-            noValidate="noValidate"
-            onSubmit={handleSubmit}
-          >
-            <Typography variant="h5" className="text-center"> About</Typography>
+              <ExpansionPanel
+                expanded={expanded === 'panel1'}
+                onChange={this.handleChange('panel1')}
+              >
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography variant="body1" className={classes.heading}>
+                    Basic Information
+                  </Typography>
+                </ExpansionPanelSummary>
 
-            <ExpansionPanel>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="body1" className={classes.heading}>Basic Information</Typography>
-              </ExpansionPanelSummary>
-
-              <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Name</InputLabel>
-                  <Input
-                    id="name"
-                    name="name"
-                    autoComplete="name"
-                    value={values.name}
-                    onChange={handleChange}
-                    autoFocus
-                    fullWidth
-                  />
-                </FormControl>
-
-                <FormControl margin="normal" fullWidth>
-                  <InputLabel htmlFor="gender">Gender</InputLabel>
-                  <Select
-                    value={values.gender}
-                    onChange={handleChange}
-                    input={<Input id="gender" name="gender" />}
+                <ExpansionPanelDetails className={classes.panelDetails}>
+                  <FormControl
+                    margin="normal"
+                    required="required"
+                    fullWidth="fullWidth"
                   >
-                    <MenuItem value="male">Male</MenuItem>
-                    <MenuItem value="female">Female</MenuItem>
-                    <MenuItem value="other">other</MenuItem>
-                  </Select>
-                  {touched.gender &&
-                    errors.gender && (
+                    <InputLabel htmlFor="name">Name</InputLabel>
+                    <Input
+                      id="name"
+                      name="name"
+                      autoComplete="name"
+                      value={values.name}
+                      onChange={handleChange}
+                      autoFocus="autoFocus"
+                      fullWidth="fullWidth"
+                    />
+                  </FormControl>
+
+                  <FormControl margin="normal" fullWidth="fullWidth">
+                    <InputLabel htmlFor="gender">Gender</InputLabel>
+                    <Select
+                      value={values.gender}
+                      onChange={handleChange}
+                      input={<Input id="gender" name="gender" />}
+                    >
+                      <MenuItem value="male">Male</MenuItem>
+                      <MenuItem value="female">Female</MenuItem>
+                      <MenuItem value="other">other</MenuItem>
+                    </Select>
+                    {touched.gender &&
+                      errors.gender && (
+                        <FormHelperText className={classes.error}>
+                          {errors.gender}
+                        </FormHelperText>
+                      )}
+                  </FormControl>
+
+                  <FormControl
+                    margin="normal"
+                    required="required"
+                    fullWidth="fullWidth"
+                  >
+                    <InputLabel htmlFor="email">Email</InputLabel>
+                    <Input
+                      id="email"
+                      name="email"
+                      autoComplete="email"
+                      value={values.email}
+                      disabled="disabled"
+                      onChange={handleChange}
+                    />{' '}
+                    {touched.email &&
+                      errors.email && (
+                        <FormHelperText className={classes.error}>
+                          {errors.email}
+                        </FormHelperText>
+                      )}
+                    {errors.exists && (
                       <FormHelperText className={classes.error}>
-                        {errors.gender}
+                        {errors.exists}
                       </FormHelperText>
                     )}
-                </FormControl>
+                  </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="email">Email</InputLabel>
-                  <Input
-                    id="email"
-                    name="email"
-                    autoComplete="email"
-                    value={values.email}
-                    disabled
-                    onChange={handleChange}
-                  />{' '}
-                  {touched.email &&
-                    errors.email && (
-                      <FormHelperText className={classes.error}>
-                        {errors.email}
-                      </FormHelperText>
-                    )}
-                  {errors.exists && (
-                    <FormHelperText className={classes.error}>
-                      {errors.exists}
-                    </FormHelperText>
-                  )}
-                </FormControl>
+                  <FormControl
+                    margin="normal"
+                    required="required"
+                    fullWidth="fullWidth"
+                  >
+                    <InputLabel htmlFor="name">Country</InputLabel>
+                    <Input
+                      id="country"
+                      name="country"
+                      value={values.country}
+                      onChange={handleChange}
+                      autoFocus="autoFocus"
+                    />
+                  </FormControl>
 
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Country</InputLabel>
-                  <Input
-                    id="country"
-                    name="country"
-                    value={values.country}
-                    onChange={handleChange}
-                    autoFocus
+                  <FormControl
+                    margin="normal"
+                    required="required"
+                    fullWidth="fullWidth"
+                  >
+                    <InputLabel htmlFor="name">Home Town</InputLabel>
+                    <Input
+                      id="homeTown"
+                      name="homeTown"
+                      value={values.homeTown}
+                      onChange={handleChange}
+                      autoFocus="autoFocus"
+                    />
+                  </FormControl>
+
+                  <FormControl
+                    margin="normal"
+                    required="required"
+                    fullWidth="fullWidth"
+                  >
+                    <InputLabel htmlFor="name">Current City</InputLabel>
+                    <Input
+                      id="currentCity"
+                      name="currentCity"
+                      value={values.currentCity}
+                      onChange={handleChange}
+                      autoFocus="autoFocus"
+                    />
+                  </FormControl>
+
+                  <Upload
+                    text="Upload Your profile picture"
+                    onUploaded={res =>
+                      setFieldValue('picture', res[0].secure_url)
+                    }
                   />
-                </FormControl>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
 
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Home Town</InputLabel>
-                  <Input
-                    id="homeTown"
-                    name="homeTown"
-                    value={values.homeTown}
-                    onChange={handleChange}
-                    autoFocus
-                  />
-                </FormControl>
-
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Current City</InputLabel>
-                  <Input
-                    id="currentCity"
-                    name="currentCity"
-                    value={values.currentCity}
-                    onChange={handleChange}
-                    autoFocus
-                  />
-                </FormControl>
-
-                <Upload
-                  text="Upload Your profile picture"
-                  onUploaded={res => setFieldValue('picture', res[0].secure_url)}
-                />
-              
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-
-            <ExpansionPanel>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="body1" className={classes.heading}>Stereotypes</Typography>
-              </ExpansionPanelSummary>
-
-              <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Political View</InputLabel>
-                  <Input
-                    id="politicalView"
-                    name="politicalView"
-                    value={values.politicalView}
-                    onChange={handleChange}
-                    autoFocus multiline
-                  />
-                </FormControl>
-
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Religious View</InputLabel>
-                  <Input
-                    id="religiousView"
-                    name="religiousView"
-                    value={values.religiousView}
-                    onChange={handleChange}
-                    autoFocus multiline
-                  />
-                </FormControl>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-
-            <ExpansionPanel>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="body1" className={classes.heading}>General Information</Typography>
-              </ExpansionPanelSummary>
-
-              <ExpansionPanelDetails className={classes.panelDetails}>
-                <FormControl margin="normal" required fullWidth>
-                  <FieldArray
-                    name="workAndExperience"
-                    render={(arrayHelpers) =>
-                      <MultiInputComponent
-                        arrayHelpers={arrayHelpers}
-                        label="Work And Experience" values={values.workAndExperience}
-                        handleChange={handleChange} classes={classes} name="workAndExperience" />} />
-                </FormControl>
-
-                <FormControl margin="normal" required fullWidth>
-                  <FieldArray
-                    name="skills"
-                    render={(arrayHelpers) =>
-                      <MultiInputComponent
-                        arrayHelpers={arrayHelpers}
-                        label="skills" values={values.skills} handleChange={handleChange}
-                        classes={classes} name="skills" />} />
-                </FormControl>
-
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">College</InputLabel>
-                  <Input
-                    id="college"
-                    name="college"
-                    value={values.college}
-                    onChange={handleChange}
-                    autoFocus
-                  />
-                </FormControl>
-
-                <FormControl margin="normal" required fullWidth>
-                  <FieldArray
-                    name="otherDegreeAndCourses"
-                    render={(arrayHelpers) =>
-                      <MultiInputComponent
-                        arrayHelpers={arrayHelpers}
-                        label="Other Degree and Courses" values={values.otherDegreeAndCourses}
-                        handleChange={handleChange} classes={classes}
-                        name="otherDegreeAndCourses" />} />
-                </FormControl>
-
-                <FormControl margin="normal" required fullWidth>
-                  <FieldArray
-                    name="careerObjectives"
-                    render={(arrayHelpers) =>
-                      <MultiInputComponent
-                        arrayHelpers={arrayHelpers}
-                        label="Career Objectives" values={values.careerObjectives}
-                        handleChange={handleChange} classes={classes}
-                        name="careerObjectives" />} />
-                </FormControl>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-
-            <div className={classes.aboutUserBtnWrapper}>
-              {isOwner ? <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                disabled={isSubmitting}
+              <ExpansionPanel
+                expanded={expanded === 'panel2'}
+                onChange={this.handleChange('panel2')}
               >
-                {' '}
-                Save
-              </Button> : ""}
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography variant="body1" className={classes.heading}>
+                    Stereotypes
+                  </Typography>
+                </ExpansionPanelSummary>
 
-              <Button
-                onClick={() => handleCancel(TAB_TYPE_MAP.POST_TAB)}
-                variant="contained"
-                className={classes.cancel}
-                disabled={isSubmitting}
+                <ExpansionPanelDetails className={classes.panelDetails}>
+                  <FormControl
+                    margin="normal"
+                    required="required"
+                    fullWidth="fullWidth"
+                  >
+                    <InputLabel htmlFor="name">Political View</InputLabel>
+                    <Input
+                      id="politicalView"
+                      name="politicalView"
+                      value={values.politicalView}
+                      onChange={handleChange}
+                      autoFocus="autoFocus"
+                      multiline="multiline"
+                    />
+                  </FormControl>
+
+                  <FormControl
+                    margin="normal"
+                    required="required"
+                    fullWidth="fullWidth"
+                  >
+                    <InputLabel htmlFor="name">Religious View</InputLabel>
+                    <Input
+                      id="religiousView"
+                      name="religiousView"
+                      value={values.religiousView}
+                      onChange={handleChange}
+                      autoFocus="autoFocus"
+                      multiline="multiline"
+                    />
+                  </FormControl>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+
+              <ExpansionPanel
+                expanded={expanded === 'panel3'}
+                onChange={this.handleChange('panel3')}
               >
-                {' '}
-                cancel
-              </Button>
-            </div>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography variant="body1" className={classes.heading}>
+                    General Information
+                  </Typography>
+                </ExpansionPanelSummary>
 
-          </form>
-        );
-      }}
-    </Formik>
-  )
+                <ExpansionPanelDetails className={classes.panelDetails}>
+                  <FormControl
+                    margin="normal"
+                    required="required"
+                    fullWidth="fullWidth"
+                  >
+                    <FieldArray
+                      name="workAndExperience"
+                      render={arrayHelpers => (
+                        <MultiInputComponent
+                          arrayHelpers={arrayHelpers}
+                          label="Work And Experience"
+                          values={values.workAndExperience}
+                          handleChange={handleChange}
+                          classes={classes}
+                          name="workAndExperience"
+                        />
+                      )}
+                    />
+                  </FormControl>
+
+                  <FormControl
+                    margin="normal"
+                    required="required"
+                    fullWidth="fullWidth"
+                  >
+                    <FieldArray
+                      name="skills"
+                      render={arrayHelpers => (
+                        <MultiInputComponent
+                          arrayHelpers={arrayHelpers}
+                          label="skills"
+                          values={values.skills}
+                          handleChange={handleChange}
+                          classes={classes}
+                          name="skills"
+                        />
+                      )}
+                    />
+                  </FormControl>
+
+                  <FormControl
+                    margin="normal"
+                    required="required"
+                    fullWidth="fullWidth"
+                  >
+                    <InputLabel htmlFor="name">College</InputLabel>
+                    <Input
+                      id="college"
+                      name="college"
+                      value={values.college}
+                      onChange={handleChange}
+                      autoFocus="autoFocus"
+                    />
+                  </FormControl>
+
+                  <FormControl
+                    margin="normal"
+                    required="required"
+                    fullWidth="fullWidth"
+                  >
+                    <FieldArray
+                      name="otherDegreeAndCourses"
+                      render={arrayHelpers => (
+                        <MultiInputComponent
+                          arrayHelpers={arrayHelpers}
+                          label="Other Degree and Courses"
+                          values={values.otherDegreeAndCourses}
+                          handleChange={handleChange}
+                          classes={classes}
+                          name="otherDegreeAndCourses"
+                        />
+                      )}
+                    />
+                  </FormControl>
+
+                  <FormControl
+                    margin="normal"
+                    required="required"
+                    fullWidth="fullWidth"
+                  >
+                    <FieldArray
+                      name="careerObjectives"
+                      render={arrayHelpers => (
+                        <MultiInputComponent
+                          arrayHelpers={arrayHelpers}
+                          label="Career Objectives"
+                          values={values.careerObjectives}
+                          handleChange={handleChange}
+                          classes={classes}
+                          name="careerObjectives"
+                        />
+                      )}
+                    />
+                  </FormControl>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+
+              <div className={classes.aboutUserBtnWrapper}>
+                {isOwner ? (
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    disabled={isSubmitting}
+                  >
+                    {' '}
+                    Save
+                  </Button>
+                ) : (
+                  ''
+                )}
+
+                <Button
+                  onClick={() => handleCancel(TAB_TYPE_MAP.POST_TAB)}
+                  variant="contained"
+                  className={classes.cancel}
+                  disabled={isSubmitting}
+                >
+                  {' '}
+                  cancel
+                </Button>
+              </div>
+            </form>
+          );
+        }}
+      </Formik>
+    );
+  }
 }
 
 AboutUserComponent.propTypes = {
   classes: PropTypes.object,
-  handleSubmit: PropTypes.func,
   isOwner: PropTypes.bool.isRequired,
 };
 
@@ -421,6 +550,4 @@ const withConnect = connect(
 );
 const componentWithStyles = withStyles(styles)(AboutUserComponent);
 
-export default compose(
-  withConnect,
-)(componentWithStyles);
+export default compose(withConnect)(componentWithStyles);

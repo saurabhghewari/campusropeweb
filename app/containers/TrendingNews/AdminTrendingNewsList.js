@@ -157,7 +157,7 @@ export class AdminTrendingNewsList extends React.Component {
   }
   renderNoTrendingNewsLabel(classes) {
     return <Typography variant="h4" className={classes.noTrendingNewsLabel}>
-                  No Trending News Created
+                  {/* No Trending News Created */}
             </Typography>;
   }
 
