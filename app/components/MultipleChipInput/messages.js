@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   header: {
-    id: 'app.components.DynamicList.header',
-    defaultMessage: 'This is the DynamicList component !',
+    id: 'app.components.MultipleChipInput.header',
+    defaultMessage: 'This is the MultipleChipInput component !',
   },
 });
