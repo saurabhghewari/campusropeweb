@@ -6,11 +6,11 @@ import {
   NON_EXIST_EMAIL_PASSWORD_ERROR_MESSAGE,
   LOGOUT,
 } from './constants';
-import { loginApi } from './api';
 import { USER_TOKEN } from '../../constants/local_storage_constants';
 import setupAxiosWithAuthHeader from '../../setup_axios';
 import { setLoggedUser } from '../../store/loggeduser/actions';
 import { fetchConstants } from '../../store/constants/actions';
+import feathersClient, { userService } from '../../feathers';
 
 // Function for storing our API token, perhaps in localStorage or Redux state.
 export function* storeToken(token) {
@@ -30,11 +30,20 @@ function* submitLogin({ values, actions }) {
   const { resetForm, setErrors, setSubmitting } = actions;
   try {
     // Connect to our "API" and get an API token for future API calls.
-    const response = yield call(loginApi, values.email, values.password);
-    yield call(storeToken, response.data.token);
+    const response = yield call(feathersClient.authenticate, {
+      strategy: 'local',
+      email: values.email,
+      password: values.password,
+    });
+
+    const payload = yield feathersClient.passport.verifyJWT(
+      response.accessToken,
+    );
+    const loggedUser = yield userService.get(payload.userId);
+    feathersClient.set('user', loggedUser);
     // Reset the form just to be clean, then send the user to our home  which "requires" authentication
     yield call(resetForm);
-    yield put(setLoggedUser(response.data.user));
+    yield put(setLoggedUser(loggedUser));
     yield put(fetchConstants());
     yield put(replace('/app'));
   } catch (e) {

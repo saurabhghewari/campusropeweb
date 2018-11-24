@@ -11,4 +11,5 @@ client.configure(
   }),
 );
 
+export const userService = client.service('users');
 export default client;

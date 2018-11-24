@@ -6,14 +6,13 @@
 
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import ls from 'local-storage';
-import { USER_TOKEN } from '../../constants/local_storage_constants';
 import setupAxiosWithAuthHeader from '../../setup_axios';
+import feathersClient from '../../feathers';
 
 /* eslint-disable */
 class PrivateRoute extends React.Component {
   renderComponentOrRedirect(props) {
-    if (ls.get(USER_TOKEN)) {
+    if (feathersClient.get('user')) {
       const { component: Component } = this.props;
       setupAxiosWithAuthHeader();
       return <Component {...props} />;
