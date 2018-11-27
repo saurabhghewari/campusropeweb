@@ -6,18 +6,13 @@ import {
   FETCH_NGO_BY_ID,
   UPDATE_NGO_BY_ID,
 } from './constants';
-import {
-  createNewNgoApi,
-  fetchNgosApi,
-  fetchNgoByIdApi,
-  updateNgoApi,
-} from './api';
 import { setNgos, setInViewNgo } from './actions';
+import { ngoService } from './../../feathers';
 
 export function* submitNewNgoDetails({ values, actions }) {
   const { resetForm, setSubmitting } = actions;
   try {
-    yield call(createNewNgoApi, values);
+    yield ngoService.create(values);
     yield call(resetForm);
     yield put(replace('/app/ngos'));
   } catch (e) {
@@ -26,17 +21,17 @@ export function* submitNewNgoDetails({ values, actions }) {
 }
 
 export function* fetchNgosSaga() {
-  const ngos = yield call(fetchNgosApi);
-  yield put(setNgos(ngos));
+  const ngos = yield ngoService.find({});
+  yield put(setNgos(ngos.data));
 }
 
 export function* updateNgoSaga({ ngo }) {
-  yield call(updateNgoApi, ngo);
+  yield ngoService.patch(ngo._id, ngo);
   yield put(replace('/app/ngos/verification'));
 }
 
 export function* fetchNgoByIdSaga({ ngoId }) {
-  const ngo = yield call(fetchNgoByIdApi, ngoId);
+  const ngo = yield ngoService.get(ngoId);
   yield put(setInViewNgo(ngo));
 }
 // Individual exports for testing

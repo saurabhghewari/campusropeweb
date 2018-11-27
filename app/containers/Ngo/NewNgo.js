@@ -269,7 +269,7 @@ class NewNgo extends React.Component {
     this.props.submitNewNgoDetails(
       {
         ...values,
-        createdBy: this.props.loggedUser.id,
+        createdBy: this.props.loggedUser._id,
       },
       actions,
     );

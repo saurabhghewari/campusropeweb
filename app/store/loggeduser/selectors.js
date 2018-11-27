@@ -9,7 +9,7 @@ import {
 const selectLoggedUserDomain = state => state.loggedUser;
 
 const makeSelectLoggedUser = () =>
-  createSelector(selectLoggedUserDomain, loggedUser => loggedUser);
+  createSelector(selectLoggedUserDomain, loggedUser => loggedUser.user);
 
 const makeSelectLoggedUserMenus = () =>
   createSelector(selectLoggedUserDomain, loggedUserState => {

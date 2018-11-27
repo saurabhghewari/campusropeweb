@@ -14,7 +14,7 @@ import { compose } from 'redux';
 import Button from '@material-ui/core/Button';
 import NgoList from './NgoList';
 import { fetchNgos } from './actions';
-import { makeSelectFetchedNgos } from './selectors';
+import { makeSelectApprovedNgos } from './selectors';
 
 /* eslint-disable*/
 
@@ -58,7 +58,7 @@ AllNgos.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  fetchedNgos: makeSelectFetchedNgos(),
+  fetchedNgos: makeSelectApprovedNgos(),
 });
 
 function mapDispatchToProps(dispatch) {

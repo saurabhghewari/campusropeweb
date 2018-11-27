@@ -16,4 +16,7 @@ client.configure(
 export const userService = client.service('users');
 export const constantsService = client.service('constants');
 export const adminTasksService = client.service('admin-tasks');
+export const ngoService = client.service('ngo');
+export const trendingNewsService = client.service('trending-news');
+
 export default client;

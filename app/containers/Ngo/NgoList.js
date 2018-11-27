@@ -79,7 +79,7 @@ class NgoList extends React.Component {
       <Fragment>
         {this.props.ngos.map(ngo => (
           <NgoBox
-            key={ngo.id}
+            key={ngo._id}
             classes={classes}
             onNgoClick={onNgoClick}
             ngoData={ngo}
