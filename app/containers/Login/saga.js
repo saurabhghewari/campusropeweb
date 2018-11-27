@@ -20,6 +20,7 @@ export function* storeToken(token) {
 
 export function* logout() {
   ls.remove(USER_TOKEN);
+  yield call(feathersClient.logout);
   yield put(replace('/login'));
 }
 
