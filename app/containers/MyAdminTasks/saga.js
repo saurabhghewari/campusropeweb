@@ -1,14 +1,16 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { put, select, takeLatest } from 'redux-saga/effects';
 import { selectLoggedUserDomain } from '../../store/loggeduser/selectors';
 import { FETCH_MY_ADMIN_TASKS } from './constants';
 import { setMyAdminTasks } from './actions';
-import { getAdminTasksForUser } from '../AssignAdminTask/api';
-
+import { adminTasksService } from '../../feathers';
+/*eslint-disable*/
 export function* fetchMyAdminTask() {
   const { user } = yield select(selectLoggedUserDomain);
   if (user) {
-    const adminTasks = yield call(getAdminTasksForUser, user.id);
-    yield put(setMyAdminTasks(adminTasks));
+    const adminTaskModel = yield adminTasksService.findOne({
+      query: { userId: user._id },
+    });
+    yield put(setMyAdminTasks(adminTaskModel.tasks));
   }
 }
 

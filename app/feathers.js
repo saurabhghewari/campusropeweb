@@ -1,10 +1,12 @@
 import io from 'socket.io-client';
 import feathers from '@feathersjs/client';
+import findOne from 'feathers-findone';
 
 const socket = io('http://localhost:3030');
 const client = feathers();
 
 client.configure(feathers.socketio(socket));
+client.configure(findOne());
 client.configure(
   feathers.authentication({
     storage: window.localStorage,
@@ -13,4 +15,5 @@ client.configure(
 
 export const userService = client.service('users');
 export const constantsService = client.service('constants');
+export const adminTasksService = client.service('admin-tasks');
 export default client;
