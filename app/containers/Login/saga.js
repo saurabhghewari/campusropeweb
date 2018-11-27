@@ -45,6 +45,7 @@ function* submitLogin({ values, actions }) {
     yield call(resetForm);
     yield put(setLoggedUser(loggedUser));
     yield put(fetchConstants());
+    yield call(storeToken, response.accessToken);
     yield put(replace('/app'));
   } catch (e) {
     if (e.response.status === 401) {

@@ -12,4 +12,5 @@ client.configure(
 );
 
 export const userService = client.service('users');
+export const constantsService = client.service('constants');
 export default client;

@@ -1,10 +1,10 @@
-import { takeLatest, call, put } from 'redux-saga/effects';
+import { takeLatest, put } from 'redux-saga/effects';
+import { constantsService } from './../../feathers';
 import { FETCH_CONSTANTS } from './constants';
-import { fetchConstantsApi } from './api';
 import { setConstants } from './actions';
 
 export function* fetchConstantsSaga() {
-  const constants = yield call(fetchConstantsApi);
+  const constants = yield constantsService.find();
   yield put(setConstants(constants));
 }
 
