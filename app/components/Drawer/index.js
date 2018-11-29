@@ -34,7 +34,7 @@ const styles = theme => ({
 });
 
 /* eslint-disable react/prefer-stateless-function */
-class TemporaryDrawer extends React.Component {
+class TemporaryDrawer extends React.PureComponent {
   render() {
     const { dispatch, menuItems } = this.props;
     return (

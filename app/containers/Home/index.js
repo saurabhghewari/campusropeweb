@@ -25,16 +25,20 @@ import Helpline from 'containers/Helpline/Loadable';
 import AboutUs from 'containers/AboutUs/Loadable';
 import PrivateRoute from 'components/PrivateRoute/Loadable';
 import CenterMenus from 'components/CenterMenus/Loadable';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import Progress from 'components/Progress/Loadable';
+import SnackBar from 'components/SnackBar/Loadable';
 
-import makeSelectHome, { makeSelectIsFetchingData } from './selectors';
+import makeSelectHome, {
+  makeSelectIsFetchingData,
+  makeSelectSnackData,
+} from './selectors';
 import makeSelectLoggedUser, {
   makeSelectLoggedUserMenus,
   makeSelectLoggedUserHomeMenus,
 } from '../../store/loggeduser/selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { homeMounted } from './actions';
+import { homeMounted, closeSnack } from './actions';
 
 import MobileNavBar from './MobileNavBar';
 import AppBottomNavigation from './BottomNavigation';
@@ -58,7 +62,7 @@ export class Home extends React.Component {
   };
 
   render() {
-    const { userInfo, isFetchingData } = this.props;
+    const { userInfo, isFetchingData, snackData, closeSnackBar } = this.props;
     return (
       <React.Fragment>
         <Helmet>
@@ -77,11 +81,7 @@ export class Home extends React.Component {
           dispatch={this.props.dispatch}
           menuItems={this.props.drawerMenus}
         />
-        {isFetchingData && (
-          <div className="progress">
-            <LinearProgress variant="query" color="secondary" />
-          </div>
-        )}
+        {isFetchingData && <Progress />}
         <Switch>
           <PrivateRoute
             exact
@@ -100,6 +100,12 @@ export class Home extends React.Component {
         <MobileView>
           <AppBottomNavigation />
         </MobileView>
+        <SnackBar
+          opened={snackData.opened}
+          message={snackData.message}
+          variant={snackData.variant}
+          close={closeSnackBar}
+        />
       </React.Fragment>
     );
   }
@@ -112,6 +118,8 @@ Home.propTypes = {
   homeMenus: PropTypes.array,
   drawerMenus: PropTypes.array,
   isFetchingData: PropTypes.bool,
+  snackData: PropTypes.object,
+  closeSnackBar: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -120,12 +128,14 @@ const mapStateToProps = createStructuredSelector({
   drawerMenus: makeSelectLoggedUserMenus(),
   homeMenus: makeSelectLoggedUserHomeMenus(),
   isFetchingData: makeSelectIsFetchingData(),
+  snackData: makeSelectSnackData(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     homeMounted: () => dispatch(homeMounted()),
+    closeSnackBar: () => dispatch(closeSnack()),
   };
 }
 

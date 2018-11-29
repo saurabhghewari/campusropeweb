@@ -20,5 +20,8 @@ const makeSelectHome = () =>
 const makeSelectIsFetchingData = () =>
   createSelector(selectHomeDomain, substate => substate.isFetchingData);
 
+const makeSelectSnackData = () =>
+  createSelector(selectHomeDomain, substate => substate.snackData);
+
 export default makeSelectHome;
-export { selectHomeDomain, makeSelectIsFetchingData };
+export { selectHomeDomain, makeSelectIsFetchingData, makeSelectSnackData };

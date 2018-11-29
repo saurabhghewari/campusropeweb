@@ -5,23 +5,19 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import styled from 'styled-components';
-
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 /* eslint-disable react/prefer-stateless-function */
-class Progress extends React.Component {
+class CustomProgress extends React.PureComponent {
   render() {
     return (
-      <div>
-        <FormattedMessage {...messages.header} />
+      <div className="progress">
+        <LinearProgress variant="query" color="secondary" />
       </div>
     );
   }
 }
 
-Progress.propTypes = {};
+CustomProgress.propTypes = {};
 
-export default Progress;
+export default CustomProgress;

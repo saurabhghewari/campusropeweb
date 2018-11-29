@@ -10,6 +10,8 @@ import {
   START_FETCHING_DATA,
   STOP_FETCHING_DATA,
   CHANGE_ROUTE,
+  OPEN_SNACK,
+  CLOSE_SNACK,
 } from './constants';
 
 export function defaultAction() {
@@ -42,5 +44,19 @@ export function changeRoute(route, actionToFetchDataForRoute, param = null) {
     actionToFetchDataForRoute,
     route,
     param,
+  };
+}
+
+export function openSnack(variant, message) {
+  return {
+    type: OPEN_SNACK,
+    variant,
+    message,
+  };
+}
+
+export function closeSnack() {
+  return {
+    type: CLOSE_SNACK,
   };
 }
