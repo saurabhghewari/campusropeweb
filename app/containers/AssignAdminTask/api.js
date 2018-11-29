@@ -1,17 +1,17 @@
-import { ADMIN_TASK_URL } from '../../constants/urlconstants';
-import { getAxiosInstance } from '../../setup_axios';
+import { adminTasksService } from '../../feathers';
 
 export function getAdminTasksForUser(userId) {
   if (userId) {
-    const URL_WITH_QUERY = `${ADMIN_TASK_URL}/user/${userId}`;
-    return getAxiosInstance()
-      .get(URL_WITH_QUERY)
+    return adminTasksService.find({
+      query:{
+        userId:userId
+      }
+    })
       .then(res => res.data.tasks); // this is called on auto complete . the above if condition is to avoid unwanted network requests
   }
   return [];
 }
 
 export function saveAdminTasksApi({ tasks, selectedUser }) {
-  const URL_WITH_QUERY = `${ADMIN_TASK_URL}/user/${selectedUser}`;
-  return getAxiosInstance().put(URL_WITH_QUERY, { tasks });
+  return adminTasksService.patch()
 }

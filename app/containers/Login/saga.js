@@ -7,7 +7,6 @@ import {
   LOGOUT,
 } from './constants';
 import { USER_TOKEN } from '../../constants/local_storage_constants';
-import setupAxiosWithAuthHeader from '../../setup_axios';
 import { setLoggedUser } from '../../store/loggeduser/actions';
 import { fetchConstants } from '../../store/constants/actions';
 import feathersClient, { userService } from '../../feathers';
@@ -15,7 +14,6 @@ import feathersClient, { userService } from '../../feathers';
 // Function for storing our API token, perhaps in localStorage or Redux state.
 export function* storeToken(token) {
   ls.set(USER_TOKEN, token);
-  setupAxiosWithAuthHeader();
 }
 
 export function* logout() {

@@ -1,11 +1,6 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { replace } from 'react-router-redux';
 import {
-  createNewTrendingNewsApi,
-  fetchTrendingNewsApi,
-  fetchTrendingNewsByIdApi,
-} from './api';
-import {
   SUBMIT_NEW_TRENDING_NEWS,
   FETCH_TRENDING_NEWS,
   FETCH_TRENDING_NEWS_BY_ID,
