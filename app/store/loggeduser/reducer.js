@@ -7,7 +7,7 @@
 import { DEFAULT_ACTION, SET_LOGGED_USER } from './constants';
 
 export const initialState = {
-  user: null,
+  user: {},
 };
 
 function loggedReducer(state = initialState, action) {
