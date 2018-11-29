@@ -96,7 +96,7 @@ const styles = theme => ({
 
 function BrowserNavbar(props) {
   const { classes, toggleDrawer, userInfo } = props;
-  const profileUrl = `/app/profile/${userInfo.id}`;
+  const profileUrl = `/app/profile/${userInfo._id}`;
   return (
     <div>
       <AppBar position="static">

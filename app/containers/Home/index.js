@@ -25,8 +25,9 @@ import Helpline from 'containers/Helpline/Loadable';
 import AboutUs from 'containers/AboutUs/Loadable';
 import PrivateRoute from 'components/PrivateRoute/Loadable';
 import CenterMenus from 'components/CenterMenus/Loadable';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
-import makeSelectHome from './selectors';
+import makeSelectHome, { makeSelectIsFetchingData } from './selectors';
 import makeSelectLoggedUser, {
   makeSelectLoggedUserMenus,
   makeSelectLoggedUserHomeMenus,
@@ -55,9 +56,9 @@ export class Home extends React.Component {
       drawerOpen: opened || !this.state.drawerOpen,
     });
   };
+
   render() {
-    const { userInfo } = this.props;
-    const user = userInfo.user || {};
+    const { userInfo, isFetchingData } = this.props;
     return (
       <React.Fragment>
         <Helmet>
@@ -65,10 +66,10 @@ export class Home extends React.Component {
           <meta name="description" content="Description of Home" />
         </Helmet>
         <MobileView>
-          <MobileNavBar toggleDrawer={this.toggleDrawer} userInfo={user} />
+          <MobileNavBar toggleDrawer={this.toggleDrawer} userInfo={userInfo} />
         </MobileView>
         <BrowserView>
-          <BrowserNavbar toggleDrawer={this.toggleDrawer} userInfo={user} />
+          <BrowserNavbar toggleDrawer={this.toggleDrawer} userInfo={userInfo} />
         </BrowserView>
         <Drawer
           open={this.state.drawerOpen}
@@ -76,6 +77,11 @@ export class Home extends React.Component {
           dispatch={this.props.dispatch}
           menuItems={this.props.drawerMenus}
         />
+        {isFetchingData && (
+          <div className="progress">
+            <LinearProgress variant="query" color="secondary" />
+          </div>
+        )}
         <Switch>
           <PrivateRoute
             exact
@@ -92,7 +98,7 @@ export class Home extends React.Component {
           <PrivateRoute path="/app/about" component={AboutUs} />
         </Switch>
         <MobileView>
-          <AppBottomNavigation profileId={user.id}/>
+          <AppBottomNavigation />
         </MobileView>
       </React.Fragment>
     );
@@ -105,6 +111,7 @@ Home.propTypes = {
   userInfo: PropTypes.object,
   homeMenus: PropTypes.array,
   drawerMenus: PropTypes.array,
+  isFetchingData: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -112,6 +119,7 @@ const mapStateToProps = createStructuredSelector({
   userInfo: makeSelectLoggedUser(),
   drawerMenus: makeSelectLoggedUserMenus(),
   homeMenus: makeSelectLoggedUserHomeMenus(),
+  isFetchingData: makeSelectIsFetchingData(),
 });
 
 function mapDispatchToProps(dispatch) {

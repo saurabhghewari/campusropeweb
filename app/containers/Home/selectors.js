@@ -17,5 +17,8 @@ const selectHomeDomain = state => state.home;
 const makeSelectHome = () =>
   createSelector(selectHomeDomain, substate => substate);
 
+const makeSelectIsFetchingData = () =>
+  createSelector(selectHomeDomain, substate => substate.isFetchingData);
+
 export default makeSelectHome;
-export { selectHomeDomain };
+export { selectHomeDomain, makeSelectIsFetchingData };
