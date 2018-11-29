@@ -9,6 +9,7 @@ import {
   HOME_MOUNTED,
   START_FETCHING_DATA,
   STOP_FETCHING_DATA,
+  CHANGE_ROUTE,
 } from './constants';
 
 export function defaultAction() {
@@ -32,5 +33,14 @@ export function startFetchingData() {
 export function stopFetchingData() {
   return {
     type: STOP_FETCHING_DATA,
+  };
+}
+
+export function changeRoute(route, actionToFetchDataForRoute, param = null) {
+  return {
+    type: CHANGE_ROUTE,
+    actionToFetchDataForRoute,
+    route,
+    param,
   };
 }
