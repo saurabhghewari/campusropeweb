@@ -1,9 +1,15 @@
-import { USER_URL } from '../../constants/urlconstants';
-import { getAxiosInstance } from '../../setup_axios';
+import { userService } from '../../feathers';
 
 export const searchUser = term => {
-  const SEARCH_URL = `${USER_URL}/search_user`;
-  return getAxiosInstance()
-    .post(SEARCH_URL, { term })
+  const regex = new RegExp(term, 'i');
+  return userService
+    .find({
+      query: {
+        name: regex,
+        role: 'user',
+        $limit: 20,
+        $select: ['name'],
+      },
+    })
     .then(res => res.data);
 };
