@@ -26,7 +26,7 @@ export function* fetchHelplinesSaga() {
     const helplines = yield call(helplineService.find, {});
     yield put(setHelplines(helplines.data));
   } catch (e) {
-    yield call(setSubmitting, false);
+    console.error(e);
   }
 }
 
