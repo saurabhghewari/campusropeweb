@@ -5,16 +5,18 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import Content from 'components/Content/Loadable';
 
 /* eslint-disable react/prefer-stateless-function */
 class HelplineAdd extends React.Component {
   render() {
-    return <div />;
+    return <Content />;
   }
 }
 
-HelplineAdd.propTypes = {};
+HelplineAdd.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default HelplineAdd;

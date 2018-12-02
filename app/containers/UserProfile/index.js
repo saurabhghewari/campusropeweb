@@ -29,7 +29,7 @@ import ProfileTabType from './ProfileTabTypeModel';
 import { tabSelectAction, fetchUserProfileAction, saveProfileAction } from './actions';
 
 import './user-profile.css';
-import '../App/common.css';
+
 const styles = () => ({
   grid2Container: {
     height: '220px',
@@ -57,8 +57,8 @@ const styles = () => ({
   followsTypo: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 /* eslint react/prop-types: 0 */

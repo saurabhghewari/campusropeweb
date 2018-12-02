@@ -25,8 +25,7 @@ const styles = theme => ({
     paddingTop: '56.25%', // 16:9
   },
   card: {
-    minWidth: 275,
-    maxWidth: 275,
+    width:'100%',
     margin: theme.spacing.unit * 2,
     display: 'inline-block',
     cursor: 'pointer',

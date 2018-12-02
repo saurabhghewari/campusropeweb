@@ -7,11 +7,12 @@ import {
   UPDATE_NGO_BY_ID,
 } from './constants';
 import { setNgos, setInViewNgo } from './actions';
-import { ngoService } from './../../feathers';
+import featherClient, { ngoService } from './../../feathers';
 
 export function* submitNewNgoDetails({ values, actions }) {
   const { resetForm, setSubmitting } = actions;
   try {
+    yield featherClient.authenticate();
     yield ngoService.create(values);
     yield call(resetForm);
     yield put(replace('/app/ngos'));
@@ -21,6 +22,7 @@ export function* submitNewNgoDetails({ values, actions }) {
 }
 
 export function* fetchNgosSaga() {
+  yield featherClient.authenticate();
   const ngos = yield ngoService.find({});
   yield put(setNgos(ngos.data));
 }

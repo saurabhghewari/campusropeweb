@@ -17,7 +17,6 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     padding: theme.spacing.unit * 2,
     minHeight: '100vh',
-    margin: theme.spacing.unit,
   },
 });
 

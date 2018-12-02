@@ -1,7 +1,6 @@
-import { takeLatest, call, put, select } from 'redux-saga/effects';
+/* import { takeLatest, call, put } from 'redux-saga/effects';
 import { PROFILE_INFO_FETCH_ACTION, SAVE_PROFILE_ACTION } from './constants';
 import { setUserProfileAction } from './actions';
-import { getUserProfile, saveUserProfile } from './api';
 
 // Individual exports for testing
 export default function* defaultSaga() {
@@ -36,3 +35,4 @@ export function* saveUserProfileSaga(action) {
     console.log(e);
   }
 }
+ */

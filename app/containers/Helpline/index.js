@@ -8,18 +8,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Switch } from 'react-router-dom';
+import PrivateRoute from 'components/PrivateRoute';
+import Loadable from 'react-loadable';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectHelpline from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
+
+const HelplineAdd = Loadable({
+  loader: () => import('./HelpLineAdd'),
+  loading: () => null,
+});
+
+const HelplineUserList = Loadable({
+  loader: () => import('./HelplineUserList'),
+  loading: () => null,
+});
+
+const HelplineAdminList = Loadable({
+  loader: () => import('./HelplineAdminList'),
+  loading: () => null,
+});
+
+const HelplineView = Loadable({
+  loader: () => import('./HelplineView'),
+  loading: () => null,
+});
+
 export class Helpline extends React.Component {
   render() {
     return (
@@ -28,7 +50,28 @@ export class Helpline extends React.Component {
           <title>Helpline</title>
           <meta name="description" content="Description of Helpline" />
         </Helmet>
-        <FormattedMessage {...messages.header} />
+        <Switch>
+          <PrivateRoute
+            exact
+            path="/app/helpline"
+            component={HelplineUserList}
+          />
+          <PrivateRoute
+            exact
+            path="/app/helpline/:helplineId/details"
+            component={HelplineView}
+          />
+          <PrivateRoute
+            exact
+            path="/app/helpline/admin"
+            component={HelplineAdminList}
+          />
+          <PrivateRoute
+            exact
+            path="/app/helpline/new"
+            component={HelplineAdd}
+          />
+        </Switch>
       </div>
     );
   }
