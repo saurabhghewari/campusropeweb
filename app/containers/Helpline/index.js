@@ -16,7 +16,7 @@ import Loadable from 'react-loadable';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectHelpline from './selectors';
+import {makeSelectHelplines} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -42,7 +42,7 @@ const HelplineView = Loadable({
   loading: () => null,
 });
 
-export class Helpline extends React.Component {
+class Helpline extends React.Component {
   render() {
     return (
       <div>
@@ -82,7 +82,7 @@ Helpline.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  helpline: makeSelectHelpline(),
+  helpline: makeSelectHelplines(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -102,5 +102,5 @@ const withSaga = injectSaga({ key: 'helpline', saga });
 export default compose(
   withReducer,
   withSaga,
-  withConnect,
+  withConnect
 )(Helpline);

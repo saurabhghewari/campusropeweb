@@ -88,13 +88,13 @@ export class Home extends React.Component {
             path="/app"
             component={() => <CenterMenus menus={this.props.homeMenus} />}
           />
+          <PrivateRoute path="/app/helpline" component={Helpline} />
           <PrivateRoute path="/app/admintaskassignment" component={AdminTask} />
           <PrivateRoute path="/app/my/admintasks" component={MyAdminTasks} />
           <PrivateRoute path="/app/news/trends" component={TrendingNews} />
           <PrivateRoute path="/app/ngos" component={Ngo} />
           <PrivateRoute path="/app/profile/:userId" component={Profile} />
           <PrivateRoute path="/app/support" component={Support} />
-          <PrivateRoute path="/app/helpline" component={Helpline} />
           <PrivateRoute path="/app/about" component={AboutUs} />
         </Switch>
         <MobileView>

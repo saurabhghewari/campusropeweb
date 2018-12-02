@@ -11,8 +11,8 @@ import featherClient, { helplineService } from './../../feathers';
 export function* submitNewHelplineDetails({ values, actions }) {
   const { resetForm, setSubmitting } = actions;
   try {
-    yield call(featherClient.authenticate);
-    yield call(helplineService.create, values);
+    yield featherClient.authenticate();
+    yield helplineService.create(values);
     yield call(resetForm);
     yield put(replace('/app/helpline'));
   } catch (e) {
@@ -22,8 +22,8 @@ export function* submitNewHelplineDetails({ values, actions }) {
 
 export function* fetchHelplinesSaga() {
   try {
-    yield call(featherClient.authenticate);
-    const helplines = yield call(helplineService.find, {});
+    yield featherClient.authenticate();
+    const helplines = yield helplineService.find({});
     yield put(setHelplines(helplines.data));
   } catch (e) {
     console.error(e);

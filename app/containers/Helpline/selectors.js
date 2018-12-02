@@ -10,12 +10,17 @@ const selectHelplineDomain = state => state.helpline;
  * Other specific selectors
  */
 
-/**
- * Default selector used by Helpline
- */
+const makeSelectHelplines = () =>
+  createSelector(
+    selectHelplineDomain,
+    substate => substate.helplineList,
+  );
 
-const makeSelectHelpline = () =>
-  createSelector(selectHelplineDomain, substate => substate);
+const makeSelectSelectedHelpline = () =>
+  createSelector(
+    selectHelplineDomain,
+    substate => substate.selectedHelpline,
+  );
 
-export default makeSelectHelpline;
-export { selectHelplineDomain };
+export default makeSelectHelplines;
+export { selectHelplineDomain,makeSelectSelectedHelpline,makeSelectHelplines };

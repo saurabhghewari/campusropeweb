@@ -13,7 +13,11 @@ import Content from 'components/Content/Loadable';
 import { withStyles } from '@material-ui/core/styles';
 import { replace } from 'react-router-redux';
 import Typography from '@material-ui/core/Typography';
-import { Input, Grid, Select, MenuItem, FormControl } from '@material-ui/core';
+import  Input from '@material-ui/core/Input';
+import  Grid from '@material-ui/core/Grid';
+import Select from '@material-ui/core/Select';
+import  MenuItem from '@material-ui/core/MenuItem';
+import FormControl  from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import { fetchTrendingNews } from './actions';

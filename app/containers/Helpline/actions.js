@@ -19,9 +19,10 @@ export function defaultAction() {
   };
 }
 
-export function fetchHelplines() {
+export function fetchHelplines(state='all') {
   return {
     type: FETCH_HELPLINES,
+    state
   };
 }
 export function setHelplines(helplines) {
@@ -38,11 +39,11 @@ export function fetchHelplineById(helplineId) {
   };
 }
 
-export function createHelpline({ values, action }) {
+export function createHelpline(values, actions ) {
   return {
     type: CREATE_HELPLINE,
     values,
-    action,
+    actions,
   };
 }
 
