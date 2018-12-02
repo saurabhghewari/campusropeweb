@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { replace } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import Content from 'components/Content/Loadable';
 import { withStyles } from '@material-ui/core/styles';
@@ -63,7 +64,7 @@ class HelplineUserList extends React.Component {
         </FormControl>
         <HelplineList
           helplines={helplines}
-          onHelplineCLick={clickedHelpline =>
+          onHelplineClick={clickedHelpline =>
             this.routeToHelplineView(clickedHelpline)
           }
         />

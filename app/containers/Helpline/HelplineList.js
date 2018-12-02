@@ -38,14 +38,14 @@ const HelplineBox = ({ helplineData, classes, onHelplineClick }) => (
 /* eslint-disable react/prefer-stateless-function */
 class HelplineList extends React.Component {
   render() {
-    const { classes, helplines, onHelplineCLick } = this.props;
+    const { classes, helplines, onHelplineClick } = this.props;
     return (
       <Fragment>
         {helplines.map(helpline => (
           <HelplineBox
             key={helpline._id}
             classes={classes}
-            onHelplineCLick={onHelplineCLick}
+            onHelplineClick={onHelplineClick}
             helplineData={helpline}
           />
         ))}
@@ -56,7 +56,7 @@ class HelplineList extends React.Component {
 
 HelplineList.propTypes = {
   helplines: PropTypes.array,
-  onHelplineCLick: PropTypes.func,
+  onHelplineClick: PropTypes.func,
 };
 
 const componentWithStyles = withStyles(styles)(HelplineList);

@@ -9,6 +9,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { replace } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import Content from 'components/Content/Loadable';
 import { withStyles } from '@material-ui/core/styles';
