@@ -11,10 +11,10 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import Content from 'components/Content/Loadable';
 import { withStyles } from '@material-ui/core/styles';
-import  Input from '@material-ui/core/Input';
+import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
-import  MenuItem from '@material-ui/core/MenuItem';
-import FormControl  from '@material-ui/core/FormControl';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import { fetchHelplines } from './actions';
@@ -22,38 +22,36 @@ import HelplineList from './HelplineList';
 import { makeSelectStates } from '../../store/constants/selectors';
 import { makeSelectHelplines } from './selectors';
 
-
-const styles = theme => ({
-  
-});
-
+const styles = theme => ({});
 
 /* eslint-disable react/prefer-stateless-function */
 class HelplineUserList extends React.Component {
-
-  state={
-    selectedOperatingState :'',
-  }
+  state = {
+    selectedOperatingState: '',
+  };
 
   componentDidMount() {
     this.props.fetchHelplines();
   }
 
   routeToHelplineView(clickedHelpline) {
-    this.props.dispatch(replace(`/app/helpline/${clickedHelpline._id}/details`));
+    this.props.dispatch(
+      replace(`/app/helpline/${clickedHelpline._id}/details`),
+    );
   }
-
 
   render() {
     const { helplines, states } = this.props;
-    const {selectedOperatingState} = this.state;
+    const { selectedOperatingState } = this.state;
     return (
-    <Content>
-      <FormControl margin="normal" fullWidth>
+      <Content>
+        <FormControl margin="normal" fullWidth>
           <InputLabel htmlFor="state">State</InputLabel>
           <Select
             value={selectedOperatingState}
-            onChange={(e)=>this.setState({selectedOperatingState:e.target.value})}
+            onChange={e =>
+              this.setState({ selectedOperatingState: e.target.value })
+            }
             input={<Input id="state" name="state" />}
           >
             {states.map(state => (
@@ -64,15 +62,15 @@ class HelplineUserList extends React.Component {
           </Select>
         </FormControl>
         <HelplineList
-            helplines={helplines}
-            onHelplineCLick={clickedHelpline => this.routeToHelplineView(clickedHelpline)}
-          />
-    </Content>);
+          helplines={helplines}
+          onHelplineCLick={clickedHelpline =>
+            this.routeToHelplineView(clickedHelpline)
+          }
+        />
+      </Content>
+    );
   }
 }
-
-
-
 
 HelplineUserList.propTypes = {
   dispatch: PropTypes.func.isRequired,
@@ -81,9 +79,9 @@ HelplineUserList.propTypes = {
   states: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector ({
+const mapStateToProps = createStructuredSelector({
   helplines: makeSelectHelplines(),
-  states: makeSelectStates()
+  states: makeSelectStates(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -100,6 +98,4 @@ const withConnect = connect(
 
 const componentWithStyles = withStyles(styles)(HelplineUserList);
 
-export default compose(
-  withConnect,
-)(componentWithStyles);
+export default compose(withConnect)(componentWithStyles);

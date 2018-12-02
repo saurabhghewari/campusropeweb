@@ -16,7 +16,7 @@ import Loadable from 'react-loadable';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import {makeSelectHelplines} from './selectors';
+import { makeSelectHelplines } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -102,5 +102,5 @@ const withSaga = injectSaga({ key: 'helpline', saga });
 export default compose(
   withReducer,
   withSaga,
-  withConnect
+  withConnect,
 )(Helpline);

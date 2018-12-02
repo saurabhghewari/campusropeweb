@@ -4,7 +4,7 @@
  *
  */
 
-import { DEFAULT_ACTION,SET_HELPLINES,SET_VIEW_HELPLINE } from './constants';
+import { DEFAULT_ACTION, SET_HELPLINES, SET_VIEW_HELPLINE } from './constants';
 
 export const initialState = {
   helplineList: [],
@@ -31,4 +31,3 @@ function helplineReducer(state = initialState, action) {
 }
 
 export default helplineReducer;
-

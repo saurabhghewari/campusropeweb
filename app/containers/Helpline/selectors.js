@@ -11,16 +11,14 @@ const selectHelplineDomain = state => state.helpline;
  */
 
 const makeSelectHelplines = () =>
-  createSelector(
-    selectHelplineDomain,
-    substate => substate.helplineList,
-  );
+  createSelector(selectHelplineDomain, substate => substate.helplineList);
 
 const makeSelectSelectedHelpline = () =>
-  createSelector(
-    selectHelplineDomain,
-    substate => substate.selectedHelpline,
-  );
+  createSelector(selectHelplineDomain, substate => substate.selectedHelpline);
 
 export default makeSelectHelplines;
-export { selectHelplineDomain,makeSelectSelectedHelpline,makeSelectHelplines };
+export {
+  selectHelplineDomain,
+  makeSelectSelectedHelpline,
+  makeSelectHelplines,
+};
