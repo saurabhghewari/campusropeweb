@@ -4,7 +4,7 @@
  *
  */
 
-import React,{Fragment} from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -13,11 +13,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-
-const styles = theme => ({
-  
-  
-});
+const styles = theme => ({});
 
 const HelplineBox = ({ helplineData, classes, onHelplineClick }) => (
   <Card className={classes.card}>
