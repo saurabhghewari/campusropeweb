@@ -31,8 +31,8 @@ export function* fetchHelplinesSaga() {
 }
 
 export function* fetchHelplineByIdSaga({ helplineId }) {
-  yield call(featherClient.authenticate);
-  const helpline = yield call(helplineService.get, helplineId);
+  yield featherClient.authenticate();
+  const helpline = yield helplineService.get(helplineId);
   yield put(setInViewHelpline(helpline));
 }
 // Individual exports for testing
