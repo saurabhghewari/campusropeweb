@@ -31,6 +31,12 @@ class HelplineUserList extends React.Component {
     selectedOperatingState: '',
   };
 
+
+  onStateChanged(state){
+    this.setState({ selectedOperatingState:state});
+    this.props.fetchHelplines(state);
+  }
+
   componentDidMount() {
     this.props.fetchHelplines();
   }
@@ -44,18 +50,17 @@ class HelplineUserList extends React.Component {
   render() {
     const { helplines, states } = this.props;
     const { selectedOperatingState } = this.state;
+    const allStates = states.concat(['All']);
     return (
       <Content>
         <FormControl margin="normal" fullWidth>
           <InputLabel htmlFor="state">State</InputLabel>
           <Select
             value={selectedOperatingState}
-            onChange={e =>
-              this.setState({ selectedOperatingState: e.target.value })
-            }
+            onChange={e =>   this.onStateChanged(e.target.value)}
             input={<Input id="state" name="state" />}
           >
-            {states.map(state => (
+            {allStates.map(state => (
               <MenuItem key={state} value={state}>
                 {state}
               </MenuItem>
@@ -88,7 +93,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchHelplines: () => dispatch(fetchHelplines()),
+    fetchHelplines: (state) => dispatch(fetchHelplines(state)),
   };
 }
 

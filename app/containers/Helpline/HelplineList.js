@@ -13,10 +13,15 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-const styles = theme => ({});
+const styles = theme => ({
+  card:{
+    marginBottom:theme.spacing.unit * 2,
+    textAlign:'center'
+  }
+});
 
 const HelplineBox = ({ helplineData, classes, onHelplineClick }) => (
-  <Card className={classes.card}>
+  <Card className={classes.card} raised>
     <CardActionArea onClick={() => onHelplineClick(helplineData)}>
       <CardContent>
         <Typography
