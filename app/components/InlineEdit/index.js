@@ -38,7 +38,7 @@ export default class InlineEdit extends React.Component {
 
   handleChange(e) {
     this.setState({
-      text: e.target.value
+      text: e.target.value,
     });
   }
 

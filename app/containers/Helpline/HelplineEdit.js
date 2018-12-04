@@ -12,80 +12,96 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { withStyles } from '@material-ui/core/styles';
 
-
-import {makeSelectSelectedHelpline} from './selectors'
-import {fetchHelplineById} from './actions'
-import Typography  from '@material-ui/core/Typography';
+import { makeSelectSelectedHelpline } from './selectors';
+import { fetchHelplineById } from './actions';
+import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import InlineEdit from '../../components/InlineEdit/Loadable'
-
+import InlineEdit from '../../components/InlineEdit/Loadable';
 
 const styles = theme => ({
-    name:{
-      textAlign:'center',
-      padding: theme.spacing.unit * 2
-    },
-    description:{
-      textAlign:'center',
-      padding: theme.spacing.unit * 2,
-      wordBreak:'break-all'
-    },
-    number:{
-      textAlign:'center',
-      padding: theme.spacing.unit * 2
-    },
-    siteLink:{
-      textAlign:'center',
-      padding: theme.spacing.unit * 2
-    },
-    complaintLink:{
-      textAlign:'center',
-      padding: theme.spacing.unit * 2
-    },
-    link:{
-      marginLeft:theme.spacing.unit
-    }
+  name: {
+    textAlign: 'center',
+    padding: theme.spacing.unit * 2,
+  },
+  description: {
+    textAlign: 'center',
+    padding: theme.spacing.unit * 2,
+    wordBreak: 'break-all',
+  },
+  number: {
+    textAlign: 'center',
+    padding: theme.spacing.unit * 2,
+  },
+  siteLink: {
+    textAlign: 'center',
+    padding: theme.spacing.unit * 2,
+  },
+  complaintLink: {
+    textAlign: 'center',
+    padding: theme.spacing.unit * 2,
+  },
+  link: {
+    marginLeft: theme.spacing.unit,
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
 class HelplineEdit extends React.Component {
+  componentDidMount() {
+    const helplineId = this.props.match.params.helplineId;
+    this.props.fetchHelplineById(helplineId);
+  }
 
- componentDidMount() {
-   const helplineId = this.props.match.params.helplineId;
-   this.props.fetchHelplineById(helplineId);
- }
-
- onInlineEditFocusOut(propName,newValue){
-    console.log(propName,newValue)
- }
+  onInlineEditFocusOut(propName, newValue) {
+    console.log(propName, newValue);
+  }
   render() {
-    const {helpline,classes} = this.props;
+    const { helpline, classes } = this.props;
     return (
-    <Content>
+      <Content>
         <div className={classes.name}>
-        <InlineEdit text={helpline.name} variant="h3" onFocusOut={(newValue) => this.onInlineEditFocusOut('name',newValue)}/>
+          <InlineEdit
+            text={helpline.name}
+            variant="h3"
+            onFocusOut={newValue => this.onInlineEditFocusOut('name', newValue)}
+          />
         </div>
-        <Divider variant="middle"/>
+        <Divider variant="middle" />
         <div className={classes.description}>
           <h4>Description</h4>
           <Typography variant="body2">{helpline.description}</Typography>
         </div>
-        <Divider variant="middle"/>
+        <Divider variant="middle" />
         <div className={classes.number}>
-        <Typography variant="body2">Helpline Number : {helpline.helplineNumber}</Typography>          
+          <Typography variant="body2">
+            Helpline Number : {helpline.helplineNumber}
+          </Typography>
         </div>
-        <Divider variant="middle"/>
+        <Divider variant="middle" />
         <div className={classes.siteLink}>
           Website Link
-          <a  className={classes.link} href={'https://' + helpline.websiteLink} target="_blank">{helpline.websiteLink}</a>
+          <a
+            className={classes.link}
+            href={`https://${helpline.websiteLink}`}
+            target="_blank"
+          >
+            {helpline.websiteLink}
+          </a>
         </div>
 
-      <Divider variant="middle"/>
-        <div className={classes.complaintLink} >
-         Link to file complaint
-          <a className={classes.link} href={helpline.linkToFileComplaint} target="_blank">{helpline.linkToFileComplaint}</a>
+        <Divider variant="middle" />
+        <div className={classes.complaintLink}>
+          Link to file complaint
+          <a
+            className={classes.link}
+            href={helpline.linkToFileComplaint}
+            target="_blank"
+          >
+            {helpline.linkToFileComplaint}
+          </a>
         </div>
-    </Content>);
+      </Content>
+    );
   }
 }
 
@@ -94,14 +110,14 @@ HelplineEdit.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector ({
-  helpline: makeSelectSelectedHelpline()
+const mapStateToProps = createStructuredSelector({
+  helpline: makeSelectSelectedHelpline(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchHelplineById: (helplineId) => dispatch(fetchHelplineById(helplineId)),
+    fetchHelplineById: helplineId => dispatch(fetchHelplineById(helplineId)),
   };
 }
 
@@ -112,6 +128,4 @@ const withConnect = connect(
 
 const componentWithStyles = withStyles(styles)(HelplineEdit);
 
-export default compose(
-  withConnect,
-)(componentWithStyles);
+export default compose(withConnect)(componentWithStyles);

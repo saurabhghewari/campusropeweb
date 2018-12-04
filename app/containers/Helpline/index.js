@@ -66,7 +66,7 @@ class Helpline extends React.Component {
             path="/app/helpline/:helplineId/details"
             component={HelplineView}
           />
-           <PrivateRoute
+          <PrivateRoute
             exact
             path="/app/helpline/:helplineId/admin/edit"
             component={HelplineEdit}

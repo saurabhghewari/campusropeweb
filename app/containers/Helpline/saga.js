@@ -9,7 +9,6 @@ import { setHelplines, setInViewHelpline } from './actions';
 import featherClient, { helplineService } from './../../feathers';
 import { startFetchingData, stopFetchingData } from '../Home/actions';
 
-
 export function* submitNewHelplineDetails({ values, actions }) {
   const { resetForm, setSubmitting } = actions;
   try {
@@ -17,9 +16,8 @@ export function* submitNewHelplineDetails({ values, actions }) {
     yield featherClient.authenticate();
     yield helplineService.create(values);
     yield call(resetForm);
-    yield put(replace('/app/helpline'))
+    yield put(replace('/app/helpline'));
     yield put(stopFetchingData());
-
   } catch (e) {
     yield call(setSubmitting, false);
   }
@@ -39,7 +37,6 @@ export function* fetchHelplinesSaga(action) {
     const helplines = yield helplineService.find({ query });
     yield put(setHelplines(helplines.data));
     yield put(stopFetchingData());
-
   } catch (e) {
     console.error(e);
   }

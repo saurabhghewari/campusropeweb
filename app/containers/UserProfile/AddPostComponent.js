@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bgImage from 'images/loginbg.jpg';
-import { Add } from '@material-ui/icons';
-import { Paper, Avatar, Button, TextField } from '@material-ui/core';
+import  Add  from '@material-ui/icons/Add';
+import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = () => ({

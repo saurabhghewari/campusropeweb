@@ -4,21 +4,20 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import * as Yup from 'yup';
-import {
-  Input,
-  Select,
-  MenuItem,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-  Button,
-  FormHelperText,
-  FormControl,
-  InputLabel,
-  Typography,
-  TextField,
-} from '@material-ui/core';
-import { Add, Delete } from '@material-ui/icons';
+import Input from '@material-ui/core/Input'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import Button from '@material-ui/core/Button'
+import FormHelperText from '@material-ui/core/FormHelperText'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
+import Add from '@material-ui/icons/Add';
+import  Delete  from '@material-ui/icons/Delete';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Formik, FieldArray } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
