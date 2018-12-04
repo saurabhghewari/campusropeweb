@@ -23,14 +23,14 @@ export function* submitNewHelplineDetails({ values, actions }) {
 export function* fetchHelplinesSaga(action) {
   try {
     yield featherClient.authenticate();
-    const state = action.state
+    const state = action.state;
     let query = {};
-    if(state !== 'all'){
+    if (state !== 'all') {
       query = {
-        operatingState:state
-      }
+        operatingState: state,
+      };
     }
-    const helplines = yield helplineService.find({query});
+    const helplines = yield helplineService.find({ query });
     yield put(setHelplines(helplines.data));
   } catch (e) {
     console.error(e);

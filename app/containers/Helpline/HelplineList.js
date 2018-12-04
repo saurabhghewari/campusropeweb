@@ -14,10 +14,10 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
-  card:{
-    marginBottom:theme.spacing.unit * 2,
-    textAlign:'center'
-  }
+  card: {
+    marginBottom: theme.spacing.unit * 2,
+    textAlign: 'center',
+  },
 });
 
 const HelplineBox = ({ helplineData, classes, onHelplineClick }) => (

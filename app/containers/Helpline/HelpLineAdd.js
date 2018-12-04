@@ -27,6 +27,8 @@ import { makeSelectStates } from '../../store/constants/selectors';
 import makeSelectLoggedUser from '../../store/loggeduser/selectors';
 import { createHelpline } from './actions';
 
+
+const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 const styles = theme => ({
   form: {},
   submit: {
@@ -61,8 +63,8 @@ const NewHelplineFormComponent = ({
       name: Yup.string().required('Please provide name of helpline'),
       description: Yup.string(),
       operatingState: Yup.string().required('Please specify operating state'),
-      websiteLink: Yup.string(),
-      linkToFileComplaint: Yup.string(),
+      websiteLink: Yup.string().matches(urlRegex,'Please enter proper url with protocol'),
+      linkToFileComplaint: Yup.string().matches(urlRegex,'Please enter proper url with protocol'),
       helplineNumber: Yup.string().required(
         'Please provide number of helpline',
       ),

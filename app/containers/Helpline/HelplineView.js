@@ -1,3 +1,4 @@
+import { replace } from 'react-router-redux';
 /**
  *
  * HelplineView
@@ -20,7 +21,30 @@ import Divider from '@material-ui/core/Divider';
 
 
 const styles = theme => ({
-  
+    name:{
+      textAlign:'center',
+      padding: theme.spacing.unit * 2
+    },
+    description:{
+      textAlign:'center',
+      padding: theme.spacing.unit * 2,
+      wordBreak:'break-all'
+    },
+    number:{
+      textAlign:'center',
+      padding: theme.spacing.unit * 2
+    },
+    siteLink:{
+      textAlign:'center',
+      padding: theme.spacing.unit * 2
+    },
+    complaintLink:{
+      textAlign:'center',
+      padding: theme.spacing.unit * 2
+    },
+    link:{
+      marginLeft:theme.spacing.unit
+    }
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -31,31 +55,31 @@ class HelplineView extends React.Component {
    this.props.fetchHelplineById(helplineId);
  }
   render() {
-    const {helpline} = this.props;
+    const {helpline,classes} = this.props;
     return (
     <Content>
-        <div>
-          <Typography>{helpline.name}</Typography>
+        <div className={classes.name}>
+          <Typography variant="h3">{helpline.name}</Typography>
         </div>
         <Divider variant="middle"/>
-        <div>
-          <h3>Description</h3>
+        <div className={classes.description}>
+          <h4>Description</h4>
           <Typography variant="body2">{helpline.description}</Typography>
         </div>
         <Divider variant="middle"/>
-        <div>
-          Helpline Number : {helpline.helplineNumber}
+        <div className={classes.number}>
+        <Typography variant="body2">Helpline Number : {helpline.helplineNumber}</Typography>          
         </div>
         <Divider variant="middle"/>
-        <div>
+        <div className={classes.siteLink}>
           Website Link
-          <a href={helpline.websiteLink} target="_blank">{helpline.websiteLink}</a>
+          <a  className={classes.link} href={'https://' + helpline.websiteLink} target="_blank">{helpline.websiteLink}</a>
         </div>
 
       <Divider variant="middle"/>
-        <div>
+        <div className={classes.complaintLink} >
          Link to file complaint
-          <a href={helpline.linkToFileComplaint} target="_blank">{helpline.linkToFileComplaint}</a>
+          <a className={classes.link} href={helpline.linkToFileComplaint} target="_blank">{helpline.linkToFileComplaint}</a>
         </div>
     </Content>);
   }
