@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bgImage from 'images/loginbg.jpg';
-import  ArrowDropDown  from '@material-ui/icons/ArrowDropDown';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';

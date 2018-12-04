@@ -17,7 +17,7 @@ import { replace } from 'react-router-redux';
 import IdealImage from 'react-ideal-image';
 import YouTube from 'react-youtube';
 
-import Grid  from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import _isEmpty from 'lodash/isEmpty';
 import _includes from 'lodash/includes';
