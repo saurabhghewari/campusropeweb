@@ -171,4 +171,11 @@ export const adminHomeMenus = [
     icon: <Title />,
     linkTo: '/app/news/trends/admin/trends',
   },
+
+  {
+    title: 'Admin Helpline',
+    iconBgColor: '#006064',
+    icon: <SettingsPhone />,
+    linkTo: '/app/helpline/admin',
+  },
 ];

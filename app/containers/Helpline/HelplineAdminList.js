@@ -42,7 +42,7 @@ class HelplineAdminList extends React.Component {
 
   routeToHelplineView(clickedHelpline) {
     this.props.dispatch(
-      replace(`/app/helpline/${clickedHelpline._id}/details`),
+      replace(`/app/helpline/${clickedHelpline._id}/admin/edit`),
     );
   }
 
@@ -68,7 +68,7 @@ class HelplineAdminList extends React.Component {
         </FormControl>
         <HelplineList
           helplines={helplines}
-          onHelplineCLick={clickedHelpline =>
+          onHelplineClick={clickedHelpline =>
             this.routeToHelplineView(clickedHelpline)
           }
         />

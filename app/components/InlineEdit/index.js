@@ -36,9 +36,9 @@ export default class InlineEdit extends React.Component {
     });
   }
 
-  handleChange() {
+  handleChange(e) {
     this.setState({
-      text: this.textInput.value,
+      text: e.target.value
     });
   }
 
@@ -74,7 +74,7 @@ export default class InlineEdit extends React.Component {
     return (
       <div>
         <Typography
-          invarient="body2"
+          variant={this.props.variant}
           className={this.props.labelClassName}
           onClick={this.handleFocus}
           style={{
@@ -91,6 +91,7 @@ export default class InlineEdit extends React.Component {
 
 InlineEdit.propTypes = {
   text: PropTypes.string.isRequired,
+  variant: PropTypes.string,
   isEditing: PropTypes.bool,
 
   labelClassName: PropTypes.string,

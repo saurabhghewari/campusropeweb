@@ -78,8 +78,7 @@ const NewHelplineFormComponent = ({
         errors,
         isSubmitting,
         handleChange,
-        handleSubmit,
-        setFieldValue,
+        handleSubmit
       } = props;
       return (
         <form

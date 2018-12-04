@@ -7,14 +7,19 @@ import {
 } from './constants';
 import { setHelplines, setInViewHelpline } from './actions';
 import featherClient, { helplineService } from './../../feathers';
+import { startFetchingData, stopFetchingData } from '../Home/actions';
+
 
 export function* submitNewHelplineDetails({ values, actions }) {
   const { resetForm, setSubmitting } = actions;
   try {
+    yield put(startFetchingData());
     yield featherClient.authenticate();
     yield helplineService.create(values);
     yield call(resetForm);
-    yield put(replace('/app/helpline'));
+    yield put(replace('/app/helpline'))
+    yield put(stopFetchingData());
+
   } catch (e) {
     yield call(setSubmitting, false);
   }
@@ -22,6 +27,7 @@ export function* submitNewHelplineDetails({ values, actions }) {
 
 export function* fetchHelplinesSaga(action) {
   try {
+    yield put(startFetchingData());
     yield featherClient.authenticate();
     const state = action.state;
     let query = {};
@@ -32,15 +38,19 @@ export function* fetchHelplinesSaga(action) {
     }
     const helplines = yield helplineService.find({ query });
     yield put(setHelplines(helplines.data));
+    yield put(stopFetchingData());
+
   } catch (e) {
     console.error(e);
   }
 }
 
 export function* fetchHelplineByIdSaga({ helplineId }) {
+  yield put(startFetchingData());
   yield featherClient.authenticate();
   const helpline = yield helplineService.get(helplineId);
   yield put(setInViewHelpline(helpline));
+  yield put(stopFetchingData());
 }
 // Individual exports for testing
 export default function* defaultSaga() {

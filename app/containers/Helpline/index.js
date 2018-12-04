@@ -42,6 +42,11 @@ const HelplineView = Loadable({
   loading: () => null,
 });
 
+const HelplineEdit = Loadable({
+  loader: () => import('./HelplineEdit'),
+  loading: () => null,
+});
+
 class Helpline extends React.Component {
   render() {
     return (
@@ -60,6 +65,11 @@ class Helpline extends React.Component {
             exact
             path="/app/helpline/:helplineId/details"
             component={HelplineView}
+          />
+           <PrivateRoute
+            exact
+            path="/app/helpline/:helplineId/admin/edit"
+            component={HelplineEdit}
           />
           <PrivateRoute
             exact
