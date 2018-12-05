@@ -12,7 +12,7 @@ import {
   CREATE_HELPLINE,
   SET_HELPLINES,
   UPDATE_HELPLINE_BY_ID,
-  DELETE_HELPLINE
+  DELETE_HELPLINE,
 } from './constants';
 
 export function defaultAction() {
@@ -47,7 +47,6 @@ export function updateHelplineById(updatedHelpline) {
     updatedHelpline,
   };
 }
-
 
 export function deleteHelpline(helplineId) {
   return {

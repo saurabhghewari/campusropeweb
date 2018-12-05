@@ -73,22 +73,21 @@ export default class InlineEdit extends React.Component {
 
     return (
       <div>
-        {this.props.component ?
-        <div onClick={this.handleFocus}>
-          { this.props.component()}
-        </div>:
-        <Typography
-          variant={this.props.variant}
-          className={this.props.labelClassName}
-          onClick={this.handleFocus}
-          style={{
-            fontSize: this.props.labelFontSize,
-            fontWeight: this.props.labelFontWeight,
-          }}
-        >
-          {this.state.text}
-        </Typography>
-        }
+        {this.props.component ? (
+          <div onClick={this.handleFocus}>{this.props.component()}</div>
+        ) : (
+          <Typography
+            variant={this.props.variant}
+            className={this.props.labelClassName}
+            onClick={this.handleFocus}
+            style={{
+              fontSize: this.props.labelFontSize,
+              fontWeight: this.props.labelFontWeight,
+            }}
+          >
+            {this.state.text}
+          </Typography>
+        )}
       </div>
     );
   }
@@ -98,7 +97,7 @@ InlineEdit.propTypes = {
   text: PropTypes.string.isRequired,
   variant: PropTypes.string,
   isEditing: PropTypes.bool,
-  component:PropTypes.node,
+  component: PropTypes.node,
 
   labelClassName: PropTypes.string,
   labelFontSize: PropTypes.string,

@@ -5,7 +5,7 @@ import {
   FETCH_HELPLINE_BY_ID,
   CREATE_HELPLINE,
   UPDATE_HELPLINE_BY_ID,
-  DELETE_HELPLINE
+  DELETE_HELPLINE,
 } from './constants';
 import { setHelplines, setInViewHelpline } from './actions';
 import featherClient, { helplineService } from './../../feathers';
@@ -44,20 +44,18 @@ export function* fetchHelplinesSaga(action) {
   }
 }
 
-
-export function* updateHelplineBYIdSaga({updatedHelpline}) {
+export function* updateHelplineBYIdSaga({ updatedHelpline }) {
   try {
     yield put(startFetchingData());
     yield featherClient.authenticate();
-    yield helplineService.patch(updatedHelpline._id,updatedHelpline.data);
+    yield helplineService.patch(updatedHelpline._id, updatedHelpline.data);
     yield put(stopFetchingData());
   } catch (e) {
     console.error(e);
   }
 }
 
-
-export function* deleteHelplineSaga({helplineId}) {
+export function* deleteHelplineSaga({ helplineId }) {
   try {
     yield put(startFetchingData());
     yield featherClient.authenticate();
@@ -83,6 +81,6 @@ export default function* defaultSaga() {
     takeLatest(FETCH_HELPLINE_BY_ID, fetchHelplineByIdSaga),
     takeLatest(CREATE_HELPLINE, submitNewHelplineDetails),
     takeLatest(UPDATE_HELPLINE_BY_ID, updateHelplineBYIdSaga),
-    takeLatest(DELETE_HELPLINE, deleteHelplineSaga)
+    takeLatest(DELETE_HELPLINE, deleteHelplineSaga),
   ];
 }
