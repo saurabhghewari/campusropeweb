@@ -11,6 +11,8 @@ import {
   SET_VIEW_HELPLINE,
   CREATE_HELPLINE,
   SET_HELPLINES,
+  UPDATE_HELPLINE_BY_ID,
+  DELETE_HELPLINE
 } from './constants';
 
 export function defaultAction() {
@@ -35,6 +37,21 @@ export function setHelplines(helplines) {
 export function fetchHelplineById(helplineId) {
   return {
     type: FETCH_HELPLINE_BY_ID,
+    helplineId,
+  };
+}
+
+export function updateHelplineById(updatedHelpline) {
+  return {
+    type: UPDATE_HELPLINE_BY_ID,
+    updatedHelpline,
+  };
+}
+
+
+export function deleteHelpline(helplineId) {
+  return {
+    type: DELETE_HELPLINE,
     helplineId,
   };
 }

@@ -17,13 +17,30 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import green from '@material-ui/core/colors/green';
+
 
 import { fetchHelplines } from './actions';
 import HelplineList from './HelplineList';
 import { makeSelectStates } from '../../store/constants/selectors';
 import { makeSelectHelplines } from './selectors';
 
-const styles = theme => ({});
+const styles = theme => ({
+  root:{
+    position:'relative'
+  },
+  addButton:{
+    position:'absolute',
+    right: theme.spacing.unit * 2,
+    color: theme.palette.common.white,
+    backgroundColor: green[500],
+  },
+  stateSelect:{
+    marginTop:theme.spacing.unit * 6
+  }
+});
 
 /* eslint-disable react/prefer-stateless-function */
 class HelplineAdminList extends React.Component {
@@ -46,13 +63,23 @@ class HelplineAdminList extends React.Component {
     );
   }
 
+  createNewHelpline(){
+    this.props.dispatch(
+      replace(`/app/helpline/new`),
+    );
+  }
+
   render() {
-    const { helplines, states } = this.props;
+    const { helplines, states,classes } = this.props;
     const { selectedOperatingState } = this.state;
     const allStates = states.concat(['all']);
     return (
       <Content>
-        <FormControl margin="normal" fullWidth>
+        <div className={classes.root}>
+        <Button variant="fab" className={classes.addButton} color="inherit" onClick={() => this.createNewHelpline()}>
+          <AddIcon />
+        </Button>
+        <FormControl margin="normal" fullWidth className={classes.stateSelect}>
           <InputLabel htmlFor="state">State</InputLabel>
           <Select
             value={selectedOperatingState}
@@ -72,6 +99,8 @@ class HelplineAdminList extends React.Component {
             this.routeToHelplineView(clickedHelpline)
           }
         />
+        
+        </div>
       </Content>
     );
   }
