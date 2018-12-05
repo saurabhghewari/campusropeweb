@@ -21,6 +21,7 @@ export function* submitNewHelplineDetails({ values, actions }) {
     yield put(replace('/app/helpline'));
     yield put(stopFetchingData());
   } catch (e) {
+    yield put(stopFetchingData());
     yield call(setSubmitting, false);
   }
 }

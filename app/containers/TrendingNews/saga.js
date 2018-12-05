@@ -6,29 +6,49 @@ import {
   FETCH_TRENDING_NEWS_BY_ID,
 } from './constants';
 import { setTrendingNews, setSelectedTrendingNewsInView } from './actions';
+import featherClient, { trendingNewsService } from './../../feathers';
+import { startFetchingData, stopFetchingData } from '../Home/actions';
 
 export function* submitNewTrendingNewsDetails({ values, actions }) {
   const { resetForm, setSubmitting } = actions;
   try {
-    yield call(createNewTrendingNewsApi, values);
+    yield put(startFetchingData());
+    yield featherClient.authenticate();
+    yield trendingNewsService.create(values);
     yield call(resetForm);
     yield put(replace('/app/news/trends/admin/trends'));
+    yield put(stopFetchingData());
   } catch (e) {
+    yield put(stopFetchingData());
     yield call(setSubmitting, false);
   }
 }
 
 export function* fetchTrendingNewsSaga() {
-  const trendingNews = yield call(fetchTrendingNewsApi);
-  yield put(setTrendingNews(trendingNews));
+  try {
+    yield put(startFetchingData());
+    yield featherClient.authenticate();
+    const trendingNews = yield trendingNewsService.find({});
+    yield put(setTrendingNews(trendingNews.data));
+    yield put(stopFetchingData());
+  } catch (e) {
+    yield put(stopFetchingData());
+    console.error(e);
+  }
+  
 }
 
 export function* fetchTrendingNewsByIdSaga({ trendingNewsId }) {
-  const selectedTrendingNews = yield call(
-    fetchTrendingNewsByIdApi,
-    trendingNewsId,
-  );
-  yield put(setSelectedTrendingNewsInView(selectedTrendingNews));
+  try {
+    yield put(startFetchingData());
+    yield featherClient.authenticate();
+    const selectedTrendingNews = trendingNewsService.get(trendingNewsId)
+    yield put(setSelectedTrendingNewsInView(selectedTrendingNews));
+    yield put(stopFetchingData());
+  } catch (e) {
+    yield put(stopFetchingData());
+    console.error(e);
+  } 
 }
 
 // Individual exports for testing
