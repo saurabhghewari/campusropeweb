@@ -109,7 +109,7 @@ export class TrendingNewsList extends React.Component {
       <Fragment>
       {trendingNews.map(trendingNew => (
         <TrendingNewsBox
-            key={trendingNew.id}
+            key={trendingNew._id}
             classes={classes}
             onTrendingNewsClick={onTrendingNewsClick}
             trendingNewsData={trendingNew}

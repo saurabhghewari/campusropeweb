@@ -1,44 +1,22 @@
 import { createSelector } from 'reselect';
 
-/**
- * Direct selector to the userProfile state domain
- */
-
 const selectUserProfileDomain = state => state.userProfile;
 
-/**
- * Other specific selectors
- */
-
-// selects user profile info(userProfileEntity)
-const selectUserProfileInfo = () =>
+const makeSelectUserProfileInfo = () =>
   createSelector(
     selectUserProfileDomain,
     profile => profile.userProfileInfo && profile.userProfileInfo,
   );
 
-// selects user details(userEntity)
-/* const selectUserInfo = () =>
-  createSelector(
-    selectUserProfileInfo,
-    userProfile => userProfile.createdBy && userProfile.createdBy,
-  ); */
-
 const makeSelectSelectedTab = () =>
-  createSelector(
-    makeSelectUserProfile(),
-    userProfile => userProfile.selectedTab,
-  );
+  createSelector(selectUserProfileDomain, state => state.selectedTab);
 /**
  * Default selector used by UserProfile
  */
 
-const makeSelectUserProfile = () =>
-  createSelector(selectUserProfileDomain, substate => substate);
-
-export default makeSelectUserProfile;
+export default makeSelectUserProfileInfo;
 export {
   selectUserProfileDomain,
   makeSelectSelectedTab,
-  selectUserProfileInfo,
+  makeSelectUserProfileInfo,
 };

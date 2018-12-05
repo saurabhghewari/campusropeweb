@@ -18,11 +18,12 @@ import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
+import {withStyles} from '@material-ui/core/styles';
 import { BrowserView, MobileView } from 'react-device-detect';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { selectUserProfileInfo, makeSelectSelectedTab } from './selectors';
+import { makeSelectUserProfileInfo, makeSelectSelectedTab } from './selectors';
 import { makeSelectLoggedUser } from '../../store/loggeduser/selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -31,7 +32,7 @@ import PostComponent from './PostComponent';
 import AboutUserComponent from './AboutUserComponent';
 import ProfileTabType from './ProfileTabTypeModel';
 
-import { tabSelectAction, fetchUserProfileAction, saveProfileAction } from './actions';
+import { tabSelectAction, fetchUserProfile, saveUserProfile } from './actions';
 
 import './user-profile.css';
 
@@ -70,6 +71,7 @@ const styles = () => ({
 /* eslint prettier/prettier: 0 */
 /* eslint-disable react/prefer-stateless-function */
 export class UserProfile extends React.Component {
+
   handleProfileTabChange = selectedTab => {
     this.props.onSelectProfileTab(selectedTab);
   };
@@ -227,15 +229,15 @@ UserProfile.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   selectedTab: makeSelectSelectedTab(),
-  userprofileInfo: selectUserProfileInfo(),
+  userprofileInfo: makeSelectUserProfileInfo(),
   loggedUserInfo: makeSelectLoggedUser(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchUserProfile: userId => dispatch(fetchUserProfileAction({ userId })),
-    saveUserProfile: (payload, actions) => dispatch(saveProfileAction(payload, actions)),
+    fetchUserProfile: userId => dispatch(fetchUserProfile({ userId })),
+    saveUserProfile: (payload, actions) => dispatch(saveUserProfile(payload, actions)),
     onSelectProfileTab: selectedTab => dispatch(tabSelectAction(selectedTab)),
   };
 }

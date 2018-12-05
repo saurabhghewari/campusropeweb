@@ -8,33 +8,55 @@ import {
 } from './constants';
 import { setNgos, setInViewNgo } from './actions';
 import featherClient, { ngoService } from './../../feathers';
+import { startFetchingData, stopFetchingData } from '../Home/actions';
 
 export function* submitNewNgoDetails({ values, actions }) {
   const { resetForm, setSubmitting } = actions;
   try {
+    yield put(startFetchingData());
     yield featherClient.authenticate();
     yield ngoService.create(values);
     yield call(resetForm);
     yield put(replace('/app/ngos'));
+    yield put(stopFetchingData());
   } catch (e) {
+    yield put(stopFetchingData());
     yield call(setSubmitting, false);
   }
 }
 
 export function* fetchNgosSaga() {
-  yield featherClient.authenticate();
-  const ngos = yield ngoService.find({});
-  yield put(setNgos(ngos.data));
+  try {
+    yield put(startFetchingData());
+    yield featherClient.authenticate();
+    const ngos = yield ngoService.find({});
+    yield put(setNgos(ngos.data));
+    yield put(stopFetchingData());
+  } catch (e) {
+    yield put(stopFetchingData());
+  }
 }
 
 export function* updateNgoSaga({ ngo }) {
-  yield ngoService.patch(ngo._id, ngo);
-  yield put(replace('/app/ngos/verification'));
+  try {
+    yield put(startFetchingData());
+    yield ngoService.patch(ngo._id, ngo);
+    yield put(replace('/app/ngos/verification'));
+    yield put(stopFetchingData());
+  } catch (e) {
+    yield put(startFetchingData());
+  }
 }
 
 export function* fetchNgoByIdSaga({ ngoId }) {
-  const ngo = yield ngoService.get(ngoId);
-  yield put(setInViewNgo(ngo));
+  try {
+    yield put(startFetchingData());
+    const ngo = yield ngoService.get(ngoId);
+    yield put(setInViewNgo(ngo));
+    yield put(stopFetchingData());
+  } catch (e) {
+    yield put(stopFetchingData());
+  }
 }
 // Individual exports for testing
 export default function* defaultSaga() {

@@ -1,38 +1,41 @@
-/* import { takeLatest, call, put } from 'redux-saga/effects';
-import { PROFILE_INFO_FETCH_ACTION, SAVE_PROFILE_ACTION } from './constants';
-import { setUserProfileAction } from './actions';
+import { takeLatest, put } from 'redux-saga/effects';
+import { FETCH_USER_PROFILE, SAVE_USER_PROFILE } from './constants';
+import { setUserProfile } from './actions';
+import featherClient, { userService } from './../../feathers';
+import { startFetchingData, stopFetchingData } from '../Home/actions';
 
 // Individual exports for testing
 export default function* defaultSaga() {
   yield [
-    takeLatest(PROFILE_INFO_FETCH_ACTION, fetchUserProfile),
-    takeLatest(SAVE_PROFILE_ACTION, saveUserProfileSaga),
+    takeLatest(FETCH_USER_PROFILE, fetchUserProfile),
+    takeLatest(SAVE_USER_PROFILE, saveUserProfileSaga),
   ];
 }
 
 export function* fetchUserProfile({ payload }) {
   const { userId } = payload;
   try {
-    const userProfile = yield call(getUserProfile, userId);
-    yield put(setUserProfileAction(userProfile));
+    yield put(startFetchingData());
+    yield featherClient.authenticate();
+    const userProfile = yield userService.get(userId);
+    yield put(setUserProfile(userProfile));
+    yield put(stopFetchingData());
   } catch (e) {
-    console.log(e);
+    yield put(stopFetchingData());
   }
 }
 
 export function* saveUserProfileSaga(action) {
   const { payload, actions } = action;
   try {
-    yield call(saveUserProfile, payload);
-    yield put({
-      type: PROFILE_INFO_FETCH_ACTION,
-      payload: {
-        userId: payload.profileOf.id,
-      },
-    });
+    yield put(startFetchingData());
+    yield featherClient.authenticate();
+    const userProfile = yield userService.patch(payload._id, payload);
+    yield put(setUserProfile(userProfile));
     actions.setSubmitting(false);
+    yield put(stopFetchingData());
   } catch (e) {
-    console.log(e);
+    yield put(stopFetchingData());
+    actions.setSubmitting(false);
   }
 }
- */

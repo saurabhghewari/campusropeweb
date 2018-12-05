@@ -6,10 +6,10 @@
 
 import {
   DEFAULT_ACTION,
-  PROFILE_INFO_FETCH_ACTION,
-  PROFILE_TAB_SELECTION_ACTION,
-  PROFILE_INFO_FETCH_SUCCESS_ACTION,
-  SAVE_PROFILE_ACTION,
+  FETCH_USER_PROFILE,
+  SET_USER_PROFILE,
+  SAVE_USER_PROFILE,
+  PROFILE_TAB_SELECTION,
 } from './constants';
 
 export function defaultAction() {
@@ -18,30 +18,30 @@ export function defaultAction() {
   };
 }
 
-export function fetchUserProfileAction(payload) {
+export function fetchUserProfile(payload) {
   return {
-    type: PROFILE_INFO_FETCH_ACTION,
+    type: FETCH_USER_PROFILE,
     payload,
   };
 }
 
 export function tabSelectAction(selectedTab) {
   return {
-    type: PROFILE_TAB_SELECTION_ACTION,
+    type: PROFILE_TAB_SELECTION,
     selectedTab,
   };
 }
 
-export function setUserProfileAction(userProfile) {
+export function setUserProfile(userProfile) {
   return {
-    type: PROFILE_INFO_FETCH_SUCCESS_ACTION,
+    type: SET_USER_PROFILE,
     userProfile,
   };
 }
 
-export function saveProfileAction(payload, actions) {
+export function saveUserProfile(payload, actions) {
   return {
-    type: SAVE_PROFILE_ACTION,
+    type: SAVE_USER_PROFILE,
     payload,
     actions,
   };
