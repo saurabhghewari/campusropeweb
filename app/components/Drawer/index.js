@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
-import Drawer from '@material-ui/core/Drawer';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -38,7 +38,7 @@ class TemporaryDrawer extends React.PureComponent {
   render() {
     const { dispatch, menuItems } = this.props;
     return (
-      <Drawer
+      <SwipeableDrawer
         anchor="right"
         open={this.props.open}
         onClose={() => this.props.toggleDrawer(false)}
@@ -50,7 +50,7 @@ class TemporaryDrawer extends React.PureComponent {
         <div style={styles.list}>
           <List>{MenuItems(menuItems, dispatch)}</List>
         </div>
-      </Drawer>
+      </SwipeableDrawer>
     );
   }
 }
