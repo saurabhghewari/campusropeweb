@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import { ButtonBase } from '@material-ui/core';
 
 export default class InlineEdit extends React.Component {
   constructor(props) {
@@ -116,3 +117,5 @@ InlineEdit.propTypes = {
   onFocus: PropTypes.func,
   onFocusOut: PropTypes.func,
 };
+
+

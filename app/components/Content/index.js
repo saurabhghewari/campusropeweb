@@ -23,14 +23,14 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 class Content extends React.PureComponent {
   render() {
-    const { classes, children } = this.props;
+    const { classes, children,withPaper } = this.props;
     return (
       <Grid container>
         <Grid item lg={2} />
         <Grid item xs={12} lg={8}>
-          <Paper className={classes.root} elevation={10}>
+          {withPaper ? <Paper className={classes.root} elevation={10}>
             <div id="content">{children}</div>
-          </Paper>
+          </Paper> : <div id="content">{children}</div>}
         </Grid>
         <Grid item lg={2} />
       </Grid>
@@ -41,6 +41,11 @@ class Content extends React.PureComponent {
 Content.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
+  withPaper: PropTypes.bool,
+};
+
+Content.defaultProps = {
+  withPaper: true
 };
 
 export default withStyles(styles)(Content);

@@ -63,7 +63,7 @@ export class UserTrendingNewsList extends React.Component {
     const { trendingNews, states } = this.props;
     const { state } = this.state;
     return (
-      <Content>
+      <Content withPaper={false}>
         <Grid container spacing={16}>
           <Grid item xs={12} sm={12} md={12} lg={12}>
           <FormControl margin="normal" fullWidth>
