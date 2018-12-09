@@ -19,9 +19,10 @@ export function defaultAction() {
   };
 }
 
-export function fetchTrendingNews() {
+export function fetchTrendingNews(state='all') {
   return {
     type: FETCH_TRENDING_NEWS,
+    state
   };
 }
 

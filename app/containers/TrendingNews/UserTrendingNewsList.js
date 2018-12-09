@@ -37,20 +37,21 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 export class UserTrendingNewsList extends React.Component {
   state={
-    state:'',
+    state:'All',
   }
   componentDidMount() {
     this.props.fetchTrendingNews();
   }
 
   routeToTrendingNewsView(selectedTrendingNews) {
-    this.props.dispatch(replace(`/app/news/trends/${selectedTrendingNews.id}/details`));
+    this.props.dispatch(replace(`/app/news/trends/${selectedTrendingNews._id}/details`));
   }
 
   handleChange(value){
     this.setState({
       state: value
-    })
+    },() => this.props.fetchTrendingNews(value))
+    
   }
   renderNoTrendingNewsLabel() {
     const { classes } = this.props;
@@ -73,7 +74,7 @@ export class UserTrendingNewsList extends React.Component {
             onChange={(e)=>this.handleChange(e.target.value)}
             input={<Input id="state" name="state" />}
           >
-            {states.map(state => (
+            {states.concat(['All']).map(state => (
               <MenuItem key={state} value={state}>
                 {state}
               </MenuItem>
@@ -108,7 +109,7 @@ const mapStateToProps = createStructuredSelector ({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchTrendingNews: () => dispatch(fetchTrendingNews()),
+    fetchTrendingNews: (state) => dispatch(fetchTrendingNews(state)),
   };
 }
 

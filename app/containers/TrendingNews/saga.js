@@ -24,11 +24,17 @@ export function* submitNewTrendingNewsDetails({ values, actions }) {
   }
 }
 
-export function* fetchTrendingNewsSaga() {
+export function* fetchTrendingNewsSaga({state}) {
   try {
     yield put(startFetchingData());
     yield featherClient.authenticate();
-    const trendingNews = yield trendingNewsService.find({});
+    let query = {};
+    if (state !== 'all') {
+      query = {
+        state: state,
+      };
+    }
+    const trendingNews = yield trendingNewsService.find({ query });
     yield put(setTrendingNews(trendingNews.data));
     yield put(stopFetchingData());
   } catch (e) {
@@ -42,7 +48,7 @@ export function* fetchTrendingNewsByIdSaga({ trendingNewsId }) {
   try {
     yield put(startFetchingData());
     yield featherClient.authenticate();
-    const selectedTrendingNews = trendingNewsService.get(trendingNewsId)
+    const selectedTrendingNews = yield trendingNewsService.get(trendingNewsId)
     yield put(setSelectedTrendingNewsInView(selectedTrendingNews));
     yield put(stopFetchingData());
   } catch (e) {
