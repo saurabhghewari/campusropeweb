@@ -54,7 +54,7 @@ const styles = () => ({
   },
 });
 
-const PostComponent = props => {
+const UserPosts = props => {
   const { classes } = props;
 
   return (
@@ -104,8 +104,8 @@ const PostComponent = props => {
   );
 };
 
-PostComponent.propTypes = {
+UserPosts.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PostComponent);
+export default withStyles(styles)(UserPosts);
