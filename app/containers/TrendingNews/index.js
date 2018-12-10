@@ -41,6 +41,11 @@ const TrendingNewsView = Loadable({
   loading: () => null,
 });
 
+const TrendingNewsEdit = Loadable({
+  loader: () => import('./TrendingNewsEdit'),
+  loading: () => null,
+});
+
 /* eslint-disable react/prefer-stateless-function */
 export class TrendingNews extends React.Component {
   render() {
@@ -76,6 +81,11 @@ export class TrendingNews extends React.Component {
             path="/app/news/trends/admin/trend/new"
             component={TrendingNewsForm}
           />
+          <PrivateRoute
+          exact
+          path="/app/news/trends/admin/trend/:trendingNewsId/edit"
+          component={TrendingNewsEdit}
+        />
         </Switch>
       </div>
     );

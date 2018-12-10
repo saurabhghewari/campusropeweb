@@ -16,8 +16,9 @@ import format from 'date-fns/format';
 
 const styles = theme => ({
   container: {
-    marginTop: 60,
     textAlign: 'center',
+    display:'flex',
+    flexWrap:'wrap',
   },
   media: {
     height: 100,
@@ -25,9 +26,9 @@ const styles = theme => ({
     paddingTop: '56.25%', // 16:9
   },
   card: {
-    width:'100%',
-    margin: theme.spacing.unit * 2,
-    display: 'inline-block',
+    width:'335px',
+    marginTop: theme.spacing.unit * 6,
+    marginRight: "8px",
     cursor: 'pointer',
   },
   title: {
@@ -35,6 +36,7 @@ const styles = theme => ({
   },
   pos: {
     marginBottom: 12,
+    textAlign: 'right',
   },
 });
 
@@ -46,21 +48,21 @@ const NgoBox = ({ ngoData, classes, onNgoClick }) => {
       onClick={() => onNgoClick(ngoData)}
     >
       <CardContent>
-        <Typography
+        <Typography className={classes.pos} color="textSecondary">
+          {format(new Date(ngoData.createdAt), 'DD-MM-YYYY')}
+        </Typography>
+          <Typography
           className={classes.title}
           color="textSecondary"
           gutterBottom
         >
-          admin : {ngoData.createdBy.name}
+          {ngoData.createdBy.name}
         </Typography>
-        <Typography variant="h5" component="h2">
+        <Typography variant="h5" component="h2" style={{marginBottom:10}}>
           {ngoData.name}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          created on : {format(new Date(ngoData.createdAt), 'DD-MM-YYYY')}
-        </Typography>
         <Typography component="p">
-          contact email: {ngoData.contactEmail}
+          Contact Email : {ngoData.contactEmail}
         </Typography>
       </CardContent>
     </Card>

@@ -70,7 +70,11 @@ function Transition(props) {
 
 /* eslint-disable*/
 const TrendingNewsCards = (props) => {
-  const { trendingNewsData, classes, getCreatedOnDate, openDeleteConfirmationModal } = props
+  const { trendingNewsData,
+    classes,
+     getCreatedOnDate,
+      openDeleteConfirmationModal,
+      goToTrendingNewsEdit } = props
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -84,13 +88,14 @@ const TrendingNewsCards = (props) => {
       </CardContent>
       <CardActions className={classes.actions}>
       <Tooltip title="Edit">
-        <IconButton color="primary" aria-label="Edit">
+        <IconButton color="primary" aria-label="Edit"
+        onClick={() => goToTrendingNewsEdit(trendingNewsData)}>
           <EditIcon />
         </IconButton>
         </Tooltip>
         <Tooltip title="Delete">
         <IconButton color="secondary" aria-label="Delete"
-          onClick={openDeleteConfirmationModal}>
+          onClick={()=>openDeleteConfirmationModal(trendingNewsData)}>
           <DeleteIcon />
         </IconButton>
       </Tooltip>
@@ -100,7 +105,7 @@ const TrendingNewsCards = (props) => {
 };
 
 const RenderDeleteConfirmationModal = (props) => {
-  const { isDeletedModalOpen, closeDeleteConfirmationModal } = props
+  const { isDeletedModalOpen, closeDeleteConfirmationModal,onConfirmTrendingNewsDelete } = props
   return (
     <Dialog
           open={isDeletedModalOpen}
@@ -123,7 +128,7 @@ const RenderDeleteConfirmationModal = (props) => {
             <Button onClick={closeDeleteConfirmationModal} color="default">
               Cancel
             </Button>
-            <Button onClick={closeDeleteConfirmationModal} color="primary">
+            <Button onClick={onConfirmTrendingNewsDelete} color="primary">
               Confirm
             </Button>
           </DialogActions>
@@ -135,13 +140,20 @@ const RenderDeleteConfirmationModal = (props) => {
 export class AdminTrendingNewsList extends React.Component {
   state={
     state:'',
-    isDeletedModalOpen : false
+    isDeletedModalOpen : false,
+    trendingNewsToDelete : {},
   }
   componentDidMount() {
     this.props.fetchTrendingNews();
   }
   createNewTrendingNews() {
     this.props.dispatch(replace('/app/news/trends/admin/trend/new'));
+  }
+
+  goToTrendingNewsEdit = (trendingNewsData) => {
+    this.props.dispatch(
+      replace(`/app/news/trends/admin/trend/${trendingNewsData._id}/edit`)
+      );
   }
 
   routeToTrendingNewsView(selectedTrendingNews) {
@@ -165,12 +177,22 @@ export class AdminTrendingNewsList extends React.Component {
             </Typography>;
   }
 
-  openDeleteConfirmationModal = () => {
-    this.setState({ isDeletedModalOpen: true });
+  openDeleteConfirmationModal = (selectedTrendingNews) => {
+    this.setState({
+      isDeletedModalOpen: true,
+      trendingNewsToDelete : selectedTrendingNews,
+     });
   };
 
   closeDeleteConfirmationModal = () => {
-    this.setState({ isDeletedModalOpen: false });
+    this.setState({
+      isDeletedModalOpen: false,
+      trendingNewsToDelete:{}
+     });
+  };
+
+  onConfirmTrendingNewsDelete = () => {
+   let trendingNewsData = this.state.trendingNewsToDelete
   };
 
   _onReady(event) {
@@ -188,12 +210,14 @@ export class AdminTrendingNewsList extends React.Component {
             classes={classes}
             getCreatedOnDate={this.getCreatedOnDate}
             openDeleteConfirmationModal={this.openDeleteConfirmationModal}
+            goToTrendingNewsEdit={this.goToTrendingNewsEdit}
             trendingNewsData={trendingNews}
           />
         ))}
         <RenderDeleteConfirmationModal
           isDeletedModalOpen={this.state.isDeletedModalOpen}
           closeDeleteConfirmationModal={this.closeDeleteConfirmationModal}
+          onConfirmTrendingNewsDelete={this.onConfirmTrendingNewsDelete}
         />
       </Fragment>
     );
