@@ -27,10 +27,9 @@ import { makeSelectUserProfileInfo, makeSelectSelectedTab } from './selectors';
 import { makeSelectLoggedUser } from '../../store/loggeduser/selectors';
 import reducer from './reducer';
 import saga from './saga';
-import AddPostComponent from './AddPostComponent';
-import PostComponent from './PostComponent';
-import AboutUserComponent from './AboutUserComponent';
-import ProfileTabType from './ProfileTabTypeModel';
+import AddPostComponent from './components/NewPost';
+import PostComponent from './components/UserPosts';
+import AboutUserComponent from './components/About';
 
 import { tabSelectAction, fetchUserProfile, saveUserProfile } from './actions';
 

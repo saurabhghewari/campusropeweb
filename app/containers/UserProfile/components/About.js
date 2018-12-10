@@ -24,8 +24,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { createStructuredSelector } from 'reselect';
 import Upload from 'components/Upload/Loadable';
 import ProfileTabType from './ProfileTabTypeModel';
-import { makeSelectLoggedUser } from '../../store/loggeduser/selectors';
-import '../App/common.css';
+import { makeSelectLoggedUser } from '../../../store/loggeduser/selectors';
 
 const styles = theme => ({
   aboutPaper: {

@@ -9,7 +9,7 @@ import {
   PROFILE_TAB_SELECTION,
   SET_USER_PROFILE,
 } from './constants';
-import ProfileTabType from './ProfileTabTypeModel';
+import ProfileTabType from './components/ProfileTabTypeModel';
 
 export const initialState = {
   selectedTab: ProfileTabType.typeTypeMap.POST_TAB,

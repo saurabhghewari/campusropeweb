@@ -31,7 +31,7 @@ const styles = () => ({
   },
 });
 
-const AddPostComponent = props => {
+const NewPostComponent = props => {
   const { classes } = props;
 
   return (
@@ -77,8 +77,8 @@ const AddPostComponent = props => {
   );
 };
 
-AddPostComponent.propTypes = {
+NewPostComponent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AddPostComponent);
+export default withStyles(styles)(NewPostComponent);
