@@ -27,7 +27,7 @@ const styles = {
   }
 };
 
-class AppBottomNavigation extends React.Component {
+class AppBottomNavigation extends React.PureComponent {
   state = {
     value: 0,
   };
@@ -42,7 +42,7 @@ class AppBottomNavigation extends React.Component {
         this.props.dispatch(replace('/news/trends'));
         break;
       case 4:
-        this.props.dispatch(replace('/profile/'+ this.props.profileId));
+        this.props.dispatch(replace('/profile/'+ this.props.userInfo._id));
         break;
       default:
         this.props.dispatch(replace('/'));
@@ -80,7 +80,9 @@ AppBottomNavigation.propTypes = {
 };
 
 function mapStateToProps() {
-  return {};
+  return {
+
+  };
 }
 
 function mapDispatchToProps(dispatch) {
