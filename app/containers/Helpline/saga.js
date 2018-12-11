@@ -18,7 +18,7 @@ export function* submitNewHelplineDetails({ values, actions }) {
     yield featherClient.authenticate();
     yield helplineService.create(values);
     yield call(resetForm);
-    yield put(replace('/app/helpline'));
+    yield put(replace('/helpline'));
     yield put(stopFetchingData());
   } catch (e) {
     yield put(stopFetchingData());
@@ -61,7 +61,7 @@ export function* deleteHelplineSaga({ helplineId }) {
     yield put(startFetchingData());
     yield featherClient.authenticate();
     yield helplineService.remove(helplineId);
-    yield put(replace('/app/helpline/admin'));
+    yield put(replace('/helpline/admin'));
     yield put(stopFetchingData());
   } catch (e) {
     console.error(e);

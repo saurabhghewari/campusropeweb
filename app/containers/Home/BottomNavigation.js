@@ -36,16 +36,16 @@ class AppBottomNavigation extends React.Component {
     this.setState({ value });
     switch (value) {
       case 0:
-        this.props.dispatch(replace('/app'));
+        this.props.dispatch(replace('/'));
         break;
       case 1:
-        this.props.dispatch(replace('/app/news/trends'));
+        this.props.dispatch(replace('/news/trends'));
         break;
       case 4:
-        this.props.dispatch(replace('/app/profile/'+ this.props.profileId));
+        this.props.dispatch(replace('/profile/'+ this.props.profileId));
         break;
       default:
-        this.props.dispatch(replace('/app'));
+        this.props.dispatch(replace('/'));
     }
   };
 

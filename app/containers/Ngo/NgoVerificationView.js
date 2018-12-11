@@ -39,7 +39,7 @@ class NgoVerificationView extends React.Component {
   }
 
   onCancelClick() {
-    this.props.dispatch(replace('/app/ngos/verification'));
+    this.props.dispatch(replace('/ngos/verification'));
   }
 
   onApproveNgo() {

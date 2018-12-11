@@ -57,10 +57,10 @@ export class TrendingNewsView extends React.Component {
   onBack() {
     const isAdminTrendingView = _includes(this.props.match.url, 'admin');
     if(isAdminTrendingView){
-      this.props.dispatch(replace('/app/news/trends/admin/trends'));
+      this.props.dispatch(replace('/news/trends/admin/trends'));
       return
     }
-    this.props.dispatch(replace('/app/news/trends'));
+    this.props.dispatch(replace('/news/trends'));
   }
 
   render() {

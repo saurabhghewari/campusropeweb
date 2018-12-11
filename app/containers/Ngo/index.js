@@ -62,16 +62,16 @@ export class Ngo extends React.Component {
           <Switch>
             <PrivateRoute
               exact
-              path="/app/ngos/:ngoId/verify/details"
+              path="/ngos/:ngoId/verify/details"
               component={NgoVerificationView}
             />
-            <PrivateRoute path="/app/ngos/new" component={NewNgo} />
-            <PrivateRoute path="/app/ngos/my" component={MyNgos} />
+            <PrivateRoute path="/ngos/new" component={NewNgo} />
+            <PrivateRoute path="/ngos/my" component={MyNgos} />
             <PrivateRoute
-              path="/app/ngos/verification"
+              path="/ngos/verification"
               component={NgoVerification}
             />
-            <PrivateRoute exact path="/app/ngos" component={AllNgos} />
+            <PrivateRoute exact path="/ngos" component={AllNgos} />
           </Switch>
         </Content>
       </div>

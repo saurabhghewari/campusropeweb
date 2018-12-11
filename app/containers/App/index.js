@@ -42,14 +42,13 @@ export default function App() {
       <CssBaseline>
         <MuiThemeProvider theme={theme}>
           <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route exact  path="/signup" component={Signup} />
             <PrivateRoute
-              exact
               path="/"
-              component={() => <Redirect to="/app" />}
+              component={Home}
             />
-            <PrivateRoute path="/app" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+           
             <Route component={NotFoundPage} />
           </Switch>
         </MuiThemeProvider>

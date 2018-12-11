@@ -36,7 +36,7 @@ class NgoAdminVerification extends React.Component {
   }
 
   routeToNgoVerifyView(ngo) {
-    this.props.dispatch(replace(`/app/ngos/${ngo._id}/verify/details`));
+    this.props.dispatch(replace(`/ngos/${ngo._id}/verify/details`));
   }
 
   render() {

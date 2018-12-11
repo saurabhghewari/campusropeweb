@@ -133,7 +133,7 @@ export class TrendingNewsForm extends React.Component {
   }
 
   onCancel() {
-    this.props.dispatch(replace('/app/news/trends/admin/trends'));
+    this.props.dispatch(replace('/news/trends/admin/trends'));
   }
   render() {
     return (

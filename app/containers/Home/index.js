@@ -85,17 +85,17 @@ export class Home extends React.Component {
         <Switch>
           <PrivateRoute
             exact
-            path="/app"
+            path="/"
             component={() => <CenterMenus menus={this.props.homeMenus} />}
           />
-          <PrivateRoute path="/app/helpline" component={Helpline} />
-          <PrivateRoute path="/app/admintaskassignment" component={AdminTask} />
-          <PrivateRoute path="/app/my/admintasks" component={MyAdminTasks} />
-          <PrivateRoute path="/app/news/trends" component={TrendingNews} />
-          <PrivateRoute path="/app/ngos" component={Ngo} />
-          <PrivateRoute path="/app/profile/:userId" component={Profile} />
-          <PrivateRoute path="/app/support" component={Support} />
-          <PrivateRoute path="/app/about" component={AboutUs} />
+          <PrivateRoute path="/helpline" component={Helpline} />
+          <PrivateRoute path="/admintaskassignment" component={AdminTask} />
+          <PrivateRoute path="/my/admintasks" component={MyAdminTasks} />
+          <PrivateRoute path="/news/trends" component={TrendingNews} />
+          <PrivateRoute path="/ngos" component={Ngo} />
+          <PrivateRoute path="/profile/:userId" component={Profile} />
+          <PrivateRoute path="/support" component={Support} />
+          <PrivateRoute path="/about" component={AboutUs} />
         </Switch>
         <MobileView>
           <AppBottomNavigation />

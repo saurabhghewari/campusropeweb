@@ -147,17 +147,17 @@ export class AdminTrendingNewsList extends React.Component {
     this.props.fetchTrendingNews();
   }
   createNewTrendingNews() {
-    this.props.dispatch(replace('/app/news/trends/admin/trend/new'));
+    this.props.dispatch(replace('/news/trends/admin/trend/new'));
   }
 
   goToTrendingNewsEdit = (trendingNewsData) => {
     this.props.dispatch(
-      replace(`/app/news/trends/admin/trend/${trendingNewsData._id}/edit`)
+      replace(`/news/trends/admin/trend/${trendingNewsData._id}/edit`)
       );
   }
 
   routeToTrendingNewsView(selectedTrendingNews) {
-    this.props.dispatch(replace(`/app/news/trends/admin/${selectedTrendingNews.id}/details`));
+    this.props.dispatch(replace(`/news/trends/admin/${selectedTrendingNews.id}/details`));
   }
 
   getCreatedOnDate(date) {
@@ -206,7 +206,7 @@ export class AdminTrendingNewsList extends React.Component {
       <Fragment>
         {this.props.trendingNews.map(trendingNews => (
           <TrendingNewsCards
-            key={trendingNews.id}
+            key={trendingNews._id}
             classes={classes}
             getCreatedOnDate={this.getCreatedOnDate}
             openDeleteConfirmationModal={this.openDeleteConfirmationModal}

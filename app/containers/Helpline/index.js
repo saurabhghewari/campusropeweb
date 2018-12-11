@@ -58,27 +58,27 @@ class Helpline extends React.Component {
         <Switch>
           <PrivateRoute
             exact
-            path="/app/helpline"
+            path="/helpline"
             component={HelplineUserList}
           />
           <PrivateRoute
             exact
-            path="/app/helpline/:helplineId/details"
+            path="/helpline/:helplineId/details"
             component={HelplineView}
           />
           <PrivateRoute
             exact
-            path="/app/helpline/:helplineId/admin/edit"
+            path="/helpline/:helplineId/admin/edit"
             component={HelplineEdit}
           />
           <PrivateRoute
             exact
-            path="/app/helpline/admin"
+            path="/helpline/admin"
             component={HelplineAdminList}
           />
           <PrivateRoute
             exact
-            path="/app/helpline/new"
+            path="/helpline/new"
             component={HelplineAdd}
           />
         </Switch>

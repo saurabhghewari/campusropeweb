@@ -16,7 +16,7 @@ export function* submitNewTrendingNewsDetails({ values, actions }) {
     yield featherClient.authenticate();
     yield trendingNewsService.create(values);
     yield call(resetForm);
-    yield put(replace('/app/news/trends/admin/trends'));
+    yield put(replace('/news/trends/admin/trends'));
     yield put(stopFetchingData());
   } catch (e) {
     yield put(stopFetchingData());

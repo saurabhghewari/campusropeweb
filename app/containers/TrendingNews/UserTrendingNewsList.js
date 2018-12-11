@@ -44,7 +44,7 @@ export class UserTrendingNewsList extends React.Component {
   }
 
   routeToTrendingNewsView(selectedTrendingNews) {
-    this.props.dispatch(replace(`/app/news/trends/${selectedTrendingNews._id}/details`));
+    this.props.dispatch(replace(`/news/trends/${selectedTrendingNews._id}/details`));
   }
 
   handleChange(value){

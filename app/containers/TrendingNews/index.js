@@ -58,32 +58,32 @@ export class TrendingNews extends React.Component {
         <Switch>
           <PrivateRoute
             exact
-            path="/app/news/trends"
+            path="/news/trends"
             component={UserTrendingNewsList}
           />
           <PrivateRoute
           exact
-          path="/app/news/trends/:trendingNewsId/details"
+          path="/news/trends/:trendingNewsId/details"
           component={TrendingNewsView}
         />
         <PrivateRoute
         exact
-        path="/app/news/trends/admin/:trendingNewsId/details"
+        path="/news/trends/admin/:trendingNewsId/details"
         component={TrendingNewsView}
       />
           <PrivateRoute
           exact
-          path="/app/news/trends/admin/trends"
+          path="/news/trends/admin/trends"
           component={AdminTrendingNewsList}
         />
           <PrivateRoute
             exact
-            path="/app/news/trends/admin/trend/new"
+            path="/news/trends/admin/trend/new"
             component={TrendingNewsForm}
           />
           <PrivateRoute
           exact
-          path="/app/news/trends/admin/trend/:trendingNewsId/edit"
+          path="/news/trends/admin/trend/:trendingNewsId/edit"
           component={TrendingNewsEdit}
         />
         </Switch>

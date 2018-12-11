@@ -63,7 +63,7 @@ class HelplineAdminList extends React.Component {
   }
 
   createNewHelpline() {
-    this.props.dispatch(replace(`/app/helpline/new`));
+    this.props.dispatch(replace(`/helpline/new`));
   }
 
   render() {

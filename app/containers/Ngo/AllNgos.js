@@ -30,7 +30,7 @@ class AllNgos extends React.Component {
   }
 
   createNewNgo() {
-    this.props.dispatch(replace('/app/ngos/new'));
+    this.props.dispatch(replace('/ngos/new'));
   }
 
   render() {

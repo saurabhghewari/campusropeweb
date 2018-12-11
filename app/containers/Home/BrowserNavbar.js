@@ -96,7 +96,7 @@ const styles = theme => ({
 
 function BrowserNavbar(props) {
   const { classes, toggleDrawer, userInfo } = props;
-  const profileUrl = `/app/profile/${userInfo._id}`;
+  const profileUrl = `/profile/${userInfo._id}`;
   return (
     <div>
       <AppBar position="static">
@@ -107,7 +107,7 @@ function BrowserNavbar(props) {
 
           <div className={classes.sectionDesktop}>
             <div className={classes.seperator}>
-              <Link to="/app" className={classes.link} href="/app">
+              <Link to="/" className={classes.link} href="/">
                 <IconButton color="inherit" className={classes.iconList}>
                   <HomeIcon />
                 </IconButton>
@@ -115,9 +115,9 @@ function BrowserNavbar(props) {
             </div>
             <div className={classes.seperator}>
               <Link
-                to="/app/news/trends"
+                to="/news/trends"
                 className={classes.link}
-                href="/app/news/trends"
+                href="/news/trends"
               >
                 <IconButton color="inherit" className={classes.iconList}>
                   <Title />

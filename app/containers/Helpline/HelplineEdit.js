@@ -77,7 +77,7 @@ class HelplineEdit extends React.Component {
   }
 
   cancel() {
-    this.props.dispatch(replace('/app/helpline/admin'));
+    this.props.dispatch(replace('/helpline/admin'));
   }
 
   render() {

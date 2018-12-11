@@ -19,7 +19,7 @@ export function* storeToken(token) {
 export function* logout() {
   ls.remove(USER_TOKEN);
   yield call(feathersClient.logout);
-  yield put(replace('/login'));
+  yield put(replace('/'));
 }
 
 // Our SUBMIT_LOGIN action passes along the form values as the payload and form actions as
@@ -45,7 +45,7 @@ function* submitLogin({ values, actions }) {
     yield put(setLoggedUser(loggedUser));
     yield put(fetchConstants());
     yield call(storeToken, response.accessToken);
-    yield put(replace('/app'));
+    yield put(replace('/'));
   } catch (e) {
     if (e.response.status === 401) {
       // If our API throws an error we will leverage Formik's existing error system to pass it along

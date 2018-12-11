@@ -17,7 +17,7 @@ export function* submitNewNgoDetails({ values, actions }) {
     yield featherClient.authenticate();
     yield ngoService.create(values);
     yield call(resetForm);
-    yield put(replace('/app/ngos'));
+    yield put(replace('/ngos'));
     yield put(stopFetchingData());
   } catch (e) {
     yield put(stopFetchingData());
@@ -41,7 +41,7 @@ export function* updateNgoSaga({ ngo }) {
   try {
     yield put(startFetchingData());
     yield ngoService.patch(ngo._id, ngo);
-    yield put(replace('/app/ngos/verification'));
+    yield put(replace('/ngos/verification'));
     yield put(stopFetchingData());
   } catch (e) {
     yield put(startFetchingData());

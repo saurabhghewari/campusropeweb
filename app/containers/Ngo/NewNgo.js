@@ -263,7 +263,7 @@ const NewNgoFormComponent = ({
 
 class NewNgo extends React.Component {
   onCancel() {
-    this.props.dispatch(replace('/app/ngos'));
+    this.props.dispatch(replace('/ngos'));
   }
   onSubmit(values, actions) {
     this.props.submitNewNgoDetails(
