@@ -98,7 +98,7 @@ export class Home extends React.Component {
           <PrivateRoute path="/about" component={AboutUs} />
         </Switch>
         <MobileView>
-          <AppBottomNavigation  userInfo={userInfo}/>
+          <AppBottomNavigation userInfo={userInfo} />
         </MobileView>
         <SnackBar
           opened={snackData.opened}

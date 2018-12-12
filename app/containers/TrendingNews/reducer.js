@@ -24,7 +24,7 @@ function trendingNewsReducer(state = initialState, action) {
         ...state,
         trendingNewsList: action.trendingNews,
       };
-      case SET_SELECTED_TRENDING_NEWS:
+    case SET_SELECTED_TRENDING_NEWS:
       return {
         ...state,
         selectedTrendingNews: action.selectedTrendingNews,

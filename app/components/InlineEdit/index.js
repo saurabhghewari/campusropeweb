@@ -117,5 +117,3 @@ InlineEdit.propTypes = {
   onFocus: PropTypes.func,
   onFocusOut: PropTypes.func,
 };
-
-

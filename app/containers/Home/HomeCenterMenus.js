@@ -56,7 +56,7 @@ const styles = () => ({
 /* eslint-disable  */
 export class HomeCenterMenus extends React.PureComponent {
   render() {
-    const { classes ,menus} = this.props;
+    const { classes, menus } = this.props;
     return (
       <div className={classes.root}>
         {menus.map(menu => (

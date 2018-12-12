@@ -23,8 +23,8 @@ const styles = {
     minWidth: 'inherit',
     maxWidth: 'inherit',
     padding: 0,
-    flex: 'inherit'
-  }
+    flex: 'inherit',
+  },
 };
 
 class AppBottomNavigation extends React.PureComponent {
@@ -42,7 +42,7 @@ class AppBottomNavigation extends React.PureComponent {
         this.props.dispatch(replace('/news/trends'));
         break;
       case 4:
-        this.props.dispatch(replace('/profile/'+ this.props.userInfo._id));
+        this.props.dispatch(replace('/profile/' + this.props.userInfo._id));
         break;
       default:
         this.props.dispatch(replace('/'));
@@ -60,15 +60,31 @@ class AppBottomNavigation extends React.PureComponent {
         showLabels
         className={classes.root}
       >
-        <BottomNavigationAction label="Home" icon={<HomeIcon />} className={classes.navButtons}/>
-        <BottomNavigationAction label="Trends" icon={<TrendingUp />} className={classes.navButtons}/>
-        <BottomNavigationAction label="Messages" icon={<MessageIcon />} className={classes.navButtons}/>
+        <BottomNavigationAction
+          label="Home"
+          icon={<HomeIcon />}
+          className={classes.navButtons}
+        />
+        <BottomNavigationAction
+          label="Trends"
+          icon={<TrendingUp />}
+          className={classes.navButtons}
+        />
+        <BottomNavigationAction
+          label="Messages"
+          icon={<MessageIcon />}
+          className={classes.navButtons}
+        />
         <BottomNavigationAction
           label="Notifications"
           icon={<NotificationsIcon />}
           className={classes.navButtons}
         />
-        <BottomNavigationAction label="Profile" icon={<AccountCircle />} className={classes.navButtons}/>
+        <BottomNavigationAction
+          label="Profile"
+          icon={<AccountCircle />}
+          className={classes.navButtons}
+        />
       </BottomNavigation>
     );
   }
@@ -80,9 +96,7 @@ AppBottomNavigation.propTypes = {
 };
 
 function mapStateToProps() {
-  return {
-
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {

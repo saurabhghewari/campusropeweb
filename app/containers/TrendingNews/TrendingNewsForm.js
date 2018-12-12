@@ -101,10 +101,9 @@ const styles = theme => ({
 /* eslint-disable */
 const opts = {
   height: '390',
-  width: '100%'
+  width: '100%',
 };
 export class TrendingNewsForm extends React.Component {
-
   width = 100;
   height = 100;
 
@@ -115,21 +114,26 @@ export class TrendingNewsForm extends React.Component {
   onSubmit(values, actions) {
     this.props.submitNewTrendingNewsDetails(
       {
-        ...values
+        ...values,
       },
       actions,
     );
   }
 
-
-  componentDidMount(){
-     this.width = document.querySelector('#content').getBoundingClientRect().width,
-     this.height = document.querySelector('#content').getBoundingClientRect().height
+  componentDidMount() {
+    (this.width = document
+      .querySelector('#content')
+      .getBoundingClientRect().width),
+      (this.height = document
+        .querySelector('#content')
+        .getBoundingClientRect().height);
   }
 
-  onYoutubeLinkChange(event,setFieldValue){
-    const playBackId = event.target.value.substring(event.target.value.length - 11); // no of characters in playbackid
-    setFieldValue('youtube_link',playBackId)
+  onYoutubeLinkChange(event, setFieldValue) {
+    const playBackId = event.target.value.substring(
+      event.target.value.length - 11,
+    ); // no of characters in playbackid
+    setFieldValue('youtube_link', playBackId);
   }
 
   onCancel() {
@@ -155,11 +159,22 @@ export class TrendingNewsForm extends React.Component {
           onSubmit={(values, actions) => this.onSubmit(values, actions)}
         >
           {props => {
-            const { values, touched, errors, handleChange,setFieldValue,
-              isSubmitting,handleSubmit } = props;
+            const {
+              values,
+              touched,
+              errors,
+              handleChange,
+              setFieldValue,
+              isSubmitting,
+              handleSubmit,
+            } = props;
             const { classes, states } = this.props;
             return (
-              <form className={classes.form} noValidate="noValidate" onSubmit={handleSubmit}>
+              <form
+                className={classes.form}
+                noValidate="noValidate"
+                onSubmit={handleSubmit}
+              >
                 <Grid container spacing={16}>
                   <Grid item xs={12} sm={12} lg={6}>
                     <FormControl margin="normal" required fullWidth>
@@ -204,70 +219,78 @@ export class TrendingNewsForm extends React.Component {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <FormControl margin="normal" fullWidth required>
-                  <InputLabel htmlFor="state">State</InputLabel>
-                  <Select
-                    value={values.state}
-                    onChange={handleChange}
-                    input={<Input id="state" name="state" />}
-                  >
-                    {states.map(state => (
-                      <MenuItem key={state.label} value={state.value}>
-                        {state.value}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {touched.state &&
-                    errors.state && (
-                      <FormHelperText className={classes.error}>
-                        {errors.state}
-                      </FormHelperText>
-                    )}
-                </FormControl>
+                    <FormControl margin="normal" fullWidth required>
+                      <InputLabel htmlFor="state">State</InputLabel>
+                      <Select
+                        value={values.state}
+                        onChange={handleChange}
+                        input={<Input id="state" name="state" />}
+                      >
+                        {states.map(state => (
+                          <MenuItem key={state.label} value={state.value}>
+                            {state.value}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                      {touched.state &&
+                        errors.state && (
+                          <FormHelperText className={classes.error}>
+                            {errors.state}
+                          </FormHelperText>
+                        )}
+                    </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Upload
-                    className={classes.uploadBtn}
-                    text="Upload Photos"
-                    onUploaded={res => setFieldValue('photo_urls', res.map((pic) => pic.secure_url))}
-                  />
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                  {!_isEmpty(values.photo_urls) && (
-                    values.photo_urls.map((pic) => <Card key={pic} className={classes.card}>
-                      <CardMedia
-                        component="img"
-                        alt="trending news image"
-                        className={classes.media}
-                        width={this.width}
-                        src={pic}
-                        title="Contemplative Reptile"
-                      />
-                  </Card>
-                  ))}
+                      className={classes.uploadBtn}
+                      text="Upload Photos"
+                      onUploaded={res =>
+                        setFieldValue(
+                          'photo_urls',
+                          res.map(pic => pic.secure_url),
+                        )
+                      }
+                    />
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                      {!_isEmpty(values.photo_urls) &&
+                        values.photo_urls.map(pic => (
+                          <Card key={pic} className={classes.card}>
+                            <CardMedia
+                              component="img"
+                              alt="trending news image"
+                              className={classes.media}
+                              width={this.width}
+                              src={pic}
+                              title="Contemplative Reptile"
+                            />
+                          </Card>
+                        ))}
+                    </Grid>
                   </Grid>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <Upload
-                    className={classes.uploadBtn}
-                    text="Upload Cover Photo"
-                    onUploaded={res => setFieldValue('cover_photo', res[0].secure_url)}
-                  />
                   <Grid item xs={12} sm={12} md={12} lg={12}>
-                {!_isEmpty(values.cover_photo) && (
-                  <Card className={classes.card}>
-                  <CardMedia
-                    component="img"
-                    alt="trending news image"
-                    className={classes.media}
-                    width={this.width}
-                    src={values.cover_photo}
-                    title="Contemplative Reptile"
-                  />
-              </Card>
-                )}
-                </Grid>
-                </Grid>
-                <Grid item xs={12} sm={12} lg={12} md={12}>
+                    <Upload
+                      className={classes.uploadBtn}
+                      text="Upload Cover Photo"
+                      onUploaded={res =>
+                        setFieldValue('cover_photo', res[0].secure_url)
+                      }
+                    />
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                      {!_isEmpty(values.cover_photo) && (
+                        <Card className={classes.card}>
+                          <CardMedia
+                            component="img"
+                            alt="trending news image"
+                            className={classes.media}
+                            width={this.width}
+                            src={values.cover_photo}
+                            title="Contemplative Reptile"
+                          />
+                        </Card>
+                      )}
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} sm={12} lg={12} md={12}>
                     <FormControl margin="normal" fullWidth>
                       <InputLabel htmlFor="youtube_link">
                         Embed YouTube Link
@@ -277,42 +300,44 @@ export class TrendingNewsForm extends React.Component {
                         name="youtube_link"
                         autoComplete="youtube_link"
                         value={values.youtube_link}
-                        onChange={(e) => this.onYoutubeLinkChange(e,setFieldValue)}
+                        onChange={e =>
+                          this.onYoutubeLinkChange(e, setFieldValue)
+                        }
                         autoFocus
                       />{' '}
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
-                  {!_isEmpty(values.youtube_link) && (
-                    <YouTube
-                    videoId={values.youtube_link}
-                    opts={opts}
-                    onReady={this._onReady}
-                  />
-                  )}
+                    {!_isEmpty(values.youtube_link) && (
+                      <YouTube
+                        videoId={values.youtube_link}
+                        opts={opts}
+                        onReady={this._onReady}
+                      />
+                    )}
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                  disabled={isSubmitting}
-                >
-                  {' '}
-                  Submit
-                </Button>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      className={classes.submit}
+                      disabled={isSubmitting}
+                    >
+                      {' '}
+                      Submit
+                    </Button>
 
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={()=>this.onCancel()}
-                  className={classes.cancel}
-                  disabled={isSubmitting}
-                >
-                  {' '}
-                  Cancel
-                </Button>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => this.onCancel()}
+                      className={classes.cancel}
+                      disabled={isSubmitting}
+                    >
+                      {' '}
+                      Cancel
+                    </Button>
                   </Grid>
                 </Grid>
               </form>
@@ -348,6 +373,4 @@ const withConnect = connect(
 
 const componentWithStyles = withStyles(styles)(TrendingNewsForm);
 
-export default compose(
-  withConnect,
-)(componentWithStyles);
+export default compose(withConnect)(componentWithStyles);

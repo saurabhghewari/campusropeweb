@@ -43,12 +43,7 @@ const styles = theme => ({
 });
 
 /* eslint-disable*/
-const NewHelplineFormComponent = ({
-  classes,
-  onSubmit,
-  onCancel,
-  states
-}) => (
+const NewHelplineFormComponent = ({ classes, onSubmit, onCancel, states }) => (
   <Formik
     initialValues={{
       name: '',
@@ -62,8 +57,14 @@ const NewHelplineFormComponent = ({
       name: Yup.string().required('Please provide name of helpline'),
       description: Yup.string(),
       operatingState: Yup.string().required('Please specify operating state'),
-      websiteLink: Yup.string().matches(urlRegex,'Please enter proper url with protocol'),
-      linkToFileComplaint: Yup.string().matches(urlRegex,'Please enter proper url with protocol'),
+      websiteLink: Yup.string().matches(
+        urlRegex,
+        'Please enter proper url with protocol',
+      ),
+      linkToFileComplaint: Yup.string().matches(
+        urlRegex,
+        'Please enter proper url with protocol',
+      ),
       helplineNumber: Yup.string().required(
         'Please provide number of helpline',
       ),
@@ -77,7 +78,7 @@ const NewHelplineFormComponent = ({
         errors,
         isSubmitting,
         handleChange,
-        handleSubmit
+        handleSubmit,
       } = props;
       return (
         <form

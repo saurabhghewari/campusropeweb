@@ -48,58 +48,65 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 const opts = {
   height: '390',
-  width: '100%'
+  width: '100%',
 };
 
-const TrendingNewsBox = ({ trendingNewsData, classes, onTrendingNewsClick, getCreatedOnDate }) => {
+const TrendingNewsBox = ({
+  trendingNewsData,
+  classes,
+  onTrendingNewsClick,
+  getCreatedOnDate,
+}) => {
   return (
-    <Card className={classes.card}
-      onClick={()=> onTrendingNewsClick(trendingNewsData)}
+    <Card
+      className={classes.card}
+      onClick={() => onTrendingNewsClick(trendingNewsData)}
     >
-          <CardHeader
-            avatar={
-              <Avatar
-                className={classNames(classes.avatar, classes.bigAvatar)}
-              >CR</Avatar>
-            }
-            title={'Campusrope'}
-            subheader={getCreatedOnDate(trendingNewsData.createdAt)}
-          />
-          <CardContent>
-            <Typography component="p">{trendingNewsData.headline}</Typography>
-          </CardContent>
-          {!_isEmpty(trendingNewsData.cover_photo) && (
-            <CardMedia
-            className={classes.media}
-            image={trendingNewsData.cover_photo}
-          />
-          )}
-          {!_isEmpty(trendingNewsData.youtube_link) && (
-            <YouTube videoId={trendingNewsData.youtube_link}
-                      controls
-                      opts={opts}
-            />
-          )}
-          <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="Like">
-              <ThumbUpSharp />
-            </IconButton>
-            <IconButton aria-label="Comment">
-            <Comment />
-          </IconButton>
-          <IconButton aria-label="Share">
+      <CardHeader
+        avatar={
+          <Avatar className={classNames(classes.avatar, classes.bigAvatar)}>
+            CR
+          </Avatar>
+        }
+        title={'Campusrope'}
+        subheader={getCreatedOnDate(trendingNewsData.createdAt)}
+      />
+      <CardContent>
+        <Typography component="p">{trendingNewsData.headline}</Typography>
+      </CardContent>
+      {!_isEmpty(trendingNewsData.cover_photo) && (
+        <CardMedia
+          className={classes.media}
+          image={trendingNewsData.cover_photo}
+        />
+      )}
+      {!_isEmpty(trendingNewsData.youtube_link) && (
+        <YouTube videoId={trendingNewsData.youtube_link} controls opts={opts} />
+      )}
+      <CardActions className={classes.actions} disableActionSpacing>
+        <IconButton aria-label="Like">
+          <ThumbUpSharp />
+        </IconButton>
+        <IconButton aria-label="Comment">
+          <Comment />
+        </IconButton>
+        <IconButton aria-label="Share">
           <Share />
         </IconButton>
-          </CardActions>
-      </Card>
+      </CardActions>
+    </Card>
   );
 };
 
 export class TrendingNewsList extends React.Component {
-
   getCreatedOnDate(date) {
     const myDate = new Date(date);
-    const trendingNewsCreationDate = myDate.getDate()+"/"+(myDate.getMonth()+1)+"/"+myDate.getFullYear();
+    const trendingNewsCreationDate =
+      myDate.getDate() +
+      '/' +
+      (myDate.getMonth() + 1) +
+      '/' +
+      myDate.getFullYear();
     return trendingNewsCreationDate;
   }
 
@@ -107,15 +114,15 @@ export class TrendingNewsList extends React.Component {
     const { classes, trendingNews, onTrendingNewsClick } = this.props;
     return (
       <Fragment>
-      {trendingNews.map(trendingNew => (
-        <TrendingNewsBox
+        {trendingNews.map(trendingNew => (
+          <TrendingNewsBox
             key={trendingNew._id}
             classes={classes}
             onTrendingNewsClick={onTrendingNewsClick}
             trendingNewsData={trendingNew}
             getCreatedOnDate={this.getCreatedOnDate}
-        />
-      ))}
+          />
+        ))}
       </Fragment>
     );
   }
@@ -126,7 +133,6 @@ TrendingNewsList.propTypes = {
   trendingNews: PropTypes.array.isRequired,
   onTrendingNewsClick: PropTypes.func,
 };
-
 
 const componentWithStyles = withStyles(styles)(TrendingNewsList);
 

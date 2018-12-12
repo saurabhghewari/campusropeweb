@@ -43,12 +43,9 @@ export default function App() {
         <MuiThemeProvider theme={theme}>
           <Switch>
             <Route exact path="/login" component={Login} />
-            <Route exact  path="/signup" component={Signup} />
-            <PrivateRoute
-              path="/"
-              component={Home}
-            />
-           
+            <Route exact path="/signup" component={Signup} />
+            <PrivateRoute path="/" component={Home} />
+
             <Route component={NotFoundPage} />
           </Switch>
         </MuiThemeProvider>

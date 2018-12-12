@@ -62,30 +62,30 @@ export class TrendingNews extends React.Component {
             component={UserTrendingNewsList}
           />
           <PrivateRoute
-          exact
-          path="/news/trends/:trendingNewsId/details"
-          component={TrendingNewsView}
-        />
-        <PrivateRoute
-        exact
-        path="/news/trends/admin/:trendingNewsId/details"
-        component={TrendingNewsView}
-      />
+            exact
+            path="/news/trends/:trendingNewsId/details"
+            component={TrendingNewsView}
+          />
           <PrivateRoute
-          exact
-          path="/news/trends/admin/trends"
-          component={AdminTrendingNewsList}
-        />
+            exact
+            path="/news/trends/admin/:trendingNewsId/details"
+            component={TrendingNewsView}
+          />
+          <PrivateRoute
+            exact
+            path="/news/trends/admin/trends"
+            component={AdminTrendingNewsList}
+          />
           <PrivateRoute
             exact
             path="/news/trends/admin/trend/new"
             component={TrendingNewsForm}
           />
           <PrivateRoute
-          exact
-          path="/news/trends/admin/trend/:trendingNewsId/edit"
-          component={TrendingNewsEdit}
-        />
+            exact
+            path="/news/trends/admin/trend/:trendingNewsId/edit"
+            component={TrendingNewsEdit}
+          />
         </Switch>
       </div>
     );
@@ -110,7 +110,7 @@ const withConnect = connect(
 );
 
 const withReducer = injectReducer({ key: 'trendingNews', reducer });
-const withSaga = injectSaga({ key: 'trendingNews', saga ,mode:DAEMON});
+const withSaga = injectSaga({ key: 'trendingNews', saga, mode: DAEMON });
 
 export default compose(
   withReducer,

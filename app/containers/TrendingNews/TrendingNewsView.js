@@ -38,8 +38,8 @@ const opts = {
   height: '390',
   width: '100%',
   playerVars: {
-    autoplay: 1
-  }
+    autoplay: 1,
+  },
 };
 /* eslint-disable react/prefer-stateless-function */
 export class TrendingNewsView extends React.Component {
@@ -49,16 +49,17 @@ export class TrendingNewsView extends React.Component {
   }
 
   componentDidMount() {
-     this.width = document.querySelector('#content').getBoundingClientRect().width || 200;
+    this.width =
+      document.querySelector('#content').getBoundingClientRect().width || 200;
     const trendingNewsId = this.props.match.params.trendingNewsId;
     this.props.fetchTrendingNewsById(trendingNewsId);
   }
 
   onBack() {
     const isAdminTrendingView = _includes(this.props.match.url, 'admin');
-    if(isAdminTrendingView){
+    if (isAdminTrendingView) {
       this.props.dispatch(replace('/news/trends/admin/trends'));
-      return
+      return;
     }
     this.props.dispatch(replace('/news/trends'));
   }
@@ -70,56 +71,69 @@ export class TrendingNewsView extends React.Component {
         <Grid container spacing={16}>
           {!_isEmpty(trendingNewsDetails.cover_photo) && (
             <IdealImage
-            placeholder={{ color: 'grey' }}
-            srcSet={[{ src: trendingNewsDetails.cover_photo, width: 100, height: 100 }]}
-            alt="cover Photo"
-            height={100}
-            width={100}
+              placeholder={{ color: 'grey' }}
+              srcSet={[
+                {
+                  src: trendingNewsDetails.cover_photo,
+                  width: 100,
+                  height: 100,
+                },
+              ]}
+              alt="cover Photo"
+              height={100}
+              width={100}
             />
           )}
           <Grid item xs={12} sm={12} lg={12}>
-              <Typography variant="headline">Headline : </Typography>
-              <Typography variant="subtitle1">{trendingNewsDetails.headline}</Typography>
+            <Typography variant="headline">Headline : </Typography>
+            <Typography variant="subtitle1">
+              {trendingNewsDetails.headline}
+            </Typography>
           </Grid>
-                <Grid item xs={12} sm={12} lg={12}>
-                <Typography variant="headline">content : </Typography>
-                    <Typography variant="subtitle1">{trendingNewsDetails.content}</Typography>
-                </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                   <Typography variant="subtitle1">state : {trendingNewsDetails.state}</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                  {trendingNewsDetails.photo_urls &&
-                    trendingNewsDetails.photo_urls.length && (
-                   trendingNewsDetails.photo_urls.map((pic) => <IdealImage
-                    key={pic}
-                    placeholder={{ color: 'grey' }}
-                    srcSet={[{ src: pic, width: this.width, height: 200 }]}
-                    alt="Photos"
-                    height={200}
-                    width={this.width}
-                  /> )
-                  )}
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                  {!_isEmpty(trendingNewsDetails.youtube_link) && (
-                    <YouTube
-                    videoId={trendingNewsDetails.youtube_link}
-                    opts={opts}
-                    onReady={this._onReady}
-                  />
-                  )}
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={()=>this.onBack()}
-                >
-                  {' '}
-                  back
-                </Button>
-                  </Grid>
+          <Grid item xs={12} sm={12} lg={12}>
+            <Typography variant="headline">content : </Typography>
+            <Typography variant="subtitle1">
+              {trendingNewsDetails.content}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <Typography variant="subtitle1">
+              state : {trendingNewsDetails.state}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            {trendingNewsDetails.photo_urls &&
+              trendingNewsDetails.photo_urls.length &&
+              trendingNewsDetails.photo_urls.map(pic => (
+                <IdealImage
+                  key={pic}
+                  placeholder={{ color: 'grey' }}
+                  srcSet={[{ src: pic, width: this.width, height: 200 }]}
+                  alt="Photos"
+                  height={200}
+                  width={this.width}
+                />
+              ))}
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            {!_isEmpty(trendingNewsDetails.youtube_link) && (
+              <YouTube
+                videoId={trendingNewsDetails.youtube_link}
+                opts={opts}
+                onReady={this._onReady}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => this.onBack()}
+            >
+              {' '}
+              back
+            </Button>
+          </Grid>
         </Grid>
       </Content>
     );
@@ -132,15 +146,16 @@ TrendingNewsView.propTypes = {
   states: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector ({
+const mapStateToProps = createStructuredSelector({
   trendingNewsDetails: makeSelectSelectedTrendingNews(),
-  states: makeSelectStatesForOptions()
+  states: makeSelectStatesForOptions(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchTrendingNewsById: (trendingNewsId) => dispatch(fetchTrendingNewsById(trendingNewsId)),
+    fetchTrendingNewsById: trendingNewsId =>
+      dispatch(fetchTrendingNewsById(trendingNewsId)),
   };
 }
 
@@ -151,6 +166,4 @@ const withConnect = connect(
 
 const componentWithStyles = withStyles(styles)(TrendingNewsView);
 
-export default compose(
-  withConnect,
-)(componentWithStyles);
+export default compose(withConnect)(componentWithStyles);

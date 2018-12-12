@@ -41,7 +41,7 @@ class TemporaryDrawer extends React.PureComponent {
       <SwipeableDrawer
         anchor="right"
         open={this.props.open}
-        onOpen={()=>{}}
+        onOpen={() => {}}
         onClose={() => this.props.toggleDrawer(false)}
         tabIndex={0}
         role="button"

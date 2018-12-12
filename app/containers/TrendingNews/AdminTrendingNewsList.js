@@ -69,12 +69,14 @@ function Transition(props) {
 }
 
 /* eslint-disable*/
-const TrendingNewsCards = (props) => {
-  const { trendingNewsData,
+const TrendingNewsCards = props => {
+  const {
+    trendingNewsData,
     classes,
-     getCreatedOnDate,
-      openDeleteConfirmationModal,
-      goToTrendingNewsEdit } = props
+    getCreatedOnDate,
+    openDeleteConfirmationModal,
+    goToTrendingNewsEdit,
+  } = props;
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -82,67 +84,75 @@ const TrendingNewsCards = (props) => {
         subheader={getCreatedOnDate(trendingNewsData.createdAt)}
       />
       <CardContent>
-        <Typography component="p">
-        {trendingNewsData.content}
-        </Typography>
+        <Typography component="p">{trendingNewsData.content}</Typography>
       </CardContent>
       <CardActions className={classes.actions}>
-      <Tooltip title="Edit">
-        <IconButton color="primary" aria-label="Edit"
-        onClick={() => goToTrendingNewsEdit(trendingNewsData)}>
-          <EditIcon />
-        </IconButton>
+        <Tooltip title="Edit">
+          <IconButton
+            color="primary"
+            aria-label="Edit"
+            onClick={() => goToTrendingNewsEdit(trendingNewsData)}
+          >
+            <EditIcon />
+          </IconButton>
         </Tooltip>
         <Tooltip title="Delete">
-        <IconButton color="secondary" aria-label="Delete"
-          onClick={()=>openDeleteConfirmationModal(trendingNewsData)}>
-          <DeleteIcon />
-        </IconButton>
-      </Tooltip>
+          <IconButton
+            color="secondary"
+            aria-label="Delete"
+            onClick={() => openDeleteConfirmationModal(trendingNewsData)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
       </CardActions>
-  </Card>
+    </Card>
   );
 };
 
-const RenderDeleteConfirmationModal = (props) => {
-  const { isDeletedModalOpen, closeDeleteConfirmationModal,onConfirmTrendingNewsDelete } = props
+const RenderDeleteConfirmationModal = props => {
+  const {
+    isDeletedModalOpen,
+    closeDeleteConfirmationModal,
+    onConfirmTrendingNewsDelete,
+  } = props;
   return (
     <Dialog
-          open={isDeletedModalOpen}
-          TransitionComponent={Transition}
-          keepMounted
-          disableBackdropClick={true}
-          onClose={closeDeleteConfirmationModal}
-          aria-labelledby="alert-dialog-slide-title"
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle id="alert-dialog-slide-title">
-            {"Delete Confirmation"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-            Are You Sure You Want to delete it.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={closeDeleteConfirmationModal} color="default">
-              Cancel
-            </Button>
-            <Button onClick={onConfirmTrendingNewsDelete} color="primary">
-              Confirm
-            </Button>
-          </DialogActions>
-        </Dialog>
+      open={isDeletedModalOpen}
+      TransitionComponent={Transition}
+      keepMounted
+      disableBackdropClick={true}
+      onClose={closeDeleteConfirmationModal}
+      aria-labelledby="alert-dialog-slide-title"
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle id="alert-dialog-slide-title">
+        {'Delete Confirmation'}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-slide-description">
+          Are You Sure You Want to delete it.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={closeDeleteConfirmationModal} color="default">
+          Cancel
+        </Button>
+        <Button onClick={onConfirmTrendingNewsDelete} color="primary">
+          Confirm
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
 /* eslint-disable react/prefer-stateless-function */
 export class AdminTrendingNewsList extends React.Component {
-  state={
-    state:'',
-    isDeletedModalOpen : false,
-    trendingNewsToDelete : {},
-  }
+  state = {
+    state: '',
+    isDeletedModalOpen: false,
+    trendingNewsToDelete: {},
+  };
   componentDidMount() {
     this.props.fetchTrendingNews();
   }
@@ -150,49 +160,58 @@ export class AdminTrendingNewsList extends React.Component {
     this.props.dispatch(replace('/news/trends/admin/trend/new'));
   }
 
-  goToTrendingNewsEdit = (trendingNewsData) => {
+  goToTrendingNewsEdit = trendingNewsData => {
     this.props.dispatch(
-      replace(`/news/trends/admin/trend/${trendingNewsData._id}/edit`)
-      );
-  }
+      replace(`/news/trends/admin/trend/${trendingNewsData._id}/edit`),
+    );
+  };
 
   routeToTrendingNewsView(selectedTrendingNews) {
-    this.props.dispatch(replace(`/news/trends/admin/${selectedTrendingNews.id}/details`));
+    this.props.dispatch(
+      replace(`/news/trends/admin/${selectedTrendingNews.id}/details`),
+    );
   }
 
   getCreatedOnDate(date) {
     const myDate = new Date(date);
-    const trendingNewsCreationDate = myDate.getDate()+"/"+(myDate.getMonth()+1)+"/"+myDate.getFullYear();
+    const trendingNewsCreationDate =
+      myDate.getDate() +
+      '/' +
+      (myDate.getMonth() + 1) +
+      '/' +
+      myDate.getFullYear();
     return trendingNewsCreationDate;
   }
 
-  handleChange(value){
+  handleChange(value) {
     this.setState({
-      state: value
-    })
+      state: value,
+    });
   }
   renderNoTrendingNewsLabel(classes) {
-    return <Typography variant="h4" className={classes.noTrendingNewsLabel}>
-                  {/* No Trending News Created */}
-            </Typography>;
+    return (
+      <Typography variant="h4" className={classes.noTrendingNewsLabel}>
+        {/* No Trending News Created */}
+      </Typography>
+    );
   }
 
-  openDeleteConfirmationModal = (selectedTrendingNews) => {
+  openDeleteConfirmationModal = selectedTrendingNews => {
     this.setState({
       isDeletedModalOpen: true,
-      trendingNewsToDelete : selectedTrendingNews,
-     });
+      trendingNewsToDelete: selectedTrendingNews,
+    });
   };
 
   closeDeleteConfirmationModal = () => {
     this.setState({
       isDeletedModalOpen: false,
-      trendingNewsToDelete:{}
-     });
+      trendingNewsToDelete: {},
+    });
   };
 
   onConfirmTrendingNewsDelete = () => {
-   let trendingNewsData = this.state.trendingNewsToDelete
+    let trendingNewsData = this.state.trendingNewsToDelete;
   };
 
   _onReady(event) {
@@ -229,36 +248,43 @@ export class AdminTrendingNewsList extends React.Component {
     return (
       <Content>
         <Grid container spacing={16}>
-        <Grid item xs={12} sm={12} md={12} lg={12}  className={classes.createBtnContainer}>
-          <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => this.createNewTrendingNews()}
-        >
-          {' '}
-          Create{' '}
-        </Button>
-        </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-          <FormControl margin="normal" fullWidth>
-          <InputLabel htmlFor="state">State</InputLabel>
-          <Select
-            value={state}
-            onChange={(e)=>this.handleChange(e.target.value)}
-            input={<Input id="state" name="state" />}
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            className={classes.createBtnContainer}
           >
-            {states.map(state => (
-              <MenuItem key={state.label} value={state.value}>
-                {state.value}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => this.createNewTrendingNews()}
+            >
+              {' '}
+              Create{' '}
+            </Button>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <FormControl margin="normal" fullWidth>
+              <InputLabel htmlFor="state">State</InputLabel>
+              <Select
+                value={state}
+                onChange={e => this.handleChange(e.target.value)}
+                input={<Input id="state" name="state" />}
+              >
+                {states.map(state => (
+                  <MenuItem key={state.label} value={state.value}>
+                    {state.value}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
-        {trendingNews.length === 0 ? this.renderNoTrendingNewsLabel(classes) :
-          this.renderTrendingNews()
-        }
+        {trendingNews.length === 0
+          ? this.renderNoTrendingNewsLabel(classes)
+          : this.renderTrendingNews()}
       </Content>
     );
   }
@@ -271,9 +297,9 @@ AdminTrendingNewsList.propTypes = {
   states: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector ({
-    trendingNews: makeSelectTrendingNews(),
-    states: makeSelectStatesForOptions()
+const mapStateToProps = createStructuredSelector({
+  trendingNews: makeSelectTrendingNews(),
+  states: makeSelectStatesForOptions(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -290,6 +316,4 @@ const withConnect = connect(
 
 const componentWithStyles = withStyles(styles)(AdminTrendingNewsList);
 
-export default compose(
-  withConnect,
-)(componentWithStyles);
+export default compose(withConnect)(componentWithStyles);

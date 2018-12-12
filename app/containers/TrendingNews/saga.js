@@ -24,7 +24,7 @@ export function* submitNewTrendingNewsDetails({ values, actions }) {
   }
 }
 
-export function* fetchTrendingNewsSaga({state}) {
+export function* fetchTrendingNewsSaga({ state }) {
   try {
     yield put(startFetchingData());
     yield featherClient.authenticate();
@@ -41,20 +41,19 @@ export function* fetchTrendingNewsSaga({state}) {
     yield put(stopFetchingData());
     console.error(e);
   }
-  
 }
 
 export function* fetchTrendingNewsByIdSaga({ trendingNewsId }) {
   try {
     yield put(startFetchingData());
     yield featherClient.authenticate();
-    const selectedTrendingNews = yield trendingNewsService.get(trendingNewsId)
+    const selectedTrendingNews = yield trendingNewsService.get(trendingNewsId);
     yield put(setSelectedTrendingNewsInView(selectedTrendingNews));
     yield put(stopFetchingData());
   } catch (e) {
     yield put(stopFetchingData());
     console.error(e);
-  } 
+  }
 }
 
 // Individual exports for testing

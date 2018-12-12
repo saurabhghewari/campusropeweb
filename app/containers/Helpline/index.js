@@ -56,11 +56,7 @@ class Helpline extends React.Component {
           <meta name="description" content="Description of Helpline" />
         </Helmet>
         <Switch>
-          <PrivateRoute
-            exact
-            path="/helpline"
-            component={HelplineUserList}
-          />
+          <PrivateRoute exact path="/helpline" component={HelplineUserList} />
           <PrivateRoute
             exact
             path="/helpline/:helplineId/details"
@@ -76,11 +72,7 @@ class Helpline extends React.Component {
             path="/helpline/admin"
             component={HelplineAdminList}
           />
-          <PrivateRoute
-            exact
-            path="/helpline/new"
-            component={HelplineAdd}
-          />
+          <PrivateRoute exact path="/helpline/new" component={HelplineAdd} />
         </Switch>
       </div>
     );

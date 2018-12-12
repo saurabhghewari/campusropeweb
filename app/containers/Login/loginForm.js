@@ -107,11 +107,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
           {errors.authentication && (
             <span className={classes.error}>{errors.authentication}</span>
           )}
-          <FormControl
-            margin="normal"
-            required
-            fullWidth
-          >
+          <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email</InputLabel>
             <Input
               id="email"
@@ -129,11 +125,7 @@ const FormComponent = ({ classes, onSubmit, handleClickOpen }) => (
               )}
           </FormControl>
 
-          <FormControl
-            margin="normal"
-            required
-            fullWidth
-          >
+          <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input
               name="password"

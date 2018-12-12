@@ -36,28 +36,34 @@ const styles = theme => ({
 
 /* eslint-disable react/prefer-stateless-function */
 export class UserTrendingNewsList extends React.Component {
-  state={
-    state:'All',
-  }
+  state = {
+    state: 'All',
+  };
   componentDidMount() {
     this.props.fetchTrendingNews();
   }
 
   routeToTrendingNewsView(selectedTrendingNews) {
-    this.props.dispatch(replace(`/news/trends/${selectedTrendingNews._id}/details`));
+    this.props.dispatch(
+      replace(`/news/trends/${selectedTrendingNews._id}/details`),
+    );
   }
 
-  handleChange(value){
-    this.setState({
-      state: value
-    },() => this.props.fetchTrendingNews(value))
-    
+  handleChange(value) {
+    this.setState(
+      {
+        state: value,
+      },
+      () => this.props.fetchTrendingNews(value),
+    );
   }
   renderNoTrendingNewsLabel() {
     const { classes } = this.props;
-    return <Typography variant="h4" className={classes.noTrendingNewsLabel}>
-               {/*  No Trending News Created */}
-            </Typography>;
+    return (
+      <Typography variant="h4" className={classes.noTrendingNewsLabel}>
+        {/*  No Trending News Created */}
+      </Typography>
+    );
   }
 
   render() {
@@ -67,28 +73,32 @@ export class UserTrendingNewsList extends React.Component {
       <Content withPaper={false}>
         <Grid container spacing={16}>
           <Grid item xs={12} sm={12} md={12} lg={12}>
-          <FormControl margin="normal" fullWidth>
-          <InputLabel htmlFor="state">State</InputLabel>
-          <Select
-            value={state}
-            onChange={(e)=>this.handleChange(e.target.value)}
-            input={<Input id="state" name="state" />}
-          >
-            {states.concat(['All']).map(state => (
-              <MenuItem key={state} value={state}>
-                {state}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+            <FormControl margin="normal" fullWidth>
+              <InputLabel htmlFor="state">State</InputLabel>
+              <Select
+                value={state}
+                onChange={e => this.handleChange(e.target.value)}
+                input={<Input id="state" name="state" />}
+              >
+                {states.concat(['All']).map(state => (
+                  <MenuItem key={state} value={state}>
+                    {state}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
-        {trendingNews.length === 0 ? this.renderNoTrendingNewsLabel() :
+        {trendingNews.length === 0 ? (
+          this.renderNoTrendingNewsLabel()
+        ) : (
           <TrendingNewsList
             trendingNews={trendingNews}
-            onTrendingNewsClick={selectedTrendingNews => this.routeToTrendingNewsView(selectedTrendingNews)}
+            onTrendingNewsClick={selectedTrendingNews =>
+              this.routeToTrendingNewsView(selectedTrendingNews)
+            }
           />
-        }
+        )}
       </Content>
     );
   }
@@ -101,15 +111,15 @@ UserTrendingNewsList.propTypes = {
   states: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector ({
+const mapStateToProps = createStructuredSelector({
   trendingNews: makeSelectTrendingNews(),
-  states: makeSelectStates()
+  states: makeSelectStates(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchTrendingNews: (state) => dispatch(fetchTrendingNews(state)),
+    fetchTrendingNews: state => dispatch(fetchTrendingNews(state)),
   };
 }
 
@@ -120,6 +130,4 @@ const withConnect = connect(
 
 const componentWithStyles = withStyles(styles)(UserTrendingNewsList);
 
-export default compose(
-  withConnect,
-)(componentWithStyles);
+export default compose(withConnect)(componentWithStyles);

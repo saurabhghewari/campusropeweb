@@ -32,10 +32,18 @@ const makeSelectLoggedUserHomeMenus = () =>
     }
     return [];
   });
+
+const makeSelectIsLoggedUser = userId =>
+  createSelector(
+    selectLoggedUserDomain,
+    loggedUser => loggedUser.user._id === userId,
+  );
+
 export default makeSelectLoggedUser;
 export {
   selectLoggedUserDomain,
   makeSelectLoggedUser,
   makeSelectLoggedUserMenus,
   makeSelectLoggedUserHomeMenus,
+  makeSelectIsLoggedUser,
 };

@@ -108,11 +108,7 @@ const FormComponent = ({
                   We will send forgot password link to your email.
                 </DialogContentText>
 
-                <FormControl
-                  margin="normal"
-                  required
-                  fullWidth
-                >
+                <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="email">Email</InputLabel>
                   <Input
                     id="email"
