@@ -5,7 +5,7 @@ import findOne from 'feathers-findone';
 const socket = io('http://localhost:3030');
 const client = feathers();
 
-client.configure(feathers.socketio(socket));
+client.configure(feathers.socketio(socket,{timeout:2000}));
 client.configure(findOne());
 client.configure(
   feathers.authentication({

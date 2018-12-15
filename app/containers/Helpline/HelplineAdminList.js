@@ -44,7 +44,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 class HelplineAdminList extends React.Component {
   state = {
-    selectedOperatingState: '',
+    selectedOperatingState: 'All',
   };
 
   onStateChanged(state) {
@@ -69,7 +69,7 @@ class HelplineAdminList extends React.Component {
   render() {
     const { helplines, states, classes } = this.props;
     const { selectedOperatingState } = this.state;
-    const allStates = states.concat(['all']);
+    const allStates = states.concat(['All']);
     return (
       <Content>
         <div className={classes.root}>

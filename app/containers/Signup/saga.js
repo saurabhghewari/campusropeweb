@@ -26,7 +26,7 @@ export function* submitSignupDetails({ values, actions }) {
     yield put(setLoggedUser(loggedUser));
     yield put(fetchConstants());
     yield call(storeToken, response.accessToken);
-    yield put(replace('/app'));
+    yield put(replace('/'));
   } catch (e) {
     if (e.response.status === 409) {
       yield call(setErrors, {

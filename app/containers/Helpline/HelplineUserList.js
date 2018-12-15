@@ -28,7 +28,7 @@ const styles = theme => ({});
 /* eslint-disable react/prefer-stateless-function */
 class HelplineUserList extends React.Component {
   state = {
-    selectedOperatingState: '',
+    selectedOperatingState: 'All',
   };
 
   onStateChanged(state) {

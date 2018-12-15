@@ -218,7 +218,7 @@ const NewHelplineFormComponent = ({ classes, onSubmit, onCancel, states }) => (
 
 class HelplineAdd extends React.Component {
   onCancel() {
-    this.props.dispatch(replace('/app/helpline/admin'));
+    this.props.dispatch(replace('/helpline/admin'));
   }
   onSubmit(values, actions) {
     this.props.submitNewHelplineDetails(

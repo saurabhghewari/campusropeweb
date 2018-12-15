@@ -32,7 +32,7 @@ export function* fetchHelplinesSaga(action) {
     yield featherClient.authenticate();
     const state = action.state;
     let query = {};
-    if (state !== 'all') {
+    if (state !== 'All') {
       query = {
         operatingState: state,
       };
