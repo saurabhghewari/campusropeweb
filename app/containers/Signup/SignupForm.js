@@ -149,7 +149,7 @@ const SignupForm = ({ classes, handleSignUp }) => (
             disabled={isSubmitting}
           >
             {' '}
-            Signp
+            Signup
           </Button>
         </form>
       );

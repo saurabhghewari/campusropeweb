@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import Content from 'components/Content/Loadable';
 import { withStyles } from '@material-ui/core/styles';
@@ -44,7 +44,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 class HelplineAdminList extends React.Component {
   state = {
-    selectedOperatingState: 'All',
+    selectedOperatingState: 'All India',
   };
 
   onStateChanged(state) {
@@ -58,18 +58,18 @@ class HelplineAdminList extends React.Component {
 
   routeToHelplineView(clickedHelpline) {
     this.props.dispatch(
-      replace(`/app/helpline/${clickedHelpline._id}/admin/edit`),
+      push(`/helpline/${clickedHelpline._id}/admin/edit`),
     );
   }
 
   createNewHelpline() {
-    this.props.dispatch(replace(`/helpline/new`));
+    this.props.dispatch(push(`/helpline/new`));
   }
 
   render() {
     const { helplines, states, classes } = this.props;
     const { selectedOperatingState } = this.state;
-    const allStates = states.concat(['All']);
+    const allStates = states.concat(['All India']);
     return (
       <Content>
         <div className={classes.root}>

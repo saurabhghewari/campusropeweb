@@ -73,7 +73,7 @@ class HelplineView extends React.Component {
           Website Link
           <a
             className={classes.link}
-            href={`https://${helpline.websiteLink}`}
+            href={`${helpline.websiteLink}`}
             target="_blank"
           >
             {helpline.websiteLink}

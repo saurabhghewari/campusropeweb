@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 import feathers from '@feathersjs/client';
 import findOne from 'feathers-findone';
 
-const socket = io('http://localhost:3030');
+const socket = io('https://campusropeapi-obtktagukd.now.sh');
 const client = feathers();
 
 client.configure(feathers.socketio(socket,{timeout:2000}));

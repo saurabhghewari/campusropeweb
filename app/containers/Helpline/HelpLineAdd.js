@@ -22,7 +22,7 @@ import TextField from '@material-ui/core/TextField';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import { makeSelectStates } from '../../store/constants/selectors';
 import makeSelectLoggedUser from '../../store/loggeduser/selectors';
 import { createHelpline } from './actions';
@@ -48,9 +48,9 @@ const NewHelplineFormComponent = ({ classes, onSubmit, onCancel, states }) => (
     initialValues={{
       name: '',
       description: '',
-      operatingState: 'all',
-      websiteLink: '',
-      linkToFileComplaint: '',
+      operatingState: 'All India',
+      websiteLink: 'https://',
+      linkToFileComplaint: 'https://',
       helplineNumber: '',
     }}
     validationSchema={Yup.object().shape({
@@ -158,7 +158,7 @@ const NewHelplineFormComponent = ({ classes, onSubmit, onCancel, states }) => (
               onChange={handleChange}
               input={<Input id="operatingState" name="operatingState" />}
             >
-              {states.map(state => (
+              {states.concat(['All India']).map(state => (
                 <MenuItem key={state} value={state}>
                   {state}
                 </MenuItem>
@@ -218,7 +218,7 @@ const NewHelplineFormComponent = ({ classes, onSubmit, onCancel, states }) => (
 
 class HelplineAdd extends React.Component {
   onCancel() {
-    this.props.dispatch(replace('/helpline/admin'));
+    this.props.dispatch(push('/helpline/admin'));
   }
   onSubmit(values, actions) {
     this.props.submitNewHelplineDetails(

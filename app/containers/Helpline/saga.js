@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import {
   FETCH_HELPLINES,
   FETCH_HELPLINE_BY_ID,
@@ -18,7 +18,7 @@ export function* submitNewHelplineDetails({ values, actions }) {
     yield featherClient.authenticate();
     yield helplineService.create(values);
     yield call(resetForm);
-    yield put(replace('/helpline'));
+    yield put(push('/helpline/admin'));
     yield put(stopFetchingData());
   } catch (e) {
     yield put(stopFetchingData());
@@ -29,14 +29,12 @@ export function* submitNewHelplineDetails({ values, actions }) {
 export function* fetchHelplinesSaga(action) {
   try {
     yield put(startFetchingData());
+    yield put(setHelplines([]));
     yield featherClient.authenticate();
     const state = action.state;
-    let query = {};
-    if (state !== 'All') {
-      query = {
+    let query = {
         operatingState: state,
       };
-    }
     const helplines = yield helplineService.find({ query });
     yield put(setHelplines(helplines.data));
     yield put(stopFetchingData());
@@ -49,7 +47,8 @@ export function* updateHelplineBYIdSaga({ updatedHelpline }) {
   try {
     yield put(startFetchingData());
     yield featherClient.authenticate();
-    yield helplineService.patch(updatedHelpline._id, updatedHelpline.data);
+    const updHelpline = yield helplineService.patch(updatedHelpline._id, updatedHelpline.data);
+    yield put(setInViewHelpline(updHelpline));    
     yield put(stopFetchingData());
   } catch (e) {
     console.error(e);
@@ -61,7 +60,7 @@ export function* deleteHelplineSaga({ helplineId }) {
     yield put(startFetchingData());
     yield featherClient.authenticate();
     yield helplineService.remove(helplineId);
-    yield put(replace('/helpline/admin'));
+    yield put(push('/helpline/admin'));
     yield put(stopFetchingData());
   } catch (e) {
     console.error(e);
@@ -70,6 +69,7 @@ export function* deleteHelplineSaga({ helplineId }) {
 
 export function* fetchHelplineByIdSaga({ helplineId }) {
   yield put(startFetchingData());
+  yield put(setInViewHelpline({}));
   yield featherClient.authenticate();
   const helpline = yield helplineService.get(helplineId);
   yield put(setInViewHelpline(helpline));

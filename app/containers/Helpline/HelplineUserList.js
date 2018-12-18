@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import { createStructuredSelector } from 'reselect';
 import Content from 'components/Content/Loadable';
 import { withStyles } from '@material-ui/core/styles';
@@ -28,7 +28,7 @@ const styles = theme => ({});
 /* eslint-disable react/prefer-stateless-function */
 class HelplineUserList extends React.Component {
   state = {
-    selectedOperatingState: 'All',
+    selectedOperatingState: 'All India',
   };
 
   onStateChanged(state) {
@@ -42,14 +42,14 @@ class HelplineUserList extends React.Component {
 
   routeToHelplineView(clickedHelpline) {
     this.props.dispatch(
-      replace(`/app/helpline/${clickedHelpline._id}/details`),
+      push(`/helpline/${clickedHelpline._id}/details`),
     );
   }
 
   render() {
     const { helplines, states } = this.props;
     const { selectedOperatingState } = this.state;
-    const allStates = states.concat(['All']);
+    const allStates = states.concat(['All India']);
     return (
       <Content>
         <FormControl margin="normal" fullWidth>

@@ -21,7 +21,7 @@ export function defaultAction() {
   };
 }
 
-export function fetchHelplines(state = 'all') {
+export function fetchHelplines(state = 'All India') {
   return {
     type: FETCH_HELPLINES,
     state,
