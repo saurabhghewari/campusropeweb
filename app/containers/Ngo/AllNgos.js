@@ -18,7 +18,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import NgoList from './NgoList';
-import { fetchNgos } from './actions';
+import { fetchNgos, createNgo } from './actions';
 import { makeSelectApprovedNgos } from './selectors';
 import { makeSelectStates } from '../../store/constants/selectors';
 
@@ -46,7 +46,7 @@ class AllNgos extends React.Component {
   }
 
   createNewNgo() {
-    this.props.dispatch(push('/ngos/new'));
+    this.props.createNgo();
   }
 
   render() {
@@ -98,6 +98,7 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fetchNgos: (state) => dispatch(fetchNgos(state)),
+    createNgo: () => dispatch(createNgo()),
   };
 }
 

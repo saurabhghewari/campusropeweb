@@ -56,7 +56,6 @@ class NgoVerificationView extends React.Component {
     const { ngo, status } = this.props;
     const updatedNgo = {
       ...ngo,
-      createdBy: ngo.createdBy.id,
       status: status.REJECTED,
     };
     this.props.updateNgo(updatedNgo);

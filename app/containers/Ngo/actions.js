@@ -12,6 +12,7 @@ import {
   SET_INVIEW_NGO,
   FETCH_NGO_BY_ID,
   UPDATE_NGO_BY_ID,
+  CREATE_NGO,
 } from './constants';
 
 export function defaultAction() {
@@ -32,6 +33,12 @@ export function fetchNgos(state = 'All') {
   return {
     type: FETCH_NGOS,
     selectedState: state,
+  };
+}
+
+export function createNgo() {
+  return {
+    type: CREATE_NGO,
   };
 }
 

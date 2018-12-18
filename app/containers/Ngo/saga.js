@@ -1,14 +1,18 @@
-import { takeLatest, call, put } from 'redux-saga/effects';
+import { takeLatest, call, put, select } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
+import omit from 'lodash/omit';
 import {
   SUBMIT_NEW_NGO,
   FETCH_NGOS,
   FETCH_NGO_BY_ID,
   UPDATE_NGO_BY_ID,
+  CREATE_NGO,
 } from './constants';
 import { setNgos, setInViewNgo } from './actions';
 import featherClient, { ngoService } from './../../feathers';
 import { startFetchingData, stopFetchingData } from '../Home/actions';
+import { selectLoggedUserDomain } from '../../store/loggeduser/selectors';
+import { openSnack } from '../Home/actions';
 
 export function* submitNewNgoDetails({ values, actions }) {
   const { resetForm, setSubmitting } = actions;
@@ -35,7 +39,6 @@ export function* fetchNgosSaga({ selectedState }) {
         operatingState: selectedState,
       };
     }
-
     const ngos = yield ngoService.find({ query });
     yield put(setNgos(ngos.data));
     yield put(stopFetchingData());
@@ -44,14 +47,42 @@ export function* fetchNgosSaga({ selectedState }) {
   }
 }
 
+export function* createNgoSaga() {
+  try {
+    yield put(startFetchingData());
+    const { user } = yield select(selectLoggedUserDomain);
+    const ngo = yield ngoService.find({ createdBy: user._id });
+    if (ngo.data.length === 0 || ngo.data[0].status === 'REJECTED') {
+      yield put(push('/ngos/new'));
+      yield put(stopFetchingData());
+    } else {
+      let errorMessage = '';
+      if (ngo.data[0].status === 'APPROVED') {
+        errorMessage = 'YOU ARE ALREADY ADMIN IF AN NGO.';
+      }
+      if (ngo.data[0].status === 'PENDING') {
+        errorMessage = 'YOUR NGO IS IN PENDING';
+      }
+      yield put(openSnack('warning', errorMessage));
+      yield put(stopFetchingData());
+    }
+  } catch (e) {
+    yield put(stopFetchingData());
+  }
+}
+
 export function* updateNgoSaga({ ngo }) {
   try {
     yield put(startFetchingData());
-    yield ngoService.patch(ngo._id, ngo);
+    if (ngo.status === 'REJECTED') {
+      yield ngoService.remove(ngo._id);
+    } else {
+      yield ngoService.patch(ngo._id, omit(ngo, 'createdBy', '_id'));
+    }
     yield put(push('/ngos/verification'));
     yield put(stopFetchingData());
   } catch (e) {
-    yield put(startFetchingData());
+    yield put(stopFetchingData());
   }
 }
 
@@ -72,5 +103,6 @@ export default function* defaultSaga() {
     takeLatest(FETCH_NGOS, fetchNgosSaga),
     takeLatest(FETCH_NGO_BY_ID, fetchNgoByIdSaga),
     takeLatest(UPDATE_NGO_BY_ID, updateNgoSaga),
+    takeLatest(CREATE_NGO, createNgoSaga),
   ];
 }
