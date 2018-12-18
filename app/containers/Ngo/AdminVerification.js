@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { createStructuredSelector } from 'reselect';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import AppBar from '@material-ui/core/AppBar';
@@ -36,7 +36,7 @@ class NgoAdminVerification extends React.Component {
   }
 
   routeToNgoVerifyView(ngo) {
-    this.props.dispatch(replace(`/ngos/${ngo._id}/verify/details`));
+    this.props.dispatch(push(`/ngos/${ngo._id}/verify/details`));
   }
 
   render() {

@@ -10,7 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import format from 'date-fns/format';
 import { createStructuredSelector } from 'reselect';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Button from '@material-ui/core/Button';
@@ -39,7 +39,7 @@ class NgoVerificationView extends React.Component {
   }
 
   onCancelClick() {
-    this.props.dispatch(replace('/ngos/verification'));
+    this.props.dispatch(push('/ngos/verification'));
   }
 
   onApproveNgo() {

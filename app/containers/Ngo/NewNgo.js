@@ -16,7 +16,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import IdealImage from 'react-ideal-image';
 import _isEmpty from 'lodash/isEmpty';
@@ -24,7 +23,7 @@ import _isEmpty from 'lodash/isEmpty';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import Upload from 'components/Upload/Loadable';
 import {
   makeSelectStates,
@@ -221,19 +220,6 @@ const NewNgoFormComponent = ({
               )}
           </FormControl>
 
-          <TextField
-            id="noteToUser"
-            label="Note to user"
-            multiline
-            rowsMax="8"
-            value={values.noteToUser}
-            onChange={handleChange}
-            margin="normal"
-            fullWidth
-            helperText="After Successful verification, your NGO will be listed on Campusrope"
-            variant="outlined"
-          />
-
           <Button
             type="submit"
             variant="contained"
@@ -263,7 +249,7 @@ const NewNgoFormComponent = ({
 
 class NewNgo extends React.Component {
   onCancel() {
-    this.props.dispatch(replace('/ngos'));
+    this.props.dispatch(push('/ngos'));
   }
   onSubmit(values, actions) {
     this.props.submitNewNgoDetails(

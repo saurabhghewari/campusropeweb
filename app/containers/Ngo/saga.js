@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import {
   SUBMIT_NEW_NGO,
   FETCH_NGOS,
@@ -17,7 +17,7 @@ export function* submitNewNgoDetails({ values, actions }) {
     yield featherClient.authenticate();
     yield ngoService.create(values);
     yield call(resetForm);
-    yield put(replace('/ngos'));
+    yield put(push('/ngos'));
     yield put(stopFetchingData());
   } catch (e) {
     yield put(stopFetchingData());
@@ -25,11 +25,18 @@ export function* submitNewNgoDetails({ values, actions }) {
   }
 }
 
-export function* fetchNgosSaga() {
+export function* fetchNgosSaga({ selectedState }) {
   try {
     yield put(startFetchingData());
     yield featherClient.authenticate();
-    const ngos = yield ngoService.find({});
+    let query = {};
+    if (selectedState !== 'All') {
+      query = {
+        operatingState: selectedState,
+      };
+    }
+
+    const ngos = yield ngoService.find({ query });
     yield put(setNgos(ngos.data));
     yield put(stopFetchingData());
   } catch (e) {
@@ -41,7 +48,7 @@ export function* updateNgoSaga({ ngo }) {
   try {
     yield put(startFetchingData());
     yield ngoService.patch(ngo._id, ngo);
-    yield put(replace('/ngos/verification'));
+    yield put(push('/ngos/verification'));
     yield put(stopFetchingData());
   } catch (e) {
     yield put(startFetchingData());

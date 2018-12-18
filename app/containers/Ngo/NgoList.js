@@ -56,8 +56,29 @@ const NgoBox = ({ ngoData, classes, onNgoClick }) => {
           color="textSecondary"
           gutterBottom
         >
-          {ngoData.createdBy.name}
+          admin : {ngoData.createdBy.name}
         </Typography>
+        <Typography
+          className={classes.title}
+          color="textSecondary"
+          gutterBottom
+        >
+         type :  {ngoData.ngoType}
+        </Typography>
+
+        <Typography
+          className={classes.title}
+          color="textSecondary"
+          gutterBottom
+        >
+        <a
+            className={classes.link}
+            href={`${ngoData.ngoSiteLink}`}
+            target="_blank"
+          ></a>
+          
+        </Typography>
+
         <Typography variant="h5" component="h2" style={{ marginBottom: 10 }}>
           {ngoData.name}
         </Typography>

@@ -2,10 +2,10 @@ import io from 'socket.io-client';
 import feathers from '@feathersjs/client';
 import findOne from 'feathers-findone';
 
-const socket = io('https://campusropeapi-obtktagukd.now.sh');
+const socket = io('http://localhost:3030');
 const client = feathers();
 
-client.configure(feathers.socketio(socket,{timeout:2000}));
+client.configure(feathers.socketio(socket, { timeout: 2000 }));
 client.configure(findOne());
 client.configure(
   feathers.authentication({

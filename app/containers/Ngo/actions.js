@@ -28,9 +28,10 @@ export function submitNewNgo(values, actions) {
   };
 }
 
-export function fetchNgos() {
+export function fetchNgos(state = 'All') {
   return {
     type: FETCH_NGOS,
+    selectedState: state,
   };
 }
 

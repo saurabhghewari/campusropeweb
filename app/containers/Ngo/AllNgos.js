@@ -8,13 +8,19 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { createStructuredSelector } from 'reselect';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import NgoList from './NgoList';
 import { fetchNgos } from './actions';
 import { makeSelectApprovedNgos } from './selectors';
+import { makeSelectStates } from '../../store/constants/selectors';
 
 /* eslint-disable*/
 
@@ -25,16 +31,28 @@ const styles = theme => ({
 });
 
 class AllNgos extends React.Component {
+
+  state = {
+    selectedState: 'All',
+  };
+
+  onStateChanged(state) {
+    this.setState({ selectedState: state });
+    this.props.fetchNgos(state);
+  }
+
   componentDidMount() {
     this.props.fetchNgos();
   }
 
   createNewNgo() {
-    this.props.dispatch(replace('/ngos/new'));
+    this.props.dispatch(push('/ngos/new'));
   }
 
   render() {
-    const { classes, fetchedNgos } = this.props;
+    const { classes, fetchedNgos,states } = this.props;
+    const { selectedState } = this.state;
+
     return (
       <Fragment>
         <Button
@@ -46,6 +64,20 @@ class AllNgos extends React.Component {
           {' '}
           Create NGO{' '}
         </Button>
+        <FormControl margin="normal" fullWidth>
+          <InputLabel htmlFor="state">State</InputLabel>
+          <Select
+            value={selectedState}
+            onChange={e => this.onStateChanged(e.target.value)}
+            input={<Input id="state" name="state" />}
+          >
+            {states.concat(['All']).map(state => (
+              <MenuItem key={state} value={state}>
+                {state}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <NgoList ngos={fetchedNgos} onNgoClick={() => {}} />
       </Fragment>
     );
@@ -59,12 +91,13 @@ AllNgos.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   fetchedNgos: makeSelectApprovedNgos(),
+  states:makeSelectStates()
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchNgos: () => dispatch(fetchNgos()),
+    fetchNgos: (state) => dispatch(fetchNgos(state)),
   };
 }
 
