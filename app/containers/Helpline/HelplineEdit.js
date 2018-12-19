@@ -79,8 +79,6 @@ class HelplineEdit extends React.Component {
     this.props.fetchHelplineById(helplineId);
   }
 
-
-
   delete() {
     this.props.deleteHelplineId(this.props.helpline._id);
   }
@@ -101,8 +99,9 @@ class HelplineEdit extends React.Component {
     const { helpline, classes,states } = this.props;
     return (
       <Content>
-
-<Formik
+NIST Telephone Time-of-Day Service 
+<a href="tel:+1-303-499-7111">+1 (303) 499-7111</a>
+{helpline.name && <Formik
     initialValues={{
       name: helpline.name,
       description: helpline.description,
@@ -278,7 +277,7 @@ class HelplineEdit extends React.Component {
         </form>
       );
     }}
-  </Formik>
+  </Formik>}
       </Content>
     );
   }

@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 import feathers from '@feathersjs/client';
 import findOne from 'feathers-findone';
 
-const socket = io('https://campusropeapi-inbfppnptu.now.sh');
+const socket = io('https://campusropeapi-swpcrlmfac.now.sh');
 const client = feathers();
 
 client.configure(feathers.socketio(socket, { timeout: 2000 }));

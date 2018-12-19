@@ -52,7 +52,7 @@ export function* createNgoSaga() {
     yield put(startFetchingData());
     const { user } = yield select(selectLoggedUserDomain);
     const ngo = yield ngoService.find({ query: { createdBy: user._id } });
-    if (ngo.data.length === 0 || ngo.data[0].status === 'REJECTED') {
+    if (ngo.data.length === 0 || ngo.data[0].status === 'REJECTED' || user.role ==='admin') {
       yield put(push('/ngos/new'));
       yield put(stopFetchingData());
     } else {
