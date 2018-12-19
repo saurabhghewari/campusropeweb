@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { replace,push } from 'react-router-redux';
+import { replace, push } from 'react-router-redux';
 import { HOME_MOUNTED, CHANGE_ROUTE } from './constants';
 import { fetchConstantsSaga } from '../../store/constants/saga';
 import { setLoggedUser } from '../../store/loggeduser/actions';
@@ -9,17 +9,17 @@ import { startFetchingData, stopFetchingData } from './actions';
 export function* homeMountedSaga() {
   yield put(startFetchingData());
   try {
-  yield call(feathersClient.authenticate);
-  yield call(fetchConstantsSaga);
-  const payload = yield feathersClient.passport.verifyJWT(
-    localStorage.getItem('feathers-jwt'),
-  );
-  const loggedUser = yield userService.get(payload.userId);
-  feathersClient.set('user', loggedUser);
-  yield put(setLoggedUser(loggedUser));
-  yield put(stopFetchingData());
-  }catch(e){
-    yield put(push('/login'))
+    yield call(feathersClient.authenticate);
+    yield call(fetchConstantsSaga);
+    const payload = yield feathersClient.passport.verifyJWT(
+      localStorage.getItem('feathers-jwt'),
+    );
+    const loggedUser = yield userService.get(payload.userId);
+    feathersClient.set('user', loggedUser);
+    yield put(setLoggedUser(loggedUser));
+    yield put(stopFetchingData());
+  } catch (e) {
+    yield put(push('/login'));
   }
 }
 

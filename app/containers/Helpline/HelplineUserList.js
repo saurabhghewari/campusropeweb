@@ -41,9 +41,7 @@ class HelplineUserList extends React.Component {
   }
 
   routeToHelplineView(clickedHelpline) {
-    this.props.dispatch(
-      push(`/helpline/${clickedHelpline._id}/details`),
-    );
+    this.props.dispatch(push(`/helpline/${clickedHelpline._id}/details`));
   }
 
   render() {

@@ -57,9 +57,7 @@ class HelplineAdminList extends React.Component {
   }
 
   routeToHelplineView(clickedHelpline) {
-    this.props.dispatch(
-      push(`/helpline/${clickedHelpline._id}/admin/edit`),
-    );
+    this.props.dispatch(push(`/helpline/${clickedHelpline._id}/admin/edit`));
   }
 
   createNewHelpline() {

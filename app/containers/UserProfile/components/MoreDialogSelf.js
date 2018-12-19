@@ -33,7 +33,6 @@ function Transition(props) {
 const ITEM_HEIGHT = 48;
 
 class LongMenu extends React.Component {
-
   state = {
     open: false,
   };
@@ -70,8 +69,8 @@ class LongMenu extends React.Component {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-              Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
+              Let Google help apps determine location. This means sending
+              anonymous location data to Google, even when no apps are running.
             </DialogContentText>
           </DialogContent>
           <DialogActions>

@@ -63,7 +63,7 @@ const NgoBox = ({ ngoData, classes, onNgoClick }) => {
           color="textSecondary"
           gutterBottom
         >
-         type :  {ngoData.ngoType}
+          type : {ngoData.ngoType}
         </Typography>
 
         <Typography
@@ -71,12 +71,11 @@ const NgoBox = ({ ngoData, classes, onNgoClick }) => {
           color="textSecondary"
           gutterBottom
         >
-        <a
+          <a
             className={classes.link}
             href={`${ngoData.ngoSiteLink}`}
             target="_blank"
-          ></a>
-          
+          />
         </Typography>
 
         <Typography variant="h5" component="h2" style={{ marginBottom: 10 }}>
@@ -92,7 +91,7 @@ const NgoBox = ({ ngoData, classes, onNgoClick }) => {
 /* eslint-disable react/prefer-stateless-function */
 class NgoList extends React.Component {
   renderNoNgoLabel() {
-    return <Typography variant="h4">No NGO found</Typography>;
+    return <Typography variant="h4" />;
   }
 
   renderNgos() {

@@ -42,6 +42,10 @@ const styles = theme => ({
   link: {
     marginLeft: theme.spacing.unit,
   },
+  description: {
+    whiteSpace: 'pre-wrap',
+    textAlign: 'center',
+  },
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -60,7 +64,9 @@ class HelplineView extends React.Component {
         <Divider variant="middle" />
         <div className={classes.description}>
           <h4>Description</h4>
-          <Typography variant="body2">{helpline.description}</Typography>
+          <Typography variant="body2" className={classes.description}>
+            {helpline.description}
+          </Typography>
         </div>
         <Divider variant="middle" />
         <div className={classes.number}>

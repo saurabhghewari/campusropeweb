@@ -31,7 +31,6 @@ const styles = theme => ({
 });
 
 class AllNgos extends React.Component {
-
   state = {
     selectedState: 'All',
   };
@@ -50,7 +49,7 @@ class AllNgos extends React.Component {
   }
 
   render() {
-    const { classes, fetchedNgos,states } = this.props;
+    const { classes, fetchedNgos, states } = this.props;
     const { selectedState } = this.state;
 
     return (
@@ -91,13 +90,13 @@ AllNgos.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   fetchedNgos: makeSelectApprovedNgos(),
-  states:makeSelectStates()
+  states: makeSelectStates(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fetchNgos: (state) => dispatch(fetchNgos(state)),
+    fetchNgos: state => dispatch(fetchNgos(state)),
     createNgo: () => dispatch(createNgo()),
   };
 }

@@ -11,6 +11,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { makeSelectIsFetchingData } from '../../containers/Home/selectors';
 
 const styles = theme => ({
   root: {
@@ -23,7 +27,7 @@ const styles = theme => ({
 /* eslint-disable react/prefer-stateless-function */
 class Content extends React.PureComponent {
   render() {
-    const { classes, children, withPaper } = this.props;
+    const { classes, children, withPaper, isFetchingData } = this.props;
     return (
       <Grid container>
         <Grid item lg={2} />
@@ -46,10 +50,26 @@ Content.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
   withPaper: PropTypes.bool,
+  isFetchingData: PropTypes.bool,
 };
 
 Content.defaultProps = {
   withPaper: true,
 };
 
-export default withStyles(styles)(Content);
+const mapStateToProps = createStructuredSelector({
+  isFetchingData: makeSelectIsFetchingData(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const componentWithStyles = withStyles(styles)(Content);
+
+export default compose(withConnect)(componentWithStyles);

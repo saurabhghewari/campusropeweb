@@ -33,8 +33,8 @@ export function* fetchHelplinesSaga(action) {
     yield featherClient.authenticate();
     const state = action.state;
     let query = {
-        operatingState: state,
-      };
+      operatingState: state,
+    };
     const helplines = yield helplineService.find({ query });
     yield put(setHelplines(helplines.data));
     yield put(stopFetchingData());
@@ -47,8 +47,11 @@ export function* updateHelplineBYIdSaga({ updatedHelpline }) {
   try {
     yield put(startFetchingData());
     yield featherClient.authenticate();
-    const updHelpline = yield helplineService.patch(updatedHelpline._id, updatedHelpline.data);
-    yield put(setInViewHelpline(updHelpline));    
+    const updHelpline = yield helplineService.patch(
+      updatedHelpline._id,
+      updatedHelpline.data,
+    );
+    yield put(setInViewHelpline(updHelpline));
     yield put(stopFetchingData());
   } catch (e) {
     console.error(e);

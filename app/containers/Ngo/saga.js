@@ -51,7 +51,7 @@ export function* createNgoSaga() {
   try {
     yield put(startFetchingData());
     const { user } = yield select(selectLoggedUserDomain);
-    const ngo = yield ngoService.find({ createdBy: user._id });
+    const ngo = yield ngoService.find({ query: { createdBy: user._id } });
     if (ngo.data.length === 0 || ngo.data[0].status === 'REJECTED') {
       yield put(push('/ngos/new'));
       yield put(stopFetchingData());
