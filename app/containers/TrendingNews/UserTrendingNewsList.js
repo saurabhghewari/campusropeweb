@@ -30,6 +30,9 @@ const styles = theme => ({
     textAlign: 'center',
     marginTop: theme.spacing.unit * 4,
   },
+  root:{
+    padding:theme.spacing.unit * 2
+  }
 });
 
 /* eslint-disable*/
@@ -67,12 +70,12 @@ export class UserTrendingNewsList extends React.Component {
   }
 
   render() {
-    const { trendingNews, states } = this.props;
+    const { trendingNews, states,classes } = this.props;
     const { state } = this.state;
     return (
       <Content withPaper={false}>
         <Grid container spacing={16}>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12} className={classes.root}>
             <FormControl margin="normal" fullWidth>
               <InputLabel htmlFor="state">State</InputLabel>
               <Select

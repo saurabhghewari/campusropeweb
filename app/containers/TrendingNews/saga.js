@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import {
   SUBMIT_NEW_TRENDING_NEWS,
   FETCH_TRENDING_NEWS,
@@ -16,7 +16,7 @@ export function* submitNewTrendingNewsDetails({ values, actions }) {
     yield featherClient.authenticate();
     yield trendingNewsService.create(values);
     yield call(resetForm);
-    yield put(replace('/news/trends/admin/trends'));
+    yield put(push('/news/trends/admin/trends'));
     yield put(stopFetchingData());
   } catch (e) {
     yield put(stopFetchingData());

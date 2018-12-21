@@ -208,7 +208,7 @@ export class TrendingNewsForm extends React.Component {
                         autoComplete="content"
                         value={values.content}
                         onChange={handleChange}
-                        autoFocus
+                        
                       />{' '}
                       {touched.content &&
                         errors.content && (
@@ -303,7 +303,7 @@ export class TrendingNewsForm extends React.Component {
                         onChange={e =>
                           this.onYoutubeLinkChange(e, setFieldValue)
                         }
-                        autoFocus
+                        
                       />{' '}
                     </FormControl>
                   </Grid>

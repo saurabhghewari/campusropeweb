@@ -13,7 +13,9 @@ import Content from 'components/Content/Loadable';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { replace } from 'react-router-redux';
+import AddIcon from '@material-ui/icons/Add';
+import green from '@material-ui/core/colors/green';
+import { push } from 'react-router-redux';
 
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -61,6 +63,15 @@ const styles = theme => ({
   noTrendingNewsLabel: {
     textAlign: 'center',
     marginTop: theme.spacing.unit * 4,
+  },
+  root: {
+    position: 'relative',
+  },
+  addButton: {
+    position: 'absolute',
+    right: theme.spacing.unit * 2,
+    color: theme.palette.common.white,
+    backgroundColor: green[500],
   },
 });
 
@@ -157,18 +168,18 @@ export class AdminTrendingNewsList extends React.Component {
     this.props.fetchTrendingNews();
   }
   createNewTrendingNews() {
-    this.props.dispatch(replace('/news/trends/admin/trend/new'));
+    this.props.dispatch(push('/news/trends/admin/trend/new'));
   }
 
   goToTrendingNewsEdit = trendingNewsData => {
     this.props.dispatch(
-      replace(`/news/trends/admin/trend/${trendingNewsData._id}/edit`),
+      push(`/news/trends/admin/trend/${trendingNewsData._id}/edit`),
     );
   };
 
   routeToTrendingNewsView(selectedTrendingNews) {
     this.props.dispatch(
-      replace(`/news/trends/admin/${selectedTrendingNews.id}/details`),
+      push(`/news/trends/admin/${selectedTrendingNews.id}/details`),
     );
   }
 
@@ -247,7 +258,7 @@ export class AdminTrendingNewsList extends React.Component {
     const { state } = this.state;
     return (
       <Content>
-        <Grid container spacing={16}>
+        <Grid container spacing={16} className={classes.root}>
           <Grid
             item
             xs={12}
@@ -256,14 +267,15 @@ export class AdminTrendingNewsList extends React.Component {
             lg={12}
             className={classes.createBtnContainer}
           >
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => this.createNewTrendingNews()}
-            >
-              {' '}
-              Create{' '}
-            </Button>
+          <Button
+            variant="fab"
+            className={classes.addButton}
+            color="inherit"
+            onClick={() => this.createNewTrendingNews()}
+          >
+            <AddIcon />
+          </Button>
+          
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <FormControl margin="normal" fullWidth>
