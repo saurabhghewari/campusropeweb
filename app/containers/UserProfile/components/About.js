@@ -25,6 +25,9 @@ import { createStructuredSelector } from 'reselect';
 import Upload from 'components/Upload/Loadable';
 import ProfileTabType from './ProfileTabTypeModel';
 import { makeSelectLoggedUser } from '../../../store/loggeduser/selectors';
+import BasicInfo from './BasicInfo';
+import StereoTypes from './StereoTypes';
+import GeneralInfo from './GeneralInfo';
 
 const styles = theme => ({
   aboutPaper: {
@@ -214,286 +217,26 @@ class AboutUserComponent extends React.Component {
                 About
               </Typography>
 
-              <ExpansionPanel
-                expanded={expanded === 'panel1'}
-                onChange={this.handleChange('panel1')}
-              >
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography variant="body1" className={classes.heading}>
-                    Basic Information
-                  </Typography>
-                </ExpansionPanelSummary>
+              <BasicInfo
+                errors={errors}
+                touched={touched}
+                values={values}
+                handleChange={handleChange}
+              />
 
-                <ExpansionPanelDetails className={classes.panelDetails}>
-                  <FormControl
-                    margin="normal"
-                    required="required"
-                    fullWidth="fullWidth"
-                  >
-                    <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input
-                      id="name"
-                      name="name"
-                      autoComplete="name"
-                      value={values.name}
-                      onChange={handleChange}
-                      autoFocus="autoFocus"
-                      fullWidth="fullWidth"
-                    />
-                  </FormControl>
+              <StereoTypes
+                errors={errors}
+                touched={touched}
+                values={values}
+                handleChange={handleChange}
+              />
 
-                  <FormControl margin="normal" fullWidth="fullWidth">
-                    <InputLabel htmlFor="gender">Gender</InputLabel>
-                    <Select
-                      value={values.gender}
-                      onChange={handleChange}
-                      input={<Input id="gender" name="gender" />}
-                    >
-                      <MenuItem value="male">Male</MenuItem>
-                      <MenuItem value="female">Female</MenuItem>
-                      <MenuItem value="other">other</MenuItem>
-                    </Select>
-                    {touched.gender &&
-                      errors.gender && (
-                        <FormHelperText className={classes.error}>
-                          {errors.gender}
-                        </FormHelperText>
-                      )}
-                  </FormControl>
-
-                  <FormControl
-                    margin="normal"
-                    required="required"
-                    fullWidth="fullWidth"
-                  >
-                    <InputLabel htmlFor="email">Email</InputLabel>
-                    <Input
-                      id="email"
-                      name="email"
-                      autoComplete="email"
-                      value={values.email}
-                      disabled="disabled"
-                      onChange={handleChange}
-                    />{' '}
-                    {touched.email &&
-                      errors.email && (
-                        <FormHelperText className={classes.error}>
-                          {errors.email}
-                        </FormHelperText>
-                      )}
-                    {errors.exists && (
-                      <FormHelperText className={classes.error}>
-                        {errors.exists}
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-
-                  <FormControl
-                    margin="normal"
-                    required="required"
-                    fullWidth="fullWidth"
-                  >
-                    <InputLabel htmlFor="name">Country</InputLabel>
-                    <Input
-                      id="country"
-                      name="country"
-                      value={values.country}
-                      onChange={handleChange}
-                      autoFocus="autoFocus"
-                    />
-                  </FormControl>
-
-                  <FormControl
-                    margin="normal"
-                    required="required"
-                    fullWidth="fullWidth"
-                  >
-                    <InputLabel htmlFor="name">Home Town</InputLabel>
-                    <Input
-                      id="homeTown"
-                      name="homeTown"
-                      value={values.homeTown}
-                      onChange={handleChange}
-                      autoFocus="autoFocus"
-                    />
-                  </FormControl>
-
-                  <FormControl
-                    margin="normal"
-                    required="required"
-                    fullWidth="fullWidth"
-                  >
-                    <InputLabel htmlFor="name">Current City</InputLabel>
-                    <Input
-                      id="currentCity"
-                      name="currentCity"
-                      value={values.currentCity}
-                      onChange={handleChange}
-                      autoFocus="autoFocus"
-                    />
-                  </FormControl>
-
-                  <Upload
-                    text="Upload Your profile picture"
-                    onUploaded={res =>
-                      setFieldValue('picture', res[0].secure_url)
-                    }
-                  />
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
-
-              <ExpansionPanel
-                expanded={expanded === 'panel2'}
-                onChange={this.handleChange('panel2')}
-              >
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography variant="body1" className={classes.heading}>
-                    Stereotypes
-                  </Typography>
-                </ExpansionPanelSummary>
-
-                <ExpansionPanelDetails className={classes.panelDetails}>
-                  <FormControl
-                    margin="normal"
-                    required="required"
-                    fullWidth="fullWidth"
-                  >
-                    <InputLabel htmlFor="name">Political View</InputLabel>
-                    <Input
-                      id="politicalView"
-                      name="politicalView"
-                      value={values.politicalView}
-                      onChange={handleChange}
-                      autoFocus="autoFocus"
-                      multiline="multiline"
-                    />
-                  </FormControl>
-
-                  <FormControl
-                    margin="normal"
-                    required="required"
-                    fullWidth="fullWidth"
-                  >
-                    <InputLabel htmlFor="name">Religious View</InputLabel>
-                    <Input
-                      id="religiousView"
-                      name="religiousView"
-                      value={values.religiousView}
-                      onChange={handleChange}
-                      autoFocus="autoFocus"
-                      multiline="multiline"
-                    />
-                  </FormControl>
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
-
-              <ExpansionPanel
-                expanded={expanded === 'panel3'}
-                onChange={this.handleChange('panel3')}
-              >
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography variant="body1" className={classes.heading}>
-                    General Information
-                  </Typography>
-                </ExpansionPanelSummary>
-
-                <ExpansionPanelDetails className={classes.panelDetails}>
-                  <FormControl
-                    margin="normal"
-                    required="required"
-                    fullWidth="fullWidth"
-                  >
-                    <FieldArray
-                      name="workAndExperience"
-                      render={arrayHelpers => (
-                        <MultiInputComponent
-                          arrayHelpers={arrayHelpers}
-                          label="Work And Experience"
-                          values={values.workAndExperience}
-                          handleChange={handleChange}
-                          classes={classes}
-                          name="workAndExperience"
-                        />
-                      )}
-                    />
-                  </FormControl>
-
-                  <FormControl
-                    margin="normal"
-                    required="required"
-                    fullWidth="fullWidth"
-                  >
-                    <FieldArray
-                      name="skills"
-                      render={arrayHelpers => (
-                        <MultiInputComponent
-                          arrayHelpers={arrayHelpers}
-                          label="skills"
-                          values={values.skills}
-                          handleChange={handleChange}
-                          classes={classes}
-                          name="skills"
-                        />
-                      )}
-                    />
-                  </FormControl>
-
-                  <FormControl
-                    margin="normal"
-                    required="required"
-                    fullWidth="fullWidth"
-                  >
-                    <InputLabel htmlFor="name">College</InputLabel>
-                    <Input
-                      id="college"
-                      name="college"
-                      value={values.college}
-                      onChange={handleChange}
-                      autoFocus="autoFocus"
-                    />
-                  </FormControl>
-
-                  <FormControl
-                    margin="normal"
-                    required="required"
-                    fullWidth="fullWidth"
-                  >
-                    <FieldArray
-                      name="otherDegreeAndCourses"
-                      render={arrayHelpers => (
-                        <MultiInputComponent
-                          arrayHelpers={arrayHelpers}
-                          label="Other Degree and Courses"
-                          values={values.otherDegreeAndCourses}
-                          handleChange={handleChange}
-                          classes={classes}
-                          name="otherDegreeAndCourses"
-                        />
-                      )}
-                    />
-                  </FormControl>
-
-                  <FormControl
-                    margin="normal"
-                    required="required"
-                    fullWidth="fullWidth"
-                  >
-                    <FieldArray
-                      name="careerObjectives"
-                      render={arrayHelpers => (
-                        <MultiInputComponent
-                          arrayHelpers={arrayHelpers}
-                          label="Career Objectives"
-                          values={values.careerObjectives}
-                          handleChange={handleChange}
-                          classes={classes}
-                          name="careerObjectives"
-                        />
-                      )}
-                    />
-                  </FormControl>
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
+              <GeneralInfo
+                errors={errors}
+                touched={touched}
+                values={values}
+                handleChange={handleChange}
+              />
 
               <div className={classes.aboutUserBtnWrapper}>
                 {isOwner ? (

@@ -37,6 +37,7 @@ import AboutUserComponent from './components/About';
 import { tabSelectAction, fetchUserProfile, saveUserProfile } from './actions';
 
 import './user-profile.css';
+import ProfileTabType from './components/ProfileTabTypeModel';
 
 const styles = () => ({
   grid2Container: {
