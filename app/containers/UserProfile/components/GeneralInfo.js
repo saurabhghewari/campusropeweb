@@ -1,30 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import * as Yup from 'yup';
 import Input from '@material-ui/core/Input';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Button from '@material-ui/core/Button';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Add from '@material-ui/icons/Add';
-import Delete from '@material-ui/icons/Delete';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Formik, FieldArray } from 'formik';
+import { FieldArray } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { createStructuredSelector } from 'reselect';
-import Upload from 'components/Upload/Loadable';
-import ProfileTabType from './ProfileTabTypeModel';
-import { makeSelectLoggedUser } from '../../../store/loggeduser/selectors';
 import MultipleChipInput from '../../../components/MultipleChipInput';
 
 const styles = theme => ({
@@ -101,15 +86,7 @@ class AboutUserComponent extends React.Component {
   };
 
   render() {
-    const {
-      classes,
-      values = {},
-      handleCancel,
-      handleChange,
-      arrayHelpers,
-      handleProfileSave,
-      isOwner,
-    } = this.props;
+    const { classes, values = {}, handleChange } = this.props;
     const { expanded } = this.state;
     return (
       <ExpansionPanel
