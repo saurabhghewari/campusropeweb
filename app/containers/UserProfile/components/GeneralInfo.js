@@ -86,12 +86,11 @@ class AboutUserComponent extends React.Component {
   };
 
   render() {
-    const { classes, values = {}, handleChange } = this.props;
-    const { expanded } = this.state;
+    const { classes, values = {}, handleChange ,handlePanelChange,expanded} = this.props;
     return (
-      <ExpansionPanel
-        expanded={expanded === 'panel3'}
-        onChange={this.handlePanelChange('panel3')}
+      <ExpansionPanel 
+      expanded={expanded}
+      onChange={handlePanelChange}
       >
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="body1" className={classes.heading}>

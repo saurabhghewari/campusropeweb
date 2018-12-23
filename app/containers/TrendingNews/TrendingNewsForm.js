@@ -263,6 +263,7 @@ export class TrendingNewsForm extends React.Component {
                               src={pic}
                               title="Contemplative Reptile"
                             />
+     
                           </Card>
                         ))}
                     </Grid>

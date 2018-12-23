@@ -81,23 +81,13 @@ const styles = theme => ({
 
 /* eslint react/prop-types: 0 */
 class AboutUserComponent extends React.PureComponent {
-  state = {
-    expanded: null,
-  };
-
-  handlePanelChange = panel => (event, expanded) => {
-    this.setState({
-      expanded: expanded ? panel : false,
-    });
-  };
-
+  
   render() {
-    const { classes, values, handleChange, touched, errors } = this.props;
-    const { expanded } = this.state;
+    const { classes, values, handleChange, touched, errors,expanded,handlePanelChange } = this.props;
     return (
       <ExpansionPanel
-        expanded={expanded === 'panel1'}
-        onChange={this.handlePanelChange('panel1')}
+        expanded={expanded}
+        onChange={handlePanelChange}
       >
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="body1" className={classes.heading}>

@@ -89,13 +89,12 @@ class AboutUserComponent extends React.Component {
   };
 
   render() {
-    const { classes, values, handleChange } = this.props;
-    const { expanded } = this.state;
+    const { classes, values, handleChange,expanded ,handlePanelChange} = this.props;
     const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
     return (
       <ExpansionPanel
-        expanded={expanded === 'panel2'}
-        onChange={this.handlePanelChange('panel2')}
+      expanded={expanded}
+      onChange={handlePanelChange}
       >
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="body1" className={classes.heading}>

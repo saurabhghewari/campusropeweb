@@ -127,10 +127,10 @@ const MultiInputComponent = ({
   <div>
     {values.length ? (
       values.map((value, index) => (
-        <div key={`${name}`} className={classes.multiInputWrapper}>
+        <div key={name} className={classes.multiInputWrapper}>
           <TextField
-            id={`${index}`}
-            name={`${name}.${index}`}
+            id={index}
+            name={name + index}
             label={label}
             className={classes.multiInput}
             value={value}
@@ -176,6 +176,7 @@ class AboutUserComponent extends React.Component {
   };
 
   handleChange = panel => (event, expanded) => {
+    debugger
     this.setState({
       expanded: expanded ? panel : false,
     });
@@ -221,6 +222,8 @@ class AboutUserComponent extends React.Component {
                 errors={errors}
                 touched={touched}
                 values={values}
+                expanded={expanded === 'panel1'}
+                handlePanelChange={this.handleChange('panel1')}
                 handleChange={handleChange}
               />
 
@@ -228,6 +231,8 @@ class AboutUserComponent extends React.Component {
                 errors={errors}
                 touched={touched}
                 values={values}
+                expanded={expanded  === 'panel2'}
+                handlePanelChange={this.handleChange('panel2')}
                 handleChange={handleChange}
               />
 
@@ -235,6 +240,8 @@ class AboutUserComponent extends React.Component {
                 errors={errors}
                 touched={touched}
                 values={values}
+                expanded={expanded  === 'panel3'}
+                handlePanelChange={this.handleChange('panel3')}
                 handleChange={handleChange}
               />
 

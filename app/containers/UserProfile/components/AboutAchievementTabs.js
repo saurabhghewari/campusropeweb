@@ -7,15 +7,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Tab from '@material-ui/core/TabC';
-import { withStyles } from '@material-ui/core/styles';
 
 import About from './About';
 import Achievement from './Achievement';
@@ -24,6 +21,7 @@ const styles = () => ({});
 
 /* eslint-disable  */
 export class AboutAchievementTabs extends React.PureComponent {
+  
   state = {
     selectedTab: 0,
   };

@@ -14,7 +14,7 @@ const styles = () => ({});
 export class UserBio extends React.PureComponent {
   render() {
     const { classes } = this.props;
-    return <div className={classes.root} />;
+    return <div className={classes.root} >I am full stack develope</div>;
   }
 }
 
