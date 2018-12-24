@@ -20,10 +20,13 @@ import UserPosts from './components/UserPosts';
 
 const styles = () => ({
   avatar: {
-    margin: 10,
-    width: 60,
-    height: 60,
+    marginTop: 20,
+    width: 150,
+    height: 150,
   },
+  root:{
+    padding:10
+  }
 });
 
 /* eslint-disable  */
@@ -31,8 +34,7 @@ export class BrowserView extends React.PureComponent {
   render() {
     const { classes, isLoggedUser, userinfo } = this.props;
     return (
-      <div className={classes.root}>
-        <Grid container>
+        <Grid container className={classes.root}>
           <Grid item lg={4} md={4}>
             <Avatar
               alt="Remy Sharp"
@@ -50,7 +52,6 @@ export class BrowserView extends React.PureComponent {
             <UserPosts />
           </Grid>
         </Grid>
-      </div>
     );
   }
 }

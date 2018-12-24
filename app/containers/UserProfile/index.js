@@ -33,10 +33,11 @@ import saga from './saga';
 import AddPostComponent from './components/NewPost';
 import PostComponent from './components/UserPosts';
 import AboutUserComponent from './components/About';
+import UserProfileBrowserView from './BrowserView'
 
 import { tabSelectAction, fetchUserProfile, saveUserProfile } from './actions';
 
-import './user-profile.css';
+import ProfileTabType from './components/ProfileTabTypeModel';
 
 const styles = () => ({
   grid2Container: {
@@ -96,8 +97,8 @@ export class UserProfile extends React.Component {
 
   render() {
     const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
-    const { classes, selectedTab, userprofileInfo = {} } = this.props;
-    const { picture } = userprofileInfo.profileOf || {};
+    const { classes, selectedTab, userprofileInfo} = this.props;
+    
 
     return (
       <div className="root">
@@ -106,163 +107,7 @@ export class UserProfile extends React.Component {
 
           <meta name="description" content="Description of UserProfile" />
         </Helmet>
-
-        <Paper className={classes.profilePaper}>
-          <Grid container className={classes.topSectionGrid}>
-            <Grid item xs={6} md={4} lg={4}>
-              <div className="avatarWrapper">
-                <div className="circleBorder">
-                  <Avatar
-                    alt="Adelle Charles"
-                    src={picture}
-                    className="avatar"
-                  />
-                </div>
-              </div>
-            </Grid>
-
-            <Grid item xs={6} md={8} lg={8}>
-              <div className="userFollowsWrapper">
-                <Typography variant="h6">Saif ELiyas</Typography>
-
-                <Typography variant="body1" className={classes.followsTypo}>
-                  <span className={classes.followsLabel}>Followers</span>
-                  <span className={classes.followsCount}> 1793</span>
-                </Typography>
-
-                <Typography variant="body1" className={classes.followsTypo}>
-                  <span className={classes.followsLabel}>Followings</span>
-                  <span className={classes.followsCount}> 1309</span>
-                </Typography>
-
-                {!this.isOwner() ? (
-                  <BrowserView viewClassName="userActionWrapper">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classNames(
-                        classes.userActionBtn,
-                        classes.followBtn,
-                      )}
-                    >
-                      Follow
-                    </Button>
-
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classNames(
-                        classes.userActionBtn,
-                        classes.messageBtn,
-                      )}
-                    >
-                      Message
-                    </Button>
-
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classNames(
-                        classes.userActionBtn,
-                        classes.moreBtn,
-                      )}
-                    >
-                      More
-                    </Button>
-                  </BrowserView>
-                ) : (
-                  ''
-                )}
-              </div>
-            </Grid>
-          </Grid>
-
-          <Grid container>
-            <Grid item xs={12} md={4} lg={4} className={classes.profileTabGrid}>
-              {!this.isOwner() ? (
-                <MobileView viewClassName="userActionWrapper">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classNames(
-                      classes.userActionBtn,
-                      classes.followBtn,
-                    )}
-                  >
-                    Follow
-                  </Button>
-
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classNames(
-                      classes.userActionBtn,
-                      classes.messageBtn,
-                    )}
-                  >
-                    Message
-                  </Button>
-
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classNames(
-                      classes.userActionBtn,
-                      classes.moreBtn,
-                    )}
-                  >
-                    More
-                  </Button>
-                </MobileView>
-              ) : (
-                ''
-              )}
-
-              <Typography invarient="body2" className="userDetail">
-                Software Developer at GMI
-              </Typography>
-
-              <Paper square>
-                <Tabs
-                  value={selectedTab}
-                  onChange={(e, value) => this.handleProfileTabChange(value)}
-                  indicatorColor="primary"
-                  textColor="primary"
-                >
-                  <Tab label="About" />
-                  <Tab label="Achievements" />
-                </Tabs>
-              </Paper>
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              md={8}
-              lg={8}
-              className="margin-auto profileFormSection"
-            >
-              {selectedTab === TAB_TYPE_MAP.ABOUT_TAB && (
-                <AboutUserComponent
-                  isOwner={this.isOwner()}
-                  handleProfileSave={this.handleProfileSave}
-                  userProfile={userprofileInfo}
-                  handleCancel={this.handleProfileTabChange}
-                />
-              )}
-
-              {selectedTab === TAB_TYPE_MAP.POST_TAB && (
-                <React.Fragment>
-                  <AddPostComponent />
-
-                  <div className={classes.postWrapper}>
-                    <PostComponent />
-                  </div>
-                </React.Fragment>
-              )}
-            </Grid>
-          </Grid>
-        </Paper>
+       <UserProfileBrowserView userinfo={userprofileInfo}/>
       </div>
     );
   }
