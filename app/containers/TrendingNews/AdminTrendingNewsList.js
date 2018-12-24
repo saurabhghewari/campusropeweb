@@ -40,7 +40,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import { fetchTrendingNews } from './actions';
+import { fetchTrendingNews, deleteSelectedTrendingNews } from './actions';
 import { makeSelectTrendingNews } from './selectors';
 import { makeSelectStatesForOptions } from '../../store/constants/selectors';
 
@@ -223,6 +223,8 @@ export class AdminTrendingNewsList extends React.Component {
 
   onConfirmTrendingNewsDelete = () => {
     let trendingNewsData = this.state.trendingNewsToDelete;
+    let {_id} = trendingNewsData
+    this.props.deleteSelectedTrendingNews(_id)
   };
 
   _onReady(event) {
@@ -275,7 +277,7 @@ export class AdminTrendingNewsList extends React.Component {
           >
             <AddIcon />
           </Button>
-          
+
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <FormControl margin="normal" fullWidth>
@@ -318,6 +320,8 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fetchTrendingNews: () => dispatch(fetchTrendingNews()),
+    deleteSelectedTrendingNews: (trendingNewsId) =>
+      dispatch(deleteSelectedTrendingNews(trendingNewsId)),
   };
 }
 

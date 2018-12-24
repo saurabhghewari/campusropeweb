@@ -11,6 +11,7 @@ import {
   SET_TRENDING_NEWS,
   FETCH_TRENDING_NEWS_BY_ID,
   SET_SELECTED_TRENDING_NEWS,
+  DELETE_SELECTED_TRENDING_NEWS,
 } from './constants';
 
 export function defaultAction() {
@@ -52,5 +53,12 @@ export function submitNewTrendingNews(values, actions) {
     type: SUBMIT_NEW_TRENDING_NEWS,
     values,
     actions,
+  };
+}
+
+export function deleteSelectedTrendingNews(trendingNewsId) {
+  return {
+    type: DELETE_SELECTED_TRENDING_NEWS,
+    trendingNewsId,
   };
 }

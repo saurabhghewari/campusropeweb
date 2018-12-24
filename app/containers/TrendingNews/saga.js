@@ -4,6 +4,7 @@ import {
   SUBMIT_NEW_TRENDING_NEWS,
   FETCH_TRENDING_NEWS,
   FETCH_TRENDING_NEWS_BY_ID,
+  DELETE_SELECTED_TRENDING_NEWS,
 } from './constants';
 import { setTrendingNews, setSelectedTrendingNewsInView } from './actions';
 import featherClient, { trendingNewsService } from './../../feathers';
@@ -24,6 +25,17 @@ export function* submitNewTrendingNewsDetails({ values, actions }) {
   }
 }
 
+export function* deleteSelectedTrendingNews({ trendingNewsId }) {
+  try {
+    yield put(startFetchingData());
+    yield featherClient.authenticate();
+    yield trendingNewsService.remove(trendingNewsId);
+    yield put(stopFetchingData());
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export function* fetchTrendingNewsSaga({ state }) {
   try {
     yield put(startFetchingData());
@@ -31,7 +43,7 @@ export function* fetchTrendingNewsSaga({ state }) {
     let query = {};
     if (state !== 'all') {
       query = {
-        state: state,
+        state,
       };
     }
     const trendingNews = yield trendingNewsService.find({ query });
@@ -62,5 +74,6 @@ export default function* defaultSaga() {
     takeLatest(SUBMIT_NEW_TRENDING_NEWS, submitNewTrendingNewsDetails),
     takeLatest(FETCH_TRENDING_NEWS, fetchTrendingNewsSaga),
     takeLatest(FETCH_TRENDING_NEWS_BY_ID, fetchTrendingNewsByIdSaga),
+    takeLatest(DELETE_SELECTED_TRENDING_NEWS, deleteSelectedTrendingNews),
   ];
 }
