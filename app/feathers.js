@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 import feathers from '@feathersjs/client';
 import findOne from 'feathers-findone';
 
-const socket = io('https://campusropeapi-swpcrlmfac.now.sh');
+const socket = io('http://localhost:3030');
 const client = feathers();
 
 client.configure(feathers.socketio(socket, { timeout: 2000 }));
@@ -19,5 +19,6 @@ export const adminTasksService = client.service('admin-tasks');
 export const ngoService = client.service('ngo');
 export const trendingNewsService = client.service('trending-news');
 export const helplineService = client.service('helpline');
+export const newsClientService = client.service('news-client');
 
 export default client;

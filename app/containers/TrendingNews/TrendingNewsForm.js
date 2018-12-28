@@ -11,7 +11,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import Content from 'components/Content/Loadable';
 import YouTube from 'react-youtube';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 
 import { Formik } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -137,7 +137,7 @@ export class TrendingNewsForm extends React.Component {
   }
 
   onCancel() {
-    this.props.dispatch(replace('/news/trends/admin/trends'));
+    this.props.dispatch(push('/news/trends/admin/trends'));
   }
   render() {
     return (
