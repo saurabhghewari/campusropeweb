@@ -11,7 +11,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import Content from 'components/Content/Loadable';
 import { withStyles } from '@material-ui/core/styles';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
@@ -30,9 +30,9 @@ const styles = theme => ({
     textAlign: 'center',
     marginTop: theme.spacing.unit * 4,
   },
-  root:{
-    padding:theme.spacing.unit * 2
-  }
+  root: {
+    padding: theme.spacing.unit * 2,
+  },
 });
 
 /* eslint-disable*/
@@ -48,7 +48,7 @@ export class UserTrendingNewsList extends React.Component {
 
   routeToTrendingNewsView(selectedTrendingNews) {
     this.props.dispatch(
-      replace(`/news/trends/${selectedTrendingNews._id}/details`),
+      push(`/news/trends/${selectedTrendingNews._id}/details`),
     );
   }
 

@@ -6,6 +6,7 @@ import {
   FETCH_TRENDING_NEWS_BY_ID,
   DELETE_SELECTED_TRENDING_NEWS,
   FETCH_NEWS_CLIENTS,
+  DELETE_NEWS_CLIENT,
 } from './constants';
 import {
   setTrendingNews,
@@ -68,7 +69,20 @@ export function* fetchNewsClientsSaga() {
     yield put(startFetchingData());
     yield featherClient.authenticate();
     const newsClients = yield newsClientService.find();
-    console.log('news clients', newsClients);
+    yield put(setNewsClients(newsClients));
+    yield put(stopFetchingData());
+  } catch (e) {
+    yield put(stopFetchingData());
+    console.error(e);
+  }
+}
+
+export function* deleteNewsClientSaga({ client }) {
+  try {
+    yield put(startFetchingData());
+    yield featherClient.authenticate();
+    yield newsClientService.remove(client._id);
+    const newsClients = yield newsClientService.find();
     yield put(setNewsClients(newsClients));
     yield put(stopFetchingData());
   } catch (e) {
@@ -98,5 +112,6 @@ export default function* defaultSaga() {
     takeLatest(FETCH_TRENDING_NEWS_BY_ID, fetchTrendingNewsByIdSaga),
     takeLatest(DELETE_SELECTED_TRENDING_NEWS, deleteSelectedTrendingNews),
     takeLatest(FETCH_NEWS_CLIENTS, fetchNewsClientsSaga),
+    takeLatest(DELETE_NEWS_CLIENT, deleteNewsClientSaga),
   ];
 }

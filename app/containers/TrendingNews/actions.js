@@ -14,6 +14,7 @@ import {
   DELETE_SELECTED_TRENDING_NEWS,
   FETCH_NEWS_CLIENTS,
   SET_NEWS_CLIENTS,
+  DELETE_NEWS_CLIENT,
 } from './constants';
 
 export function defaultAction() {
@@ -38,6 +39,12 @@ export function setNewsClients(clients) {
   return {
     type: SET_NEWS_CLIENTS,
     clients,
+  };
+}
+export function deleteNewsClient(client) {
+  return {
+    type: DELETE_NEWS_CLIENT,
+    client,
   };
 }
 

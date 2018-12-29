@@ -247,6 +247,15 @@ export class TrendingNewsForm extends React.Component {
                     </FormControl>
                   </Grid>
 
+                  <Button
+                      variant="contained"
+                      onClick={() => this.props.dispatch(push('/news/trends/admin/client/manage'))}
+                      className={classes.cancel}
+                    >
+                      {' '}
+                      Manage Clients
+                    </Button>
+
 
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                     <FormControl margin="normal" fullWidth required>

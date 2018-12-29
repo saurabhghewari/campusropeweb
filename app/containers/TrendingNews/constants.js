@@ -15,6 +15,7 @@ export const SET_SELECTED_TRENDING_NEWS =
   'app/TrendingNews/SET_SELECTED_TRENDING_NEWS';
 export const FETCH_NEWS_CLIENTS = 'app/TrendingNews/FETCH_NEWS_CLIENTS';
 export const SET_NEWS_CLIENTS = 'app/TrendingNews/SET_NEWS_CLIENTS';
+export const DELETE_NEWS_CLIENT = 'app/TrendingNews/DELETE_NEWS_CLIENT';
 
 export const DELETE_SELECTED_TRENDING_NEWS =
   'app/TrendingNews/DELETE_SELECTED_TRENDING_NEWS';

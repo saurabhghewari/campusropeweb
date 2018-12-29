@@ -51,6 +51,12 @@ const AddTrendingNewsClient = Loadable({
   loading: () => null,
 });
 
+const TrendingNewsClientList = Loadable({
+  loader: () => import('./TrendingNewsClientList'),
+  loading: () => null,
+});
+
+
 /* eslint-disable react/prefer-stateless-function */
 export class TrendingNews extends React.Component {
   render() {
@@ -95,6 +101,11 @@ export class TrendingNews extends React.Component {
             exact
             path="/news/trends/admin/client/new"
             component={AddTrendingNewsClient}
+          />
+          <PrivateRoute
+            exact
+            path="/news/trends/admin/client/manage"
+            component={TrendingNewsClientList}
           />
         </Switch>
       </div>
