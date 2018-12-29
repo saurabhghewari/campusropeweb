@@ -168,12 +168,12 @@ export class AdminTrendingNewsList extends React.Component {
     this.props.fetchTrendingNews();
   }
   createNewTrendingNews() {
-    this.props.dispatch(push('/news/trends/admin/trend/new'));
+    this.props.dispatch(push('/news/trends/admin/new'));
   }
 
   goToTrendingNewsEdit = trendingNewsData => {
     this.props.dispatch(
-      push(`/news/trends/admin/trend/${trendingNewsData._id}/edit`),
+      push(`/news/trends/admin/${trendingNewsData._id}/edit`),
     );
   };
 

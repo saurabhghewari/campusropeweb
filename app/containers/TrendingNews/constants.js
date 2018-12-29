@@ -11,6 +11,8 @@ export const FETCH_TRENDING_NEWS = 'app/TrendingNews/FETCH_TRENDING_NEWS';
 export const SET_TRENDING_NEWS = 'app/TrendingNews/SET_TRENDING_NEWS';
 export const FETCH_TRENDING_NEWS_BY_ID =
   'app/TrendingNews/FETCH_TRENDING_NEWS_BY_ID';
+export const UPDATE_TRENDING_NEWS_BY_ID =
+  'app/TrendingNews/UPDATE_TRENDING_NEWS_BY_ID';
 export const SET_SELECTED_TRENDING_NEWS =
   'app/TrendingNews/SET_SELECTED_TRENDING_NEWS';
 export const FETCH_NEWS_CLIENTS = 'app/TrendingNews/FETCH_NEWS_CLIENTS';

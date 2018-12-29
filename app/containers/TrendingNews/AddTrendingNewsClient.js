@@ -25,8 +25,7 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import Upload from 'components/Upload/Loadable';
 import _isEmpty from 'lodash/isEmpty';
-import {newsClientService} from '../../feathers'
-
+import { newsClientService } from '../../feathers';
 
 const styles = theme => ({
   container: {
@@ -101,12 +100,12 @@ export class NewTrendingNewsClient extends React.PureComponent {
 
   onSubmit(values, actions) {
     newsClientService.create(values).then(() => {
-        this.props.dispatch(push('/news/trends/admin/trends'));
+        this.props.dispatch(push('/news/trends/admin/'));
     })
   }
 
   onCancel() {
-    this.props.dispatch(push('/news/trends/admin/trends'));
+    this.props.dispatch(push('/news/trends/admin/'));
   }
 
   render() {

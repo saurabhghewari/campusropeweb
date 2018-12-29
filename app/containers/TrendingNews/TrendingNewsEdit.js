@@ -1,6 +1,6 @@
 /**
  *
- * TrendingNewsForm
+ * TrendingNewsEdit
  *
  */
 
@@ -11,7 +11,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import Content from 'components/Content/Loadable';
 import YouTube from 'react-youtube';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 
 import { Formik } from 'formik';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -20,6 +20,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import * as Yup from 'yup';
 import Select from '@material-ui/core/Select';
@@ -30,7 +31,15 @@ import Upload from 'components/Upload/Loadable';
 import _isEmpty from 'lodash/isEmpty';
 
 import { makeSelectStatesForOptions } from '../../store/constants/selectors';
-import { submitNewTrendingNews } from './actions';
+import {
+  fetchTrendingNewsById,
+  fetchNewsClients,
+  updateTrendingNewsById,
+} from './actions';
+import {
+  makeSelectNewsClientsForOptions,
+  makeSelectSelectedTrendingNews,
+} from './selectors';
 
 const styles = theme => ({
   container: {
@@ -112,12 +121,11 @@ export class TrendingNewsEdit extends React.Component {
     event.target.pauseVideo();
   }
   onSubmit(values, actions) {
-    this.props.submitNewTrendingNewsDetails(
-      {
-        ...values,
-      },
+    this.props.updateHelplineById({
+      _id: this.props.match.params.trendingNewsId,
+      data: values,
       actions,
-    );
+    });
   }
 
   componentDidMount() {
@@ -127,6 +135,9 @@ export class TrendingNewsEdit extends React.Component {
       (this.height = document
         .querySelector('#content')
         .getBoundingClientRect().height);
+        const trendingNewsId = this.props.match.params.trendingNewsId;
+    this.props.fetchNewsClients();    
+    this.props.fetchTrendingNewsById(trendingNewsId)
   }
 
   onYoutubeLinkChange(event, setFieldValue) {
@@ -137,24 +148,27 @@ export class TrendingNewsEdit extends React.Component {
   }
 
   onCancel() {
-    this.props.dispatch(replace('/news/trends/admin/trends'));
+    this.props.dispatch(push('/news/trends/admin/'));
   }
   render() {
+    const {selectedTrendingNews} = this.props;
     return (
       <Content>
-        <Formik
+       { selectedTrendingNews.headline && <Formik
           initialValues={{
-            headline: '',
-            content: '',
-            state: '',
-            photo_urls: [],
-            cover_photo: '',
-            youtube_link: '',
+            headline: selectedTrendingNews.headline,
+            content: selectedTrendingNews.content,
+            state: selectedTrendingNews.state,
+            newsClient:selectedTrendingNews.newsClient._id,
+            photo_urls: selectedTrendingNews.photo_urls,
+            cover_photo: selectedTrendingNews.cover_photo,
+            youtube_link: selectedTrendingNews.youtube_link,
           }}
           validationSchema={Yup.object().shape({
             headline: Yup.string().required('please provide headline'),
             content: Yup.string().required('Please provide content'),
             state: Yup.string().required('Please choose any one of the State'),
+            newsClient: Yup.string().required('Please choose any one of the news Clients'),
           })}
           onSubmit={(values, actions) => this.onSubmit(values, actions)}
         >
@@ -168,7 +182,7 @@ export class TrendingNewsEdit extends React.Component {
               isSubmitting,
               handleSubmit,
             } = props;
-            const { classes, states } = this.props;
+            const { classes, states ,newsClients} = this.props;
             return (
               <form
                 className={classes.form}
@@ -208,7 +222,7 @@ export class TrendingNewsEdit extends React.Component {
                         autoComplete="content"
                         value={values.content}
                         onChange={handleChange}
-                        autoFocus
+                        
                       />{' '}
                       {touched.content &&
                         errors.content && (
@@ -240,6 +254,45 @@ export class TrendingNewsEdit extends React.Component {
                         )}
                     </FormControl>
                   </Grid>
+
+                  <Button
+                      variant="contained"
+                      onClick={() => this.props.dispatch(push('/news/trends/admin/client/manage'))}
+                      className={classes.cancel}
+                    >
+                      {' '}
+                      Manage Clients
+                    </Button>
+
+
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <FormControl margin="normal" fullWidth required>
+                      <InputLabel htmlFor="state">Client</InputLabel>
+                      <Select
+                        value={values.newsClient}
+                        onChange={handleChange}
+                        input={<Input id="newsClient" name="newsClient" />}
+                      >
+                        {newsClients.map(client => (
+                          <MenuItem key={client.value} value={client.value}>
+                            <Avatar
+                              alt="Remy Sharp"
+                              src={client.logourl}
+                              className={classes.avatar}
+                            />{client.label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                      {touched.newsClient &&
+                        errors.newsClient && (
+                          <FormHelperText className={classes.error}>
+                            {errors.newsClient}
+                          </FormHelperText>
+                        )}
+                    </FormControl>
+                  </Grid>
+
+
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Upload
                       className={classes.uploadBtn}
@@ -263,6 +316,7 @@ export class TrendingNewsEdit extends React.Component {
                               src={pic}
                               title="Contemplative Reptile"
                             />
+     
                           </Card>
                         ))}
                     </Grid>
@@ -303,7 +357,7 @@ export class TrendingNewsEdit extends React.Component {
                         onChange={e =>
                           this.onYoutubeLinkChange(e, setFieldValue)
                         }
-                        autoFocus
+                        
                       />{' '}
                     </FormControl>
                   </Grid>
@@ -325,7 +379,7 @@ export class TrendingNewsEdit extends React.Component {
                       disabled={isSubmitting}
                     >
                       {' '}
-                      Submit
+                      Update
                     </Button>
 
                     <Button
@@ -343,26 +397,30 @@ export class TrendingNewsEdit extends React.Component {
               </form>
             );
           }}
-        </Formik>
+        </Formik>}
       </Content>
     );
   }
 }
 
-TrendingNewsForm.propTypes = {
+TrendingNewsEdit.propTypes = {
   classes: PropTypes.object,
   states: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   states: makeSelectStatesForOptions(),
+  newsClients:makeSelectNewsClientsForOptions(),
+  selectedTrendingNews:makeSelectSelectedTrendingNews()
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    submitNewTrendingNewsDetails: (values, actions) =>
-      dispatch(submitNewTrendingNews(values, actions)),
+    fetchTrendingNewsById:(trendingNewsId) => dispatch(fetchTrendingNewsById(trendingNewsId)),
+    fetchNewsClients:() => dispatch(fetchNewsClients()),
+    updateTrendingNewsById: updNews =>
+      dispatch(updateTrendingNewsById(updNews)),
   };
 }
 

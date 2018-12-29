@@ -15,6 +15,7 @@ import {
   FETCH_NEWS_CLIENTS,
   SET_NEWS_CLIENTS,
   DELETE_NEWS_CLIENT,
+  UPDATE_TRENDING_NEWS_BY_ID,
 } from './constants';
 
 export function defaultAction() {
@@ -59,6 +60,13 @@ export function fetchTrendingNewsById(trendingNewsId) {
   return {
     type: FETCH_TRENDING_NEWS_BY_ID,
     trendingNewsId,
+  };
+}
+
+export function updateTrendingNewsById(updatedNews) {
+  return {
+    type: UPDATE_TRENDING_NEWS_BY_ID,
+    updatedNews,
   };
 }
 

@@ -169,7 +169,7 @@ export const adminHomeMenus = [
     title: 'Admin Trends',
     iconBgColor: '#006064',
     icon: <Title />,
-    linkTo: '/news/trends/admin/trends',
+    linkTo: '/news/trends/admin/',
   },
 
   {

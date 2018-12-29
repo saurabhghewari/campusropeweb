@@ -7,6 +7,7 @@ import {
   DELETE_SELECTED_TRENDING_NEWS,
   FETCH_NEWS_CLIENTS,
   DELETE_NEWS_CLIENT,
+  UPDATE_TRENDING_NEWS_BY_ID,
 } from './constants';
 import {
   setTrendingNews,
@@ -26,7 +27,7 @@ export function* submitNewTrendingNewsDetails({ values, actions }) {
     yield featherClient.authenticate();
     yield trendingNewsService.create(values);
     yield call(resetForm);
-    yield put(push('/news/trends/admin/trends'));
+    yield put(push('/news/trends/admin/'));
     yield put(stopFetchingData());
   } catch (e) {
     yield put(stopFetchingData());
@@ -104,6 +105,23 @@ export function* fetchTrendingNewsByIdSaga({ trendingNewsId }) {
   }
 }
 
+export function* updateTrendingNewsBYIdSaga({ updatedNews }) {
+  try {
+    yield put(startFetchingData());
+    yield featherClient.authenticate();
+    const updNews = yield trendingNewsService.patch(
+      updatedNews._id,
+      updatedNews.data,
+    );
+    yield put(setSelectedTrendingNewsInView(updNews));
+    yield call(updatedNews.actions.resetForm);
+    yield put(stopFetchingData());
+  } catch (e) {
+    yield call(updatedNews.actions.resetForm);
+    console.error(e);
+  }
+}
+
 // Individual exports for testing
 export default function* defaultSaga() {
   yield [
@@ -113,5 +131,6 @@ export default function* defaultSaga() {
     takeLatest(DELETE_SELECTED_TRENDING_NEWS, deleteSelectedTrendingNews),
     takeLatest(FETCH_NEWS_CLIENTS, fetchNewsClientsSaga),
     takeLatest(DELETE_NEWS_CLIENT, deleteNewsClientSaga),
+    takeLatest(UPDATE_TRENDING_NEWS_BY_ID, updateTrendingNewsBYIdSaga),
   ];
 }
