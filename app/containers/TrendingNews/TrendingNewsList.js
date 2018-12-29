@@ -64,11 +64,9 @@ const TrendingNewsBox = ({
     >
       <CardHeader
         avatar={
-          <Avatar className={classNames(classes.avatar, classes.bigAvatar)}>
-            CR
-          </Avatar>
+          <Avatar src= {trendingNewsData.newsClient.logourl} className={classNames(classes.avatar, classes.bigAvatar)}/>
         }
-        title={'Campusrope'}
+        title={trendingNewsData.newsClient.name}
         subheader={getCreatedOnDate(trendingNewsData.createdAt)}
       />
       <CardContent>
