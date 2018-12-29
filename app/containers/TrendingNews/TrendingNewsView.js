@@ -31,6 +31,10 @@ const styles = theme => ({
     textAlign: 'center',
     marginTop: theme.spacing.unit * 4,
   },
+  graphy: {
+    textAlign: 'center',
+    wordBreak: 'break-all',
+  },
 });
 
 /* eslint-disable*/
@@ -49,8 +53,6 @@ export class TrendingNewsView extends React.Component {
   }
 
   componentDidMount() {
-    this.width =
-      document.querySelector('#content').getBoundingClientRect().width || 200;
     const trendingNewsId = this.props.match.params.trendingNewsId;
     this.props.fetchTrendingNewsById(trendingNewsId);
   }
@@ -84,26 +86,21 @@ export class TrendingNewsView extends React.Component {
               width={100}
             />
           )}
-          <Grid item xs={12} sm={12} lg={12}>
-            <Typography variant="headline">Headline : </Typography>
-            <Typography variant="subtitle1">
+            <Typography variant="h5" className={classes.graphy} >Headline : </Typography>
+            <Typography variant="h4" className={classes.graphy}>
               {trendingNewsDetails.headline}
             </Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} lg={12}>
-            <Typography variant="headline">content : </Typography>
-            <Typography variant="subtitle1">
+            <Typography variant="headline" className={classes.graphy}>content : </Typography>
+            <Typography component="p" className={classes.graphy}>
               {trendingNewsDetails.content}
             </Typography>
-          </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography variant="subtitle1">
               state : {trendingNewsDetails.state}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
-            {trendingNewsDetails.photo_urls &&
-              trendingNewsDetails.photo_urls.length &&
+            {
               trendingNewsDetails.photo_urls.map(pic => (
                 <IdealImage
                   key={pic}
