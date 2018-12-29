@@ -12,6 +12,8 @@ import {
   FETCH_TRENDING_NEWS_BY_ID,
   SET_SELECTED_TRENDING_NEWS,
   DELETE_SELECTED_TRENDING_NEWS,
+  FETCH_NEWS_CLIENTS,
+  SET_NEWS_CLIENTS,
 } from './constants';
 
 export function defaultAction() {
@@ -24,6 +26,18 @@ export function fetchTrendingNews(state = 'all') {
   return {
     type: FETCH_TRENDING_NEWS,
     state,
+  };
+}
+export function fetchNewsClients() {
+  return {
+    type: FETCH_NEWS_CLIENTS,
+  };
+}
+
+export function setNewsClients(clients) {
+  return {
+    type: SET_NEWS_CLIENTS,
+    clients,
   };
 }
 

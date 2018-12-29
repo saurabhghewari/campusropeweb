@@ -20,6 +20,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import * as Yup from 'yup';
 import Select from '@material-ui/core/Select';
@@ -30,7 +31,8 @@ import Upload from 'components/Upload/Loadable';
 import _isEmpty from 'lodash/isEmpty';
 
 import { makeSelectStatesForOptions } from '../../store/constants/selectors';
-import { submitNewTrendingNews } from './actions';
+import { submitNewTrendingNews, fetchNewsClients } from './actions';
+import { makeSelectNewsClientsForOptions } from './selectors';
 
 const styles = theme => ({
   container: {
@@ -127,6 +129,8 @@ export class TrendingNewsForm extends React.Component {
       (this.height = document
         .querySelector('#content')
         .getBoundingClientRect().height);
+    
+    this.props.fetchNewsClients()
   }
 
   onYoutubeLinkChange(event, setFieldValue) {
@@ -147,6 +151,7 @@ export class TrendingNewsForm extends React.Component {
             headline: '',
             content: '',
             state: '',
+            newsClient:'',
             photo_urls: [],
             cover_photo: '',
             youtube_link: '',
@@ -155,6 +160,7 @@ export class TrendingNewsForm extends React.Component {
             headline: Yup.string().required('please provide headline'),
             content: Yup.string().required('Please provide content'),
             state: Yup.string().required('Please choose any one of the State'),
+            newsClient: Yup.string().required('Please choose any one of the news Clients'),
           })}
           onSubmit={(values, actions) => this.onSubmit(values, actions)}
         >
@@ -168,7 +174,7 @@ export class TrendingNewsForm extends React.Component {
               isSubmitting,
               handleSubmit,
             } = props;
-            const { classes, states } = this.props;
+            const { classes, states ,newsClients} = this.props;
             return (
               <form
                 className={classes.form}
@@ -240,6 +246,36 @@ export class TrendingNewsForm extends React.Component {
                         )}
                     </FormControl>
                   </Grid>
+
+
+                  <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <FormControl margin="normal" fullWidth required>
+                      <InputLabel htmlFor="state">Client</InputLabel>
+                      <Select
+                        value={values.newsClient}
+                        onChange={handleChange}
+                        input={<Input id="newsClient" name="newsClient" />}
+                      >
+                        {newsClients.map(client => (
+                          <MenuItem key={client.value} value={client.value}>
+                            <Avatar
+                              alt="Remy Sharp"
+                              src={client.logourl}
+                              className={classes.avatar}
+                            />{client.label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                      {touched.newsClient &&
+                        errors.newsClient && (
+                          <FormHelperText className={classes.error}>
+                            {errors.newsClient}
+                          </FormHelperText>
+                        )}
+                    </FormControl>
+                  </Grid>
+
+
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Upload
                       className={classes.uploadBtn}
@@ -357,11 +393,13 @@ TrendingNewsForm.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   states: makeSelectStatesForOptions(),
+  newsClients:makeSelectNewsClientsForOptions()
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchNewsClients:() => dispatch(fetchNewsClients()),
     submitNewTrendingNewsDetails: (values, actions) =>
       dispatch(submitNewTrendingNews(values, actions)),
   };

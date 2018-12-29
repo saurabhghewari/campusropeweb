@@ -5,9 +5,17 @@ import {
   FETCH_TRENDING_NEWS,
   FETCH_TRENDING_NEWS_BY_ID,
   DELETE_SELECTED_TRENDING_NEWS,
+  FETCH_NEWS_CLIENTS,
 } from './constants';
-import { setTrendingNews, setSelectedTrendingNewsInView } from './actions';
-import featherClient, { trendingNewsService } from './../../feathers';
+import {
+  setTrendingNews,
+  setSelectedTrendingNewsInView,
+  setNewsClients,
+} from './actions';
+import featherClient, {
+  trendingNewsService,
+  newsClientService,
+} from './../../feathers';
 import { startFetchingData, stopFetchingData } from '../Home/actions';
 
 export function* submitNewTrendingNewsDetails({ values, actions }) {
@@ -55,6 +63,20 @@ export function* fetchTrendingNewsSaga({ state }) {
   }
 }
 
+export function* fetchNewsClientsSaga() {
+  try {
+    yield put(startFetchingData());
+    yield featherClient.authenticate();
+    const newsClients = yield newsClientService.find();
+    console.log('news clients', newsClients);
+    yield put(setNewsClients(newsClients));
+    yield put(stopFetchingData());
+  } catch (e) {
+    yield put(stopFetchingData());
+    console.error(e);
+  }
+}
+
 export function* fetchTrendingNewsByIdSaga({ trendingNewsId }) {
   try {
     yield put(startFetchingData());
@@ -75,5 +97,6 @@ export default function* defaultSaga() {
     takeLatest(FETCH_TRENDING_NEWS, fetchTrendingNewsSaga),
     takeLatest(FETCH_TRENDING_NEWS_BY_ID, fetchTrendingNewsByIdSaga),
     takeLatest(DELETE_SELECTED_TRENDING_NEWS, deleteSelectedTrendingNews),
+    takeLatest(FETCH_NEWS_CLIENTS, fetchNewsClientsSaga),
   ];
 }
