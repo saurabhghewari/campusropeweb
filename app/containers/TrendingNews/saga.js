@@ -38,7 +38,6 @@ export function* submitNewTrendingNewsDetails({ values, actions }) {
 export function* deleteSelectedTrendingNews({ trendingNewsId }) {
   try {
     yield put(startFetchingData());
-    yield featherClient.authenticate();
     yield trendingNewsService.remove(trendingNewsId);
     yield put(stopFetchingData());
   } catch (e) {
