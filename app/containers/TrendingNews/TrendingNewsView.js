@@ -70,7 +70,7 @@ export class TrendingNewsView extends React.Component {
     const { classes, trendingNewsDetails, states } = this.props;
     return (
       <Content>
-       { trendingNewsDetails && <Grid container spacing={16}>
+       { trendingNewsDetails.photo_urls && <Grid container spacing={16}>
           {!_isEmpty(trendingNewsDetails.cover_photo) && (
             <IdealImage
               placeholder={{ color: 'grey' }}
