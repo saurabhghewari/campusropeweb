@@ -27,9 +27,14 @@ import { makeSelectStatesForOptions } from '../../store/constants/selectors';
 import { makeSelectSelectedTrendingNews } from './selectors';
 
 const styles = theme => ({
-  noTrendingNewsLabel: {
+  name: {
     textAlign: 'center',
-    marginTop: theme.spacing.unit * 4,
+    padding: theme.spacing.unit * 2,
+  },
+  description: {
+    textAlign: 'center',
+    padding: theme.spacing.unit * 2,
+    wordBreak: 'break-all',
   },
   graphy: {
     textAlign: 'center',
@@ -70,7 +75,7 @@ export class TrendingNewsView extends React.Component {
     const { classes, trendingNewsDetails, states } = this.props;
     return (
       <Content>
-       { trendingNewsDetails.photo_urls && <Grid container spacing={16}>
+       { trendingNewsDetails.photo_urls && <div >
           {!_isEmpty(trendingNewsDetails.cover_photo) && (
             <IdealImage
               placeholder={{ color: 'grey' }}
@@ -86,14 +91,16 @@ export class TrendingNewsView extends React.Component {
               width={100}
             />
           )}
-            <Typography variant="h5" className={classes.graphy} >Headline : </Typography>
+            <div className={classes.name}>
             <Typography variant="h4" className={classes.graphy}>
               {trendingNewsDetails.headline}
             </Typography>
-            <Typography variant="headline" className={classes.graphy}>content : </Typography>
+            </div>
+            <div className={classes.description}>
             <Typography component="p" className={classes.graphy}>
               {trendingNewsDetails.content}
             </Typography>
+            </div>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Typography variant="subtitle1">
               state : {trendingNewsDetails.state}
@@ -131,7 +138,7 @@ export class TrendingNewsView extends React.Component {
               back
             </Button>
           </Grid>
-        </Grid>}
+        </div>}
       </Content>
     );
   }
