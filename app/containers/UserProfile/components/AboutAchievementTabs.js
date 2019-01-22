@@ -6,55 +6,45 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { push } from 'react-router-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import Grid from '@material-ui/core/Grid';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import Button from '@material-ui/core/Button';
 
-import About from './About';
-import Achievement from './Achievement';
-
-const styles = () => ({});
+const styles = () => ({
+  root: {
+    margin: 50,
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  achievementBtn: {
+    background: '#ff4c00',
+    color: 'white',
+    '&:hover': {
+      background: '#ea5d21db',
+    },
+  },
+});
 
 /* eslint-disable  */
 export class AboutAchievementTabs extends React.PureComponent {
-  
-  state = {
-    selectedTab: 0,
-  };
-  handleProfileTabChange = selectedTab => {
-    this.setState({
-      selectedTab,
-    });
-  };
+
+  handleAboutClick = (userinfo) => {
+    this.props.dispatch(push(`/profile/${userinfo._id}/about`));
+  }
 
   render() {
-    const { classes } = this.props;
-    const { selectedTab } = this.state;
+    const { classes,userinfo } = this.props;
     return (
       <div className={classes.root}>
-        <Tabs
-          value={selectedTab}
-          onChange={(e, value) => this.handleProfileTabChange(value)}
-          indicatorColor="primary"
-          textColor="primary"
-        >
-          <Tab label="About" value={0} />
-          <Tab label="Achievements" value={1} />
-        </Tabs>
-        {selectedTab === 0 && (
-          <div>
-            <About />
-          </div>
-        )}
-        {selectedTab === 1 && (
-          <div>
-            <Achievement />
-          </div>
-        )}
+        <Button variant="contained" color="primary"
+          onClick={()=> this.handleAboutClick(userinfo)}>
+          About
+        </Button>
+        <Button variant="contained" color="primary" className={classes.achievementBtn}>
+          Achievement
+        </Button>
       </div>
     );
   }
@@ -67,7 +57,9 @@ AboutAchievementTabs.propTypes = {
 const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    dispatch: dispatch
+  };
 }
 
 const withConnect = connect(

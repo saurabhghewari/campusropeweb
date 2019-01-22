@@ -27,6 +27,7 @@ import PrivateRoute from 'components/PrivateRoute/Loadable';
 import CenterMenus from 'components/CenterMenus/Loadable';
 import Progress from 'components/Progress/Loadable';
 import SnackBar from 'components/SnackBar/Loadable';
+import About from '../UserProfile/components/About';
 
 import makeSelectHome, {
   makeSelectIsFetchingData,
@@ -93,6 +94,7 @@ export class Home extends React.Component {
           <PrivateRoute path="/my/admintasks" component={MyAdminTasks} />
           <PrivateRoute path="/news/trends" component={TrendingNews} />
           <PrivateRoute path="/ngos" component={Ngo} />
+          <PrivateRoute path="/profile/:userId/about" component={About} />
           <PrivateRoute path="/profile/:userId" component={Profile} />
           <PrivateRoute path="/support" component={Support} />
           <PrivateRoute path="/about" component={AboutUs} />

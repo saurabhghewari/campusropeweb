@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
-import UserBio from './components/UserBio';
 import Typography from '@material-ui/core/Typography';
+import UserBio from './components/UserBio';
 import AboutAchievementTabs from './components/AboutAchievementTabs';
 import Followers from './components/Followers';
 import MoreDialogOther from './components/MoreDialogOther';
@@ -24,9 +24,9 @@ const styles = () => ({
     width: 150,
     height: 150,
   },
-  root:{
-    padding:10
-  }
+  root: {
+    padding: 10,
+  },
 });
 
 /* eslint-disable  */
@@ -42,7 +42,8 @@ export class BrowserView extends React.PureComponent {
               className={classes.avatar}
             />
             <UserBio />
-            <AboutAchievementTabs />
+            <AboutAchievementTabs
+            userinfo={userinfo} />
           </Grid>
           <Grid item lg={8} md={8}>
             <Typography>{userinfo.name}</Typography>

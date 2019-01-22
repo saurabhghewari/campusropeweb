@@ -5,21 +5,12 @@
  */
 
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import { BrowserView, MobileView } from 'react-device-detect';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -30,14 +21,9 @@ import {
 } from '../../store/loggeduser/selectors';
 import reducer from './reducer';
 import saga from './saga';
-import AddPostComponent from './components/NewPost';
-import PostComponent from './components/UserPosts';
-import AboutUserComponent from './components/About';
 import UserProfileBrowserView from './BrowserView'
 
 import { tabSelectAction, fetchUserProfile, saveUserProfile } from './actions';
-
-import ProfileTabType from './components/ProfileTabTypeModel';
 
 const styles = () => ({
   grid2Container: {
@@ -96,9 +82,8 @@ export class UserProfile extends React.Component {
   }
 
   render() {
-    const TAB_TYPE_MAP = ProfileTabType.typeTypeMap;
-    const { classes, selectedTab, userprofileInfo} = this.props;
-    
+    const { userprofileInfo} = this.props;
+
 
     return (
       <div className="root">
@@ -114,7 +99,7 @@ export class UserProfile extends React.Component {
 }
 
 UserProfile.propTypes = {
-  classes: PropTypes.object.isRequired,
+
 };
 
 const mapStateToProps = createStructuredSelector({
