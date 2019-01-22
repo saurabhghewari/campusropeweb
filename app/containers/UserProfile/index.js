@@ -34,6 +34,7 @@ import AddPostComponent from './components/NewPost';
 import PostComponent from './components/UserPosts';
 import AboutUserComponent from './components/About';
 import UserProfileBrowserView from './BrowserView'
+import UserProfileMobileView from './MobileView'
 
 import { tabSelectAction, fetchUserProfile, saveUserProfile } from './actions';
 
@@ -107,7 +108,13 @@ export class UserProfile extends React.Component {
 
           <meta name="description" content="Description of UserProfile" />
         </Helmet>
-       <UserProfileBrowserView userinfo={userprofileInfo}/>
+        <MobileView>
+          <UserProfileMobileView userinfo={userprofileInfo}/>
+        </MobileView>
+        <BrowserView>
+          <UserProfileBrowserView userinfo={userprofileInfo}/>
+        </BrowserView>
+      
       </div>
     );
   }
