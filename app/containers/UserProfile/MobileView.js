@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import UserBio from './components/UserBio';
 import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
 import AboutAchievementTabs from './components/AboutAchievementTabs';
 import Followers from './components/Followers';
 import MoreDialogOther from './components/MoreDialogOther';
