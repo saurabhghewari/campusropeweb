@@ -27,7 +27,7 @@ import PrivateRoute from 'components/PrivateRoute/Loadable';
 import CenterMenus from 'components/CenterMenus/Loadable';
 import Progress from 'components/Progress/Loadable';
 import SnackBar from 'components/SnackBar/Loadable';
-import DeleteDialog from 'components/DeleteDialog/Loadable'
+import DeleteDialog from 'components/DeleteDialog/Loadable';
 
 import makeSelectHome, {
   makeSelectIsFetchingData,
@@ -63,8 +63,8 @@ export class Home extends React.Component {
   };
 
   onDelete = () => {
-    console.log("Yes testing done.")
-  }
+    console.log('Yes testing done.');
+  };
 
   render() {
     const { userInfo, isFetchingData, snackData, closeSnackBar } = this.props;
@@ -111,7 +111,13 @@ export class Home extends React.Component {
           variant={snackData.variant}
           close={closeSnackBar}
         />
-        <DeleteDialog title={"This is test"} confirmationText={"Are you sure you want to delete this resource?"} onDelete = { () => { this.onDelete() } }/>
+        <DeleteDialog
+          title="This is test"
+          confirmationText="Are you sure you want to delete this resource?"
+          onDelete={() => {
+            this.onDelete();
+          }}
+        />
       </React.Fragment>
     );
   }
